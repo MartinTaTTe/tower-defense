@@ -1,2 +1,2 @@
-.src/main.o
-.src/main.exe
+src/*.o
+src/main.exe

@@ -6,7 +6,7 @@
 
 class Map {
 public:
-    Map(int height = 8, int width = 12);
+    Map(int height = 8, int width = 8);
     ~Map() { };
     Tile* GetTile(int x, int y) const;
     void Draw(sf::RenderWindow& window);

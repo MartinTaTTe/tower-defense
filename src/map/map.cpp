@@ -16,8 +16,8 @@ Tile* Map::GetTile(int x, int y) const {
 
 void Map::Draw(sf::RenderWindow& window) {
   auto windowsize = window.getSize();
-  int tile_size_x = (windowsize.x - 200) / width_;
-  int tile_size_y = (windowsize.y - 200) / height_;
+  int tile_size_x = (windowsize.x) / width_;
+  int tile_size_y = (windowsize.y) / height_;
   auto tile_size = std::min(tile_size_x, tile_size_y);
   for (int y = 0; y < height_; y++) {
     for (int x = 0; x < width_; x++) {
