@@ -11,6 +11,5 @@ link:
 
 clean:
 	del *.o
-
 run:
 	main.exe
