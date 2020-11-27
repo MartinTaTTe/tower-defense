@@ -1,7 +1,7 @@
 #include "map.hpp"
 
 Map::Map(int height, int width) 
-    : height_(height), width_(width) {     
+    : height_(height), width_(width) {   
     for (int i = 0; i < height; i++) {
         tiles_.push_back(std::vector<Tile*>());
         for (int j = 0; j < width; j++) {
@@ -9,6 +9,43 @@ Map::Map(int height, int width)
         }
     }
 }
+
+Map::Map(const std::string filePath) {
+  std::ifstream file(filePath);
+  std::string line;
+  int y = 0;
+  while(std::getline(file,line)) {
+    tiles_.push_back(std::vector<Tile*>());
+    width_ = line.length();
+    for (auto i : line) {
+      switch(i) {
+        case '0':
+          tiles_[y].push_back(new Tile(Grass));
+          break;
+        case '!':
+          tiles_[y].push_back(new Tile(Water));
+          break;
+        case '#':
+          tiles_[y].push_back(new Tile(Path));
+          break;
+        default:
+          tiles_[y].push_back(new Tile(Grass));
+          break;
+      }
+    }
+    y++;
+  }
+  height_ = y;
+}
+
+Map::~Map() {
+  for (auto column : tiles_) {
+    for (auto tile : column) {
+      delete tile;
+    }
+  }
+}
+
 
 Tile* Map::GetTile(int x, int y) const {
     return tiles_[y][x];
