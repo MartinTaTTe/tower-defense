@@ -10,7 +10,7 @@ Map::Map(int height, int width)
     }
 }
 
-Map::Map(const std::string filePath) {
+Map::Map(const std::string& filePath) {
   std::ifstream file(filePath);
   std::string line;
   int y = 0;

@@ -10,7 +10,7 @@
 class Map {
 public:
     Map(int height = 8, int width = 8);
-    Map(const std::string filePath);
+    Map(const std::string& filePath);
     ~Map();
     Tile*               GetTile(int x, int y) const;
     void                Draw(sf::RenderWindow& window);
