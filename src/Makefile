@@ -1,6 +1,6 @@
 all: compile link
 
-test: compile link run
+test: compile link clean run
 
 compile:
 	g++ -c *.cpp
@@ -16,7 +16,7 @@ clean:
 run:
 	main.exe
 
-hidden:
+ignored:
 	g++ -c ./enemies/*.cpp
 	g++ -c ./towers/*.cpp
 
