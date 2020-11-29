@@ -14,16 +14,12 @@ Tile::Tile(TileTypes type) : type_(type) {
         default:
             texturePath_ = "./textures/grass.png";
     }
-    texture_ = GetTexture();
+    texture_ = GetTexture(texturePath_);
     texture_.setSmooth(true);
     sprite_ = sf::Sprite(texture_);
 }
 
 TileTypes Tile::GetType() const { return type_; }
-
-sf::Texture& Tile::GetTexture() {
-    return texture_manager.GetTexture(texturePath_);
-}
 
 sf::Sprite* Tile::GetSprite() { return &sprite_; }
 

@@ -15,7 +15,6 @@ public:
     Tile(TileTypes type = Grass);
     ~Tile() { };
     inline TileTypes    GetType() const;
-    inline sf::Texture& GetTexture(); 
     void                SetPos(float x, float y);
     void                SetScale(float size);
     void                Draw(sf::RenderWindow& window) const;
