@@ -3,7 +3,7 @@
 #include "../game/texture_manager.hpp"
 
 
-enum TileTypes {
+enum TileTypes : int8_t {
     Path,
     Grass,
     Water
@@ -14,11 +14,11 @@ class Tile {
 public: 
     Tile(TileTypes type = Grass);
     ~Tile() { };
-    TileTypes           GetType() const;
-    sf::Texture&        GetTexture(); 
+    inline TileTypes    GetType() const;
+    inline sf::Texture& GetTexture(); 
     void                SetPos(float x, float y);
     void                SetScale(float size);
-    void                draw(sf::RenderWindow& window) const;
+    void                Draw(sf::RenderWindow& window) const;
     sf::Sprite*         GetSprite();
     
 private:

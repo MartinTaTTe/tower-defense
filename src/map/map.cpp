@@ -61,7 +61,7 @@ void Map::Draw(sf::RenderWindow& window) {
       Tile* tile = tiles_[y][x];
       tile->SetPos(x * tile_size, y * tile_size);
       tile->SetScale(tile_size);
-      tile->draw(window);
+      tile->Draw(window);
     }
   }
 }

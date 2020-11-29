@@ -11,6 +11,6 @@ App::~App() {
 void App::Run() {
 
     std::string str;
-    std::getline(std::cin, str);
+    std::cin.get();
 }
 

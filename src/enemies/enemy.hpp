@@ -3,7 +3,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
-enum TypesOfEnemies {
+enum TypesOfEnemies : int8_t {
     Normal,
     Multiple,
     Spawn,
@@ -13,7 +13,7 @@ enum TypesOfEnemies {
 class Enemy {
 public:
     Enemy(float max_hp, float x, float y, float speed, float delay, int size,
-    TypesOfEnemies type = Normal);
+          TypesOfEnemies type = Normal);
 
 private:
     float               hp_;
