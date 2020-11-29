@@ -7,12 +7,7 @@
 int main()
 {
     int size = 400;
-    sf::RenderWindow window(sf::VideoMode(size, size), "SFML works!");
-    int i = 0;
-    while (i < 50) {
-        Map map = Map("map/maps/basic.map");
-        i++;
-    }
+    sf::RenderWindow window(sf::VideoMode(size, size), "Tower Defense");
     Map map = Map("map/maps/basic.map");
     sf::RectangleShape tower(sf::Vector2f(size * 4.0f/5, size * 4.0f/5));
     sf::Texture towerTexture;
