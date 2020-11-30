@@ -4,6 +4,8 @@
 
 #include "./map/map.hpp"
 
+#include "./towers/towers.hpp"
+
 int main()
 {
     App app(500, 1000);

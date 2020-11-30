@@ -15,6 +15,8 @@ public:
     Enemy(float max_hp, float x, float y, float speed, float delay, int size,
           TypesOfEnemies type = Normal);
 
+          //Lägg hit SetHp, GetHp funktioner h. Sandra
+
 private:
     float               hp_;
     const float         max_hp_;
