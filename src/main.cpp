@@ -1,10 +1,5 @@
 #include <SFML/Graphics.hpp>
-
 #include "game/app.hpp"
-
-#include "./map/map.hpp"
-
-#include "./towers/towers.hpp"
 
 int main()
 {
