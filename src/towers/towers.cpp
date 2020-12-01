@@ -1,74 +1,80 @@
-#include "tower.hpp"
+#include "towers.hpp"
 #include "../game/texture_manager.hpp"
 
-    Tower::Tower( int price, float damage, int x_coord, int y_coord, float size, float speed, float range, const std::string& texture):
-    _price(price), 
-    _damage(damage), 
-    _x_coord(x_coord), 
-    _y_coord(y_coord), 
-    _size(size),
-    _texture(texture),
-    _prewious_attack(0){
-        _sprite = sf::Sprite(GetTexture());
-        _sprite.setScale(size / (float)(*_sprite.getTexture()).getSize().x_coord, size / (float)(*_sprite.getTexture()).getSize().y_coord));
-        _radius.setRadius(range);
-        // setFillColor till _radius när vi har bestämt!
+    Tower::Tower( int price, float damage, int x_coord, int y_coord, float size, float speed, float range, const std::string& texturePath):
+    price_(price), 
+    damage_(damage), 
+    x_coord_(x_coord), 
+    y_coord_(y_coord), 
+    size_(size),
+    texturePath_(texturePath),
+    prewious_attack_(0){
+        texture_ = GetTexture(texturePath_);
+        texture_.setSmooth(true);
+        sprite_ = sf::Sprite(texture_);
+       
+        radius_.setRadius(range);
+        radius_.setFillColor(sf::Color::Transparent);
+        radius_.setOutlineThickness(10);
+        radius_.setOutlineColor(sf::Color::Red);
     }
 
     bool Tower::Attack(Enemy& enemy) const{
-        enemy.SetHp(enemy.GetHp - _damage);
+        enemy.SetHp(enemy.GetHp - damage_);
     }
     
     int Tower::GetPrice() const{
-        return _price;
+        return price_;
     }
     float Tower::GetDamage() const{
-        return _damage;
+        return damage_;
     }
     const std::pair<int, int> GetCoords() const{
-        return (_x_coord, _y_coord);
+        return (x_coord_, y_coord_);
     }
     float Tower::GetSize() const{
-        return _size;
+        return size_;
     }
     float Tower::GetSpeed() const{
-        return _speed;
+        return speed_;
     }
     sf::Texture& Tower::GetTexture() const{
-        return _texture;
+        return texture_.getTexture();
     }
     int Tower::GetUpgrade() const{
-        return _upgrade;
+        return upgrade_;
     }
     int Tower::GetUpgradePrice() const{
-        return _upgrade_price;
+        return upgrade_price_;
     }
     sf::Sprite* Tower::GetSprite(){
-        return _sprite;
+        return sprite_;
     }
     float Tower::GetRange(){
-        return _range;
+        return range_;
     }
     int Tower:: MoneyFromWave() const{
-        return _money_from_wave;
+        return money_from_wave_;
     }
     void Tower::SetPosition(float xCoord, float yCoord){
-        _sprite.setPosition(xCoord, yCoord);
+        sprite_.setPosition(xCoord, yCoord);
     }
     void Tower::SetScale(float size){
-        _sprite.setScale(size / _texture.getSize().x, size / _texture.getSize().y)
+        sprite_.setScale(size / texture_.getSize().x_coord_, size / texture_.getSize().y_coord_)
     } //Från tile -> räcker bara det här?
+
+
     void Tower::SetActive(){
-        _active = true;
+        active_ = true;
     }
     void Tower::SetNotActive(){
-        _active = false;
+        active_ = false;
     }
 
     bool Tower::IsActive() const{
-        return _active;
+        return active_;
     }
     bool Tower::CanBeUpgraded() const{
-        return _upgrade < _upgrade_max;
+        return upgrade_ < upgrade_max_;
     }
 //Tower::Draw?????

@@ -9,6 +9,7 @@ compile:
 	g++ -c *.cpp
 	g++ -c ./game/*.cpp
 	g++ -c ./map/*.cpp
+	
 
 link:
 	g++ *.o -o main -lsfml-graphics -lsfml-window -lsfml-system

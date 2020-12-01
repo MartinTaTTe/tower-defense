@@ -42,5 +42,6 @@ void App::Run() {
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<float> duration = end - start;
     std::cout << "Exited successfully. App was running for " << duration.count() << " seconds." << std::endl;
+
 }
 
