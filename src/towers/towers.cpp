@@ -7,8 +7,12 @@
     x_coord_(x_coord), 
     y_coord_(y_coord), 
     size_(size),
+    speed_(speed),
+    range_(range),
     texturePath_(texturePath),
-    prewious_attack_(0){
+    prewious_attack_(0),
+    upgrade_(1),
+    money_from_wave_(0){
         texture_ = GetTexture(texturePath_);
         texture_.setSmooth(true);
         sprite_ = sf::Sprite(texture_);
@@ -29,8 +33,8 @@
     float Tower::GetDamage() const{
         return damage_;
     }
-    const std::pair<int, int> GetCoords() const{
-        return (x_coord_, y_coord_);
+    const std::pair<int, int> Tower::GetCoords() const{
+        return {x_coord_, y_coord_};
     }
     float Tower::GetSize() const{
         return size_;
@@ -38,9 +42,7 @@
     float Tower::GetSpeed() const{
         return speed_;
     }
-    sf::Texture& Tower::GetTexture() const{
-        return texture_.getTexture();
-    }
+  
     int Tower::GetUpgrade() const{
         return upgrade_;
     }
@@ -48,7 +50,7 @@
         return upgrade_price_;
     }
     sf::Sprite* Tower::GetSprite(){
-        return sprite_;
+        return &sprite_;
     }
     float Tower::GetRange(){
         return range_;

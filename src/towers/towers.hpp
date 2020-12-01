@@ -40,19 +40,22 @@ protected:
     float               speed_;
     int                 upgrade_price_;
     int                 money_from_wave_;
-    
+    int                 x_coord_;
+    int                 y_coord_;
+    sf::Sprite          sprite_; 
+    sf::Texture         texture_;
+    int                 enemy_type; //vilken sort av fiender kan den attackera
+    std::string         tile_type; //vilken sort av "underlag"
+ 
  
 private:
     int                 price_;
-    int                 x_coord_;
-    int                 y_coord_;
+
     float               size_;
-    float               speed_;
-    sf::Texture         texture_;
     std::string         texturePath_;
     bool                active_;
     float               prewious_attack_;
-    sf::Sprite          sprite_; 
+
     sf::CircleShape     radius_;
     bool                active_;
 };
