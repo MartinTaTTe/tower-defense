@@ -1,27 +1,21 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "../game/texture_manager.hpp"
+#include "../gui/drawable.hpp"
 
 
-enum TileTypes : int8_t {
+enum TileType : int8_t {
     Path,
     Grass,
     Water
     
 };
 
-class Tile {
+class Tile : public Drawable {
 public: 
-    Tile(TileTypes type = Grass);
+    Tile(TileType type = Grass);
     ~Tile() { };
-    inline TileTypes    GetType() const;
-    void                SetPos(float x, float y);
-    void                SetScale(float size);
-    void                Draw(sf::RenderWindow& window) const;
-    sf::Sprite*         GetSprite();
+    inline TileType     GetType() const;
     
 private:
-    TileTypes           type_;
-    sf::Texture         texture_;
-    sf::Sprite          sprite_;
+    TileType            type_;
 };

@@ -9,7 +9,7 @@ compile:
 	g++ -c *.cpp
 	g++ -c ./game/*.cpp
 	g++ -c ./map/*.cpp
-	
+	g++ -c ./gui/*.cpp
 
 link:
 	g++ *.o -o main -lsfml-graphics -lsfml-window -lsfml-system
@@ -23,4 +23,4 @@ run:
 ignored:
 	g++ -c ./enemies/*.cpp
 	g++ -c ./towers/*.cpp
-
+	g++ -c ./utils/*.cpp

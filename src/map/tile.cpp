@@ -1,23 +1,13 @@
 #include "tile.hpp"
 #include "../utils/app_constants.hpp"
+#include "../game/texture_manager.hpp"
 
-Tile::Tile(TileTypes type) : type_(type) {
-    texture_ = GetTexture(T_TILES[type]);
-    sprite_ = sf::Sprite(texture_);
+Tile::Tile(TileType type)
+    : Drawable({0.0f, 0.0f, 0.0f, 0.0f}, T_TILES[type]), type_(type) {
+
 }
 
-TileTypes Tile::GetType() const { return type_; }
-
-sf::Sprite* Tile::GetSprite() { return &sprite_; }
-
-void Tile::SetPos(float x, float y) {
-    sprite_.setPosition(x,y);
+TileType Tile::GetType() const {
+    return type_;
 }
 
-void Tile::SetScale(float size) {
-    sprite_.setScale(size / texture_.getSize().x, size / texture_.getSize().y);
-}
-
-void Tile::Draw(sf::RenderWindow& window) const {
-    window.draw(sprite_);
-}
