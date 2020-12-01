@@ -1,21 +1,8 @@
 #include "tile.hpp"
+#include "../utils/app_constants.hpp"
 
 Tile::Tile(TileTypes type) : type_(type) {
-    switch(type) {
-        case Path:
-            texturePath_ = "./textures/path.png";
-            break;
-        case Grass:
-            texturePath_ = "./textures/grass.png";
-            break;
-        case Water:
-            texturePath_ = "./textures/water.png";
-            break;
-        default:
-            texturePath_ = "./textures/grass.png";
-    }
-    texture_ = GetTexture(texturePath_);
-    texture_.setSmooth(true);
+    texture_ = GetTexture(T_TILES[type]);
     sprite_ = sf::Sprite(texture_);
 }
 

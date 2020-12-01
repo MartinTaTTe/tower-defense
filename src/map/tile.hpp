@@ -22,7 +22,6 @@ public:
     
 private:
     TileTypes           type_;
-    std::string         texturePath_;
     sf::Texture         texture_;
     sf::Sprite          sprite_;
 };
