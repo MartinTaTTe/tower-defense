@@ -2,6 +2,9 @@ all: compile link
 
 test: compile link clean run
 
+#test utan clean för victor
+test2: compile link run
+
 compile:
 	g++ -c *.cpp
 	g++ -c ./game/*.cpp
