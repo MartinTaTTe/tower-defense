@@ -1,5 +1,6 @@
 #include "drawable.hpp"
 #include "../game/texture_manager.hpp"
+#include "../utils/app_constants.hpp"
 
 Drawable::Drawable(const Vector4i& body, const std::string& texturePath)
     : body_(sf::Vector2f(body.lower_right_x - body.upper_left_x, body.lower_right_y - body.upper_left_y)) {
@@ -58,5 +59,5 @@ void Drawable::SetCorners(const Vector4i& corners) {
 }
 
 void Drawable::Highlight(bool highlight) {
-    body_.setFillColor(sf::Color(255, 255, 255, 255 - 100 * highlight));
+    body_.setFillColor(sf::Color(255, 255, 255, 255 - HIGHLIGHT * highlight));
 }

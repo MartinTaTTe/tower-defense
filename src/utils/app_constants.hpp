@@ -1,8 +1,10 @@
 #pragma once
 
 // App constants
+const std::string WINDOW_TITLE = "Tower Defense";
 const int WINDOW_HEIGHT = 500;
 const int WINDOW_WIDTH = 1000;
+const int HIGHLIGHT = 100; // 0-255
 
 // Tower constants
 const int UPGRADE_PRICE = 1000;

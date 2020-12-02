@@ -1,4 +1,5 @@
 #include "app.hpp"
+#include "../utils/app_constants.hpp"
 
 #include <chrono>
 #include <future>
@@ -27,7 +28,7 @@ void App::PopState() {
 }
 
 void App::Run() {
-    sf::RenderWindow window(sf::VideoMode(width_, height_), "Tower Defense");
+    sf::RenderWindow window(sf::VideoMode(width_, height_), WINDOW_TITLE);
     
     auto start = std::chrono::high_resolution_clock::now();
     while (window.isOpen()) {
