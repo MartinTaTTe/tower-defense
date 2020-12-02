@@ -72,8 +72,12 @@ void Canvas::Update(const Vector2i& upper_left, const Vector2i& lower_right) {
 void Canvas::Update(const Vector4i& corners) {
     Update(corners.upper_left_x, corners.upper_left_y, corners.lower_right_x, corners.lower_right_y);
 }
-    
-void Canvas::Draw(sf::RenderWindow& window) {
+
+void Canvas::Update(const Vector4f& corners) {
+    Update(corners.upper_left_x, corners.upper_left_y, corners.lower_right_x, corners.lower_right_y);
+}
+
+void Canvas::Draw(sf::RenderWindow& window) const {
     for (auto drawable : drawables_)
         drawable.second->Draw(window);
     for (auto button : buttons_)
@@ -86,4 +90,8 @@ void Canvas::AddButton(const Vector4f& position, const std::string& texturePath)
 
 void Canvas::AddDrawable(const Vector4f& position, const std::string& texturePath) {
     drawables_.push_back(std::pair<Vector4f, Drawable*>(position, new Drawable(position, texturePath)));
+}
+
+Vector2f Canvas::GetPosition() {
+    return Vector2f({body_.getPosition().x, body_.getPosition().y});
 }
