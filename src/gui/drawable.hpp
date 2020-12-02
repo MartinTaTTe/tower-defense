@@ -22,6 +22,7 @@ public:
     void                SetCorners(int upper_left_x, int upper_left_y, int lower_right_x, int lower_right_y);
     void                SetCorners(const Vector2i& upper_left, const Vector2i& lower_right);
     void                SetCorners(const Vector4i& corners);
+    void                Highlight(bool highlight);
 private:
     sf::RectangleShape  body_;
 };

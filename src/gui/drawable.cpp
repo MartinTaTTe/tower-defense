@@ -56,3 +56,7 @@ void Drawable::SetCorners(const Vector2i& upper_left, const Vector2i& lower_righ
 void Drawable::SetCorners(const Vector4i& corners) {
     SetCorners(corners.upper_left, corners.lower_right);
 }
+
+void Drawable::Highlight(bool highlight) {
+    body_.setFillColor(sf::Color(255, 255, 255, 255 - 100 * highlight));
+}
