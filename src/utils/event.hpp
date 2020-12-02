@@ -1,10 +1,10 @@
 #pragma once
 #include <stdint.h>
 #include "../game/state.hpp"
-
-typedef std::pair<float, float> Coords;
+#include "../gui/drawable.hpp"
 
 enum EventType : int8_t {
+    None,
     PushState,
     PopState,
     MouseMovement,
@@ -15,10 +15,12 @@ enum EventType : int8_t {
 struct Event
 {
     Event(EventType type) : type(type) { }
+    Event() = delete;
     EventType type;
     union {
         State* state;
-        Coords coords;
+        Vector2f coords;
+        Vector4i body;
     };
 };
 
