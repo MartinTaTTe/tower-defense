@@ -2,14 +2,24 @@
 #include "../game/texture_manager.hpp"
 #include "../utils/app_constants.hpp"
 
-Button::Button(const Vector4& body)
+Button::Button(const Vector4i& body)
     : Drawable(body, T_DEFAULT_BUTTON), hasTexture_(false) {
 
 }
 
-Button::Button(const Vector4& body, const std::string& texturePath)
+Button::Button(const Vector4i& body, const std::string& texturePath)
     : Drawable(body, texturePath), hasTexture_(true) {
     
+}
+
+Button::Button(const Vector4f& body)
+    : Drawable(body, T_DEFAULT_BUTTON), hasTexture_(false) {
+
+}
+
+Button::Button(const Vector4f& body, const std::string& texturePath)
+    : Drawable(body, texturePath), hasTexture_(true) {
+
 }
 
 Button::~Button() {
