@@ -1,70 +1,36 @@
-#include "map.hpp" 
+#include "map.hpp"
+#include <iostream>
 
-Map::Map(int height, int width) 
-    : height_(height), width_(width) {   
-    for (int i = 0; i < height; i++) {
-        tiles_.push_back(std::vector<Tile*>());
-        for (int j = 0; j < width; j++) {
-            tiles_[i].push_back(new Tile((TileType)(rand() % 3)));
+Map::Map(const Vector4f& body, const std::string& filePath)
+    : Canvas(sf::RectangleShape(sf::Vector2f())) {
+    std::ifstream file(filePath);
+    std::string line;
+    std::getline(file,line);
+    grid_width_  = stoi(line.substr(0, line.find(':')));
+    grid_height_ = stoi(line.substr(line.find(':') + 1));
+    float tile_width =  100.0f / grid_width_;
+    float tile_height = 100.0f / grid_height_;
+    int x = 0;
+    int y = 0;
+    while(std::getline(file,line)) {
+        x = 0;
+        for (auto i : line) {
+            drawables_.push_back(std::pair<Vector4f, Drawable*>
+                ({tile_width * x, tile_height * y, tile_width * (x + 1), tile_height * (y + 1)},
+                 new Tile(static_cast<TileType>(i - '0'))));
+            x++;
         }
+        y++;
     }
-}
-
-Map::Map(const std::string& filePath) {
-  std::ifstream file(filePath);
-  std::string line;
-  int y = 0;
-  while(std::getline(file,line)) {
-    tiles_.push_back(std::vector<Tile*>());
-    width_ = line.length();
-    for (auto i : line) {
-      switch(i) {
-        case '0':
-          tiles_[y].push_back(new Tile(Grass));
-          break;
-        case '!':
-          tiles_[y].push_back(new Tile(Water));
-          break;
-        case '#':
-          tiles_[y].push_back(new Tile(Path));
-          break;
-        default:
-          tiles_[y].push_back(new Tile(Grass));
-          break;
-      }
-    }
-    y++;
-  }
-  height_ = y;
+    Update(body);
 }
 
 Map::~Map() {
-  for (auto column : tiles_) {
-    for (auto tile : column) {
-      delete tile;
-    }
-  }
-}
 
+}
 
 Tile* Map::GetTile(int x, int y) const {
-    return tiles_[y][x];
+    if (x < grid_width_ && y < grid_height_)
+        return dynamic_cast<Tile*>(drawables_[x + y * grid_width_].second);
+    else return nullptr;
 }
-
-void Map::Draw(sf::RenderWindow& window) {
-  auto windowsize = window.getSize();
-  int tile_size_x = (windowsize.x) / width_;
-  int tile_size_y = (windowsize.y) / height_;
-  int tile_size = std::min(tile_size_x, tile_size_y);
-  for (int y = 0; y < height_; y++) {
-    for (int x = 0; x < width_; x++) {
-      Tile* tile = tiles_[y][x];
-      tile->SetPosition(x * tile_size, y * tile_size);
-      tile->SetSize(tile_size_x, tile_size_y);
-      tile->Draw(window);
-    }
-  }
-}
-
-
-

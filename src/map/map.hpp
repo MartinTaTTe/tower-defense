@@ -5,18 +5,16 @@
 #include <fstream>
 
 #include "tile.hpp"
+#include "../gui/canvas.hpp"
 
 typedef std::vector<std::vector<Tile*>> Grid;
 
-class Map {
+class Map : public Canvas {
 public:
-    Map(int height = 8, int width = 8);
-    Map(const std::string& filePath);
+    Map(const Vector4f& body, const std::string& filePath);
     ~Map();
     inline Tile*        GetTile(int x, int y) const;
-    void                Draw(sf::RenderWindow& window);
 private:
-    int                 height_;
-    int                 width_;
-    Grid                tiles_; // tiles[height][width]
+    int                 grid_height_;
+    int                 grid_width_;
 };

@@ -11,8 +11,10 @@ State* MenuState::EventHandler(sf::RenderWindow& window, sf::Event& event) {
                 window.close();
                 break;
             case sf::Event::KeyPressed:
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-                    return new GameState(new Map("map/maps/basic.map"));
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                    sf::Vector2u size = window.getSize();
+                    return new GameState(new Map({0, 0, (float)size.x, (float)size.y}, "map/maps/basic.map"));
+                }
         }
     }
     return this;

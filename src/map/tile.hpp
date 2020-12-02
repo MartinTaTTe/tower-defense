@@ -6,8 +6,7 @@
 enum TileType : int8_t {
     Path,
     Grass,
-    Water
-    
+    Water 
 };
 
 class Tile : public Drawable {
