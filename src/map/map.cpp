@@ -1,5 +1,5 @@
 #include "map.hpp"
-#include <iostream>
+#include <fstream>
 
 Map::Map(const Vector4f& body, const std::string& filePath)
     : Canvas(sf::RectangleShape(sf::Vector2f())) {

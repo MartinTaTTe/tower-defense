@@ -36,7 +36,7 @@ void App::Run() {
         State* state = states_.back()->EventHandler(window, event);
         if (states_.back() != state)
             PushState(state);
-        window.clear(sf::Color::White);
+        window.clear(sf::Color(BACKGROUND_R, BACKGROUND_G, BACKGROUND_B));
         states_.back()->Draw(window);
         window.display();
     }

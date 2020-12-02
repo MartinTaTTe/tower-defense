@@ -2,8 +2,6 @@
 
 Canvas::Canvas(sf::RectangleShape body)
     : body_(body) {
-    width_  = body.getSize().x - body.getPosition().x;
-    height_ = body.getSize().y - body.getPosition().y;
 }
 
 Canvas::~Canvas() {
@@ -18,11 +16,10 @@ Event Canvas::EventHandler(const Event& event) {
     switch (event.type)
     {
     case EventType::Resize:
-        Update(event.body);
         break;
     case EventType::MouseMovement:
-        relative.x = (event.coords.x - body_.getPosition().x) / width_;
-        relative.y = (event.coords.y - body_.getPosition().y) / height_;
+        relative.x = (event.coords.x - body_.getPosition().x) / width_ * 100;
+        relative.y = (event.coords.y - body_.getPosition().y) / height_ * 100;
         for (auto button : buttons_) {
             if (button.first.upper_left_x < relative.x && relative.x < button.first.lower_right_x &&
                 button.first.upper_left_y < relative.y && relative.y < button.first.lower_right_y)
@@ -32,8 +29,8 @@ Event Canvas::EventHandler(const Event& event) {
         }
         break;
     case EventType::MouseClick:
-        relative.x = (event.coords.x - body_.getPosition().x) / width_;
-        relative.y = (event.coords.y - body_.getPosition().y) / height_;
+        relative.x = (event.coords.x - body_.getPosition().x) / width_ * 100;
+        relative.y = (event.coords.y - body_.getPosition().y) / height_ * 100;
         for (auto button : buttons_) {
             if (button.first.upper_left_x < relative.x && relative.x < button.first.lower_right_x &&
                 button.first.upper_left_y < relative.y && relative.y < button.first.lower_right_y)
@@ -49,6 +46,8 @@ Event Canvas::EventHandler(const Event& event) {
 void Canvas::Update(int upper_left_x, int upper_left_y, int lower_right_x, int lower_right_y) {
     body_.setPosition((float)upper_left_x, (float)upper_left_y);
     body_.setSize(sf::Vector2f((float)(lower_right_x - upper_left_x), (float)(lower_right_y - upper_left_y)));
+    width_  = lower_right_x - upper_left_x;
+    height_ = lower_right_y - upper_left_y;
     for (auto button : buttons_)
         button.second->SetCorners(
             upper_left_x + button.first.upper_left_x  * (lower_right_x - upper_left_x) / 100,

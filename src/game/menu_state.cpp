@@ -1,5 +1,6 @@
 #include "menu_state.hpp"
 #include "texture_manager.hpp"
+#include "../utils/app_constants.hpp"
 
 MenuState::MenuState()
     : State("Menu State") { }
@@ -12,8 +13,10 @@ State* MenuState::EventHandler(sf::RenderWindow& window, sf::Event& event) {
                 break;
             case sf::Event::KeyPressed:
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                    sf::Vector2u size = window.getSize();
-                    return new GameState(new Map({0, 0, (float)size.x, (float)size.y}, "map/maps/basic.map"));
+                    Vector2i size;
+                    size.x = window.getSize().x;
+                    size.y = window.getSize().y;
+                    return new GameState(size, M_BASIC_MAP);
                 }
         }
     }

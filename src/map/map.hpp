@@ -1,8 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include <iostream>
-#include <fstream>
 
 #include "tile.hpp"
 #include "../gui/canvas.hpp"
@@ -13,8 +11,8 @@ class Map : public Canvas {
 public:
     Map(const Vector4f& body, const std::string& filePath);
     ~Map();
-    inline Tile*        GetTile(int x, int y) const;
+    Tile* GetTile(int x, int y) const;
 private:
-    int                 grid_height_;
-    int                 grid_width_;
+    int grid_height_;
+    int grid_width_;
 };

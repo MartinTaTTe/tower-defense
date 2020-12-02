@@ -13,8 +13,8 @@ class Tile : public Drawable {
 public: 
     Tile(TileType type = Grass);
     ~Tile() { };
-    inline TileType     GetType() const;
+    TileType GetType() const;
     
 private:
-    TileType            type_;
+    TileType type_;
 };

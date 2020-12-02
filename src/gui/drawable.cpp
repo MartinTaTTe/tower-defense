@@ -59,9 +59,9 @@ void Drawable::SetCorners(const Vector4i& corners) {
 }
 
 void Drawable::Highlight(bool highlight) {
-    body_.setFillColor(sf::Color(255, 255, 255, HIGHLIGHT * highlight));
+    body_.setFillColor(sf::Color(255, 255, 255, 255 - HIGHLIGHT * highlight));
 }
 
 void Drawable::Disable(bool disable) {
-    body_.setFillColor(sf::Color(0, 0, 0, DISABLE * disable));
+    body_.setFillColor(sf::Color(255 - DISABLE * disable, 255 - DISABLE * disable, 255 - DISABLE * disable, 255));
 }
