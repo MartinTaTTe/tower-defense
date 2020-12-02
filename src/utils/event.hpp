@@ -8,11 +8,13 @@ enum EventType : int8_t {
     PushState,
     PopState,
     MouseMovement,
-    MouseClick
+    MouseClick,
+    Resize
 };
 
 struct Event
 {
+    Event(EventType type) : type(type) { }
     EventType type;
     union {
         State* state;

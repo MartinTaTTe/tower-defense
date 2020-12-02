@@ -27,11 +27,23 @@ Button::~Button() {
 }
 
 void Button::Press(bool press) {
-    isPressed_ = press;
+    if (!isDisabled_)
+        isPressed_ = press;
 }
 
 void Button::Toggle() {
-    isToggled_ = !isToggled_;
+    if (!isDisabled_)
+        isToggled_ = !isToggled_;
+}
+
+void Button::Highlight(bool highlight) {
+    if (!isDisabled_)
+        body_.setFillColor(sf::Color(255, 255, 255, HIGHLIGHT * highlight));
+}
+
+void Button::Disable(bool disable) {
+    body_.setFillColor(sf::Color(0, 0, 0, DISABLE * disable));
+    isDisabled_ = disable;
 }
 
 bool Button::IsPressed() const {

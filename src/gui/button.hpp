@@ -14,11 +14,14 @@ public:
     ~Button();
     void Press(bool press);
     void Toggle();
-    inline bool IsPressed() const;
-    inline bool IsToggled() const;
-    inline bool HasTexture() const;
+    void Highlight(bool highlight) override;
+    void Disable(bool disable) override;
+    bool IsPressed() const;
+    bool IsToggled() const;
+    bool HasTexture() const;
 private:
     bool isPressed_;
     bool isToggled_;
+    bool isDisabled_;
     bool hasTexture_;
 };
