@@ -1,7 +1,7 @@
 #include "towers.hpp"
 #include "../game/texture_manager.hpp"
 
-    Tower::Tower( int price, float damage, int x_coord, int y_coord, float size, float speed, float range, const std::string& texturePath):
+    Tower::Tower( int price, float damage, int x_coord, int y_coord, float size, float speed, float range, int enemy_type, bool tile_type, const std::string& texturePath):
     price_(price), 
     damage_(damage), 
     x_coord_(x_coord), 
@@ -9,6 +9,8 @@
     size_(size),
     speed_(speed),
     range_(range),
+    enemy_type_(enemy_type),
+    tile_type_(tile_type),
     texturePath_(texturePath),
     prewious_attack_(0),
     upgrade_(1),
@@ -24,7 +26,12 @@
     }
 
     bool Tower::Attack(Enemy& enemy) const{
-        enemy.SetHp(enemy.GetHp - damage_);
+        if( enemy.IsLand() && (enemy_type_ == 1 || enemy_type_ == 3)){
+            enemy.SetHp(enemy.GetHp() - damage_);
+        }else if(!enemy.IsLand && enemy_type_ == 2){
+            enemy.SetHp(enemy.GetHp() - damage_);
+        }
+        
     }
     
     int Tower::GetPrice() const{
