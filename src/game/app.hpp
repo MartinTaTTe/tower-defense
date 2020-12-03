@@ -1,10 +1,10 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+/*
+App manages the whole program through States. The most recently added State is the current State.
+*/
 #include <vector>
 
-#include "state.hpp"
 #include "menu_state.hpp"
-#include "game_state.hpp"
 
 class App {
 public:
@@ -18,5 +18,3 @@ private:
     int                 width_;
     std::vector<State*> states_;
 };
-
-

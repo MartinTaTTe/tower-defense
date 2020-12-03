@@ -1,21 +1,21 @@
 #include "menu_state.hpp"
-#include "texture_manager.hpp"
+#include "game_state.hpp"
+#include "../utils/texture_manager.hpp"
+#include "../utils/app_constants.hpp"
 
 MenuState::MenuState()
     : State("Menu State") { }
 
-State* MenuState::EventHandler(sf::RenderWindow& window, sf::Event& event) {
-    while (window.pollEvent(event)) {
-        switch (event.type) {
-            case sf::Event::Closed:
-                window.close();
-                break;
-            case sf::Event::KeyPressed:
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-                    return new GameState(new Map("map/maps/basic.map"));
-        }
+Event MenuState::EventHandler(const sf::Event& sf_event) {
+    Event event(EventType::None);
+    switch (sf_event.type) {
+        case sf::Event::KeyPressed:
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                event.type = EventType(PushState);
+                event.state = new GameState(M_BASIC_MAP);
+            }
     }
-    return this;
+    return event;
 }
 
 void MenuState::Draw(sf::RenderWindow& window) {

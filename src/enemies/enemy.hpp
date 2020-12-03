@@ -15,7 +15,7 @@ public:
     Enemy(float max_hp, float x, float y, float speed, float delay, int size,
           TypesOfEnemies type = Normal);
 
-          //Lägg hit SetHp, GetHp funktioner h. Sandra
+          //Lägg hit SetHp, GetHp, IsLand(bool, true om på land, false om i luften) funktioner h. Sandra
 
 private:
     float               hp_;
