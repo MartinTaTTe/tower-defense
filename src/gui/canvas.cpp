@@ -63,6 +63,13 @@ void Canvas::Update(int upper_left_x, int upper_left_y, int lower_right_x, int l
             upper_left_x + drawable.first.lower_right_x * width_ / 100,
             upper_left_y + drawable.first.lower_right_y * height_ / 100
         );
+    for (auto canvas : canvases_)
+        canvas.second->Update(
+            upper_left_x + canvas.first.upper_left_x  * width_ / 100,
+            upper_left_y + canvas.first.upper_left_y  * height_ / 100,
+            upper_left_x + canvas.first.lower_right_x * width_ / 100,
+            upper_left_y + canvas.first.lower_right_y * height_ / 100
+        );
 }
 
 void Canvas::Update(const Vector2i& upper_left, const Vector2i& lower_right) {
@@ -82,6 +89,8 @@ void Canvas::Draw(sf::RenderWindow& window) const {
         drawable.second->Draw(window);
     for (auto button : buttons_)
         button.second->Draw(window);
+    for (auto canvas : canvases_)
+        canvas.second->Draw(window);
 }
 
 void Canvas::AddButton(const Vector4f& position, const std::string& texturePath, const Event& action) {

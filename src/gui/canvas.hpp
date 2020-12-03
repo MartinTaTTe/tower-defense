@@ -8,6 +8,8 @@ Canvases are used to manage Drawables and Buttons in a certain area.
 #include "../utils/event.hpp"
 #include "../utils/app_constants.hpp"
 
+class Canvas;
+typedef std::vector<std::pair<Vector4f, Canvas*>> Canvases;
 typedef std::vector<std::pair<Vector4f, Button*>> Buttons;
 typedef std::vector<std::pair<Vector4f, Drawable*>> Drawables;
 
@@ -25,6 +27,7 @@ public:
     void                AddDrawable(const Vector4f& position, const std::string& texturePath);
 protected:
     Vector2f            GetPosition();
+    Canvases            canvases_;
     Buttons             buttons_;
     Drawables           drawables_;
     float               width_;
