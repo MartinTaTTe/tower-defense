@@ -12,7 +12,6 @@ struct Vector4f;
 
 class Drawable {
 public:
-    Drawable(const Vector4i& body, const std::string& texturePath);
     Drawable(const Vector4f& body, const std::string& texturePath);
     Drawable(const std::string& texturePath);
     ~Drawable();

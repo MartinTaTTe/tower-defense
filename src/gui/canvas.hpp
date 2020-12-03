@@ -21,7 +21,7 @@ public:
     void                Update(const Vector4i& corners);
     void                Update(const Vector4f& corners);
     void                Draw(sf::RenderWindow& window) const;
-    void                AddButton(const Vector4f& position, const std::string& texturePath = T_DEFAULT_BUTTON);
+    void                AddButton(const Vector4f& position, const std::string& texturePath = T_DEFAULT_BUTTON, const Event& action = Event());
     void                AddDrawable(const Vector4f& position, const std::string& texturePath);
 protected:
     Vector2f            GetPosition();

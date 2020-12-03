@@ -84,12 +84,28 @@ void Canvas::Draw(sf::RenderWindow& window) const {
         button.second->Draw(window);
 }
 
-void Canvas::AddButton(const Vector4f& position, const std::string& texturePath) {
-    buttons_.push_back(std::pair<Vector4f, Button*>(position, new Button(position, texturePath)));
+void Canvas::AddButton(const Vector4f& position, const std::string& texturePath, const Event& action) {
+    buttons_.push_back(
+        std::pair<Vector4f, Button*>
+        (position,
+        new Button({
+            body_.getPosition().x + position.upper_left_x * width_,
+            body_.getPosition().y + position.upper_left_y * height_,
+            body_.getPosition().x + position.lower_right_x * width_,
+            body_.getPosition().y + position.lower_right_y * height_
+        }, texturePath, action)));
 }
 
 void Canvas::AddDrawable(const Vector4f& position, const std::string& texturePath) {
-    drawables_.push_back(std::pair<Vector4f, Drawable*>(position, new Drawable(position, texturePath)));
+    drawables_.push_back(
+        std::pair<Vector4f, Drawable*>
+        (position,
+        new Drawable({
+            body_.getPosition().x + position.upper_left_x * width_,
+            body_.getPosition().y + position.upper_left_y * height_,
+            body_.getPosition().x + position.lower_right_x * width_,
+            body_.getPosition().y + position.lower_right_y * height_
+        }, texturePath)));
 }
 
 Vector2f Canvas::GetPosition() {

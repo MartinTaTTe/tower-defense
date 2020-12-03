@@ -1,23 +1,7 @@
 #include "button.hpp"
-#include "../utils/app_constants.hpp"
 
-Button::Button(EventType action, const Vector4i& body)
-    : Drawable(body, T_DEFAULT_BUTTON), hasTexture_(false), action_(action) {
-
-}
-
-Button::Button(const Vector4i& body, const std::string& texturePath)
-    : Drawable(body, texturePath), hasTexture_(true) {
-    
-}
-
-Button::Button(const Vector4f& body)
-    : Drawable(body, T_DEFAULT_BUTTON), hasTexture_(false) {
-
-}
-
-Button::Button(const Vector4f& body, const std::string& texturePath)
-    : Drawable(body, texturePath), hasTexture_(true) {
+Button::Button(const Vector4f& body, const std::string& texturePath, const Event& action)
+    : Drawable(body, texturePath), hasTexture_(true), action_(action) {
 
 }
 
@@ -25,16 +9,21 @@ Button::~Button() {
     
 }
 
-Event Button::Press(bool press) {
+const Event Button::Press(bool press) {
     if (!isDisabled_) {
         isPressed_ = press;
         return action_;
     }
+    return Event();
 }
 
-Event Button::Toggle() {
+const Event Button::Toggle() {
     if (!isDisabled_)
         isToggled_ = !isToggled_;
+    if (isToggled_)
+        return action_;
+    else
+        return Event();
 }
 
 void Button::Highlight(bool highlight) {
