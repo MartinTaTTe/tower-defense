@@ -73,10 +73,10 @@ private:
     Map* map_;
 
 
-}
+};
 //Map.gettile för att få coordinaterna
 //tile.gettype för att få typen så att den vet vilken som e nästa
 
 //spara alltid den gamla att den inte far dit
 // skanna alla 4 tiles runtom för att kolla nästa lediga tile
-// kolla att man får enemins position
+// kolla att man får enemins position;
