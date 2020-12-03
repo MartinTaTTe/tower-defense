@@ -4,6 +4,11 @@ Canvas::Canvas(sf::RectangleShape body)
     : body_(body) {
 }
 
+Canvas::Canvas(const Vector4f& body) {
+    body_.setPosition(sf::Vector2f(body.upper_left_x, body.upper_left_y));
+    body_.setSize(sf::Vector2f(body.lower_right_x - body.upper_left_x, body.lower_right_y - body.upper_left_y));
+}
+
 Canvas::~Canvas() {
     for (auto button : buttons_)
         delete button.second;
@@ -102,7 +107,8 @@ void Canvas::AddButton(const Vector4f& position, const std::string& texturePath,
             body_.getPosition().y + position.upper_left_y * height_,
             body_.getPosition().x + position.lower_right_x * width_,
             body_.getPosition().y + position.lower_right_y * height_
-        }, texturePath, action)));
+        }, texturePath, action))
+    );
 }
 
 void Canvas::AddDrawable(const Vector4f& position, const std::string& texturePath) {
@@ -114,7 +120,21 @@ void Canvas::AddDrawable(const Vector4f& position, const std::string& texturePat
             body_.getPosition().y + position.upper_left_y * height_,
             body_.getPosition().x + position.lower_right_x * width_,
             body_.getPosition().y + position.lower_right_y * height_
-        }, texturePath)));
+        }, texturePath))
+    );
+}
+
+void Canvas::AddCanvas(const Vector4f& position) {
+    canvases_.push_back(
+        std::pair<Vector4f, Canvas*>
+        (position,
+        new Canvas({
+            body_.getPosition().x + position.upper_left_x * width_,
+            body_.getPosition().y + position.upper_left_y * height_,
+            body_.getPosition().x + position.lower_right_x * width_,
+            body_.getPosition().y + position.lower_right_y * height_
+        }))
+    );
 }
 
 Vector2f Canvas::GetPosition() {
