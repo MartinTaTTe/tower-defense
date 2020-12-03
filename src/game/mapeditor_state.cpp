@@ -21,8 +21,13 @@ Event MapEditorState::EventHandler(const sf::Event& sf_event) {
                 map_->EventHandler(event);
                 break;
             case sf::Event::Resized:
+                std::cout << "Resized" << std::endl;
                 event.type = EventType::Resize;
-                map_->EventHandler(event);
+                event.body.upper_left_x = 0;
+                event.body.upper_left_y = 0;
+                event.body.lower_right_x = MAP_WIDTH * sf_event.size.width;
+                event.body.lower_right_y = sf_event.size.height;
+                event = map_->EventHandler(event);
                 break;
             case sf::Event::KeyPressed:
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
@@ -34,11 +39,11 @@ Event MapEditorState::EventHandler(const sf::Event& sf_event) {
 }
 
 void MapEditorState::Save() {
-    std::string fileName = name_ + ".txt";
+    std::string fileName = "map/maps/" + name_ + ".map";
     std::ofstream file;
     
     file.open(fileName);
-    file << width_ + "x" + height_ << std::endl;
+    file << width_ << "x" << height_ << std::endl;
     
     for(int y = 0; y < height_; y++) {
         for(int x = 0; x < width_; x++) {
@@ -47,7 +52,6 @@ void MapEditorState::Save() {
         }
         file << std::endl;
     }
-    std::cout << "kys" << std::endl;
     file.close();
 
 }
