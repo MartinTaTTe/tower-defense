@@ -1,5 +1,4 @@
 #include "button.hpp"
-#include "../game/texture_manager.hpp"
 #include "../utils/app_constants.hpp"
 
 Button::Button(const Vector4i& body)

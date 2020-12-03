@@ -1,7 +1,9 @@
 #pragma once
-
+/*
+GUIManager is used by each State and manages everything related to graphics and user interactions.
+*/
 #include <vector>
-#include <SFML/Graphics.hpp>
+
 #include "canvas.hpp"
 
 typedef std::pair<float, float> Proportion;

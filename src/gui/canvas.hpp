@@ -1,7 +1,9 @@
 #pragma once
-
+/*
+Canvases are used to manage Drawables and Buttons in a certain area.
+*/
 #include <vector>
-#include <SFML/Graphics.hpp>
+
 #include "button.hpp"
 #include "../utils/event.hpp"
 #include "../utils/app_constants.hpp"

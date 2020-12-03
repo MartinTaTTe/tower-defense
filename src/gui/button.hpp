@@ -1,6 +1,7 @@
 #pragma once 
-
-#include <SFML/Graphics.hpp>
+/*
+A Drawable that reacts to user input.
+*/
 #include "drawable.hpp"
 
 typedef std::pair<int, int> Coords;

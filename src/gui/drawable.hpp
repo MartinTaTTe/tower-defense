@@ -1,5 +1,7 @@
 #pragma once
-
+/*
+Everything that is visible to the player inherits Drawable either directly or indirectly.
+*/
 #include <SFML/Graphics.hpp>
 
 struct Vector2i;

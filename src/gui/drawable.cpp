@@ -1,5 +1,5 @@
 #include "drawable.hpp"
-#include "../game/texture_manager.hpp"
+#include "../utils/texture_manager.hpp"
 #include "../utils/app_constants.hpp"
 
 Drawable::Drawable(const Vector4i& body, const std::string& texturePath)
