@@ -32,13 +32,13 @@ protected:
 
 // Vector structs
 struct Vector2i {
-    int x, y;
+    short x, y;
 };
 
 struct Vector4i {
     union {
         struct {
-            int upper_left_x, upper_left_y, lower_right_x, lower_right_y;
+            short upper_left_x, upper_left_y, lower_right_x, lower_right_y;
         };
         struct {
             Vector2i upper_left, lower_right;
