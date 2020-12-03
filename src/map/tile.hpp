@@ -1,7 +1,8 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+/*
+Tiles are used as the base of a Map.
+*/
 #include "../gui/drawable.hpp"
-
 
 enum TileType : int8_t {
     Path,

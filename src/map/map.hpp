@@ -1,7 +1,7 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <vector>
-
+/*
+Map is custom Canvas used for controlling all objects on the game map, such as Towers and Enemies.
+*/
 #include "tile.hpp"
 #include "../gui/canvas.hpp"
 
