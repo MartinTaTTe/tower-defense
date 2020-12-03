@@ -10,6 +10,7 @@ typedef std::vector<std::vector<Tile*>> Grid;
 class Map : public Canvas {
 public:
     Map(const Vector4f& body, const std::string& filePath);
+    Map(const Vector4f& body, int width, int height);
     ~Map();
     Tile* GetTile(int x, int y) const;
 private:

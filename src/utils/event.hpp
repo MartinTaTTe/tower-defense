@@ -9,18 +9,6 @@ Events are used to communicate between the levels in the component hierarchy.
 
 enum EventType : int8_t;
 
-struct Event
-{
-    Event(EventType type) : type(type) { }
-    Event() = delete;
-    EventType type;
-    union {
-        State* state;
-        Vector2f coords;
-        Vector4i body;
-    };
-};
-
 enum EventType : int8_t {
     None,
     PushState,
@@ -28,4 +16,15 @@ enum EventType : int8_t {
     MouseMovement,
     MouseClick,
     Resize
+};
+
+struct Event
+{
+    Event(EventType type = EventType::None) : type(type) { }
+    EventType type;
+    union {
+        State*   state;
+        Vector2f coords;
+        Vector4i body;
+    };
 };
