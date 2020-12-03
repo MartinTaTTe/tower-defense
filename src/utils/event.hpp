@@ -1,16 +1,13 @@
 #pragma once
+/*
+Events are used to communicate between the levels in the component hierarchy.
+*/
 #include <stdint.h>
+
 #include "../game/state.hpp"
 #include "../gui/drawable.hpp"
 
-enum EventType : int8_t {
-    None,
-    PushState,
-    PopState,
-    MouseMovement,
-    MouseClick,
-    Resize
-};
+enum EventType : int8_t;
 
 struct Event
 {
@@ -24,3 +21,11 @@ struct Event
     };
 };
 
+enum EventType : int8_t {
+    None,
+    PushState,
+    PopState,
+    MouseMovement,
+    MouseClick,
+    Resize
+};

@@ -1,5 +1,7 @@
 #pragma once
-
+/*
+This file contains all values that are used for balancing purposes and won't break functionality if changed.
+*/
 // App constants
 const std::string WINDOW_TITLE = "Tower Defense";
 const int WINDOW_HEIGHT = 500;
