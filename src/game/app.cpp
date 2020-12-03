@@ -48,7 +48,7 @@ void App::Run() {
                         break;
                     case EventType::PushState:
                         PushState(event.state);
-                        sf_event.type = sf::Event::Resized;
+                        sf_event.type = sf::Event::Closed;
                         sf_event.size.width = window.getSize().x;
                         sf_event.size.height = window.getSize().y;
                         states_.back()->EventHandler(sf_event);

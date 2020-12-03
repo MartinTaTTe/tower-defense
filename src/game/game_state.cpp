@@ -1,6 +1,5 @@
 #include "game_state.hpp"
 #include "../utils/app_constants.hpp"
-#include <iostream>
 
 GameState::GameState(const std::string& mapPath)
     : map_(new Map({0, 0, WINDOW_WIDTH, WINDOW_HEIGHT}, mapPath)), State("Game State") { }
@@ -20,8 +19,7 @@ Event GameState::EventHandler(const sf::Event& sf_event) {
             event.coords.y = sf_event.mouseButton.y;
             map_->EventHandler(event);
             break;
-        case sf::Event::Resized:
-            std::cout << "Resized" << std::endl;
+        case sf::Event::Closed:
             event.type = EventType::Resize;
             event.body.upper_left_x = 0;
             event.body.upper_left_y = 0;

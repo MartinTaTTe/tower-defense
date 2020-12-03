@@ -45,23 +45,23 @@ Event Canvas::EventHandler(const Event& event) {
 }
 
 void Canvas::Update(int upper_left_x, int upper_left_y, int lower_right_x, int lower_right_y) {
-    body_.setPosition((float)upper_left_x, (float)upper_left_y);
-    body_.setSize(sf::Vector2f((float)(lower_right_x - upper_left_x), (float)(lower_right_y - upper_left_y)));
     width_  = lower_right_x - upper_left_x;
     height_ = lower_right_y - upper_left_y;
+    body_.setPosition((float)upper_left_x, (float)upper_left_y);
+    body_.setSize(sf::Vector2f((float)width_, (float)height_));
     for (auto button : buttons_)
         button.second->SetCorners(
-            upper_left_x + button.first.upper_left_x  * (lower_right_x - upper_left_x) / 100,
-            upper_left_y + button.first.upper_left_y  * (lower_right_y - upper_left_y) / 100,
-            upper_left_x + button.first.lower_right_x * (lower_right_x - upper_left_x) / 100,
-            upper_left_y + button.first.lower_right_y * (lower_right_y - upper_left_y) / 100
+            upper_left_x + button.first.upper_left_x  * width_ / 100,
+            upper_left_y + button.first.upper_left_y  * height_ / 100,
+            upper_left_x + button.first.lower_right_x * width_ / 100,
+            upper_left_y + button.first.lower_right_y * height_ / 100
         );
     for (auto drawable : drawables_)
         drawable.second->SetCorners(
-            upper_left_x + drawable.first.upper_left_x  * (lower_right_x - upper_left_x) / 100,
-            upper_left_y + drawable.first.upper_left_y  * (lower_right_y - upper_left_y) / 100,
-            upper_left_x + drawable.first.lower_right_x * (lower_right_x - upper_left_x) / 100,
-            upper_left_y + drawable.first.lower_right_y * (lower_right_y - upper_left_y) / 100
+            upper_left_x + drawable.first.upper_left_x  * width_ / 100,
+            upper_left_y + drawable.first.upper_left_y  * height_ / 100,
+            upper_left_x + drawable.first.lower_right_x * width_ / 100,
+            upper_left_y + drawable.first.lower_right_y * height_ / 100
         );
 }
 
