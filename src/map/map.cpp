@@ -25,6 +25,22 @@ Map::Map(const Vector4f& body, const std::string& filePath)
     Update(body);
 }
 
+Map::Map(const Vector4f& body, int width, int height)
+    : Canvas(sf::RectangleShape(sf::Vector2f())) {
+    grid_width_  = width;
+    grid_height_ = height;
+    float tile_width =  100.0f / grid_width_;
+    float tile_height = 100.0f / grid_height_;
+    for(int y = 0; y < grid_height_; y++) {
+        for (int x = 0; x < grid_width_; x++) {
+            drawables_.push_back(std::pair<Vector4f, Drawable*>
+                ({tile_width * x, tile_height * y, tile_width * (x + 1), tile_height * (y + 1)},
+                 new Tile(static_cast<TileType>(1))));
+        }
+    }
+    Update(body);
+}
+
 Map::~Map() {
 
 }

@@ -2,6 +2,7 @@
 #include "game_state.hpp"
 #include "../utils/texture_manager.hpp"
 #include "../utils/app_constants.hpp"
+#include "input_state.hpp"
 
 MenuState::MenuState()
     : State("Menu State") { }
@@ -14,6 +15,11 @@ Event MenuState::EventHandler(const sf::Event& sf_event) {
                 event.type = EventType(PushState);
                 event.state = new GameState(M_BASIC_MAP);
             }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+                event.type = EventType(PushState);
+                event.state = new InputState();
+            }
+            break;
     }
     return event;
 }
