@@ -28,7 +28,7 @@ const Event Button::Toggle() {
 
 void Button::Highlight(bool highlight) {
     if (!isDisabled_)
-        body_.setFillColor(sf::Color(255, 255, 255, HIGHLIGHT * highlight));
+        body_.setFillColor(sf::Color(255, 255, 255, 255 - HIGHLIGHT * highlight));
 }
 
 void Button::Disable(bool disable) {

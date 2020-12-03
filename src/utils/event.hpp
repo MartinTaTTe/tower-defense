@@ -24,7 +24,7 @@ struct Event
     EventType type;
     union {
         State*   state;
-        Vector2f coords;
+        Vector2i coords;
         Vector4i body;
     };
 };

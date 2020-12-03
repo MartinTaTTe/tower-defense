@@ -5,8 +5,10 @@ Canvas::Canvas(sf::RectangleShape body)
 }
 
 Canvas::Canvas(const Vector4f& body) {
+    width_  = body.lower_right_x - body.upper_left_x;
+    height_ = body.lower_right_y - body.upper_left_y;
     body_.setPosition(sf::Vector2f(body.upper_left_x, body.upper_left_y));
-    body_.setSize(sf::Vector2f(body.lower_right_x - body.upper_left_x, body.lower_right_y - body.upper_left_y));
+    body_.setSize(sf::Vector2f(width_, height_));
 }
 
 Canvas::~Canvas() {
@@ -103,10 +105,10 @@ void Canvas::AddButton(const Vector4f& position, const std::string& texturePath,
         std::pair<Vector4f, Button*>
         (position,
         new Button({
-            body_.getPosition().x + position.upper_left_x * width_,
-            body_.getPosition().y + position.upper_left_y * height_,
-            body_.getPosition().x + position.lower_right_x * width_,
-            body_.getPosition().y + position.lower_right_y * height_
+            body_.getPosition().x + position.upper_left_x * width_ / 100,
+            body_.getPosition().y + position.upper_left_y * height_ / 100,
+            body_.getPosition().x + position.lower_right_x * width_ / 100,
+            body_.getPosition().y + position.lower_right_y * height_ / 100
         }, texturePath, action))
     );
 }
