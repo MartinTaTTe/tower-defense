@@ -1,6 +1,8 @@
 #pragma once
-
-#include <string>
+/*
+Base class.
+A State manages everything that is currently happening, from graphics to logic.
+*/
 #include <SFML/Graphics.hpp>
 
 class State {
@@ -13,4 +15,3 @@ public:
 private:
     std::string         state_name_;
 };
-

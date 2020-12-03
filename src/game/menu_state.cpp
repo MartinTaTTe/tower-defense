@@ -1,5 +1,6 @@
 #include "menu_state.hpp"
-#include "texture_manager.hpp"
+#include "game_state.hpp"
+#include "../utils/texture_manager.hpp"
 #include "../utils/app_constants.hpp"
 
 MenuState::MenuState()

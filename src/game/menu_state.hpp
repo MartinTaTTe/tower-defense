@@ -1,7 +1,8 @@
 #pragma once
-
+/*
+MenuState is the main menu, the first State a user sees.
+*/
 #include "state.hpp"
-#include "game_state.hpp"
 
 class MenuState : public State {
 public:

@@ -1,5 +1,7 @@
 #pragma once
-
+/*
+GameState is the actual game.
+*/
 #include "state.hpp"
 #include "../map/map.hpp"
 

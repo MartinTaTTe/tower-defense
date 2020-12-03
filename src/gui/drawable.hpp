@@ -1,5 +1,6 @@
 #pragma once
 /*
+Base class.
 Everything that is visible to the player inherits Drawable either directly or indirectly.
 */
 #include <SFML/Graphics.hpp>
