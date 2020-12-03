@@ -7,6 +7,6 @@ MenuState is the main menu, the first State a user sees.
 class MenuState : public State {
 public:
     MenuState();
-    State*              EventHandler(sf::RenderWindow& window, sf::Event& event) override;
-    void                Draw(sf::RenderWindow& window) override;
+    Event EventHandler(const sf::Event& sf_event) override;
+    void  Draw(sf::RenderWindow& window) override;
 };

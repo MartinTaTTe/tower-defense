@@ -6,22 +6,16 @@
 MenuState::MenuState()
     : State("Menu State") { }
 
-State* MenuState::EventHandler(sf::RenderWindow& window, sf::Event& event) {
-    while (window.pollEvent(event)) {
-        switch (event.type) {
-            case sf::Event::Closed:
-                window.close();
-                break;
-            case sf::Event::KeyPressed:
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                    Vector2i size;
-                    size.x = window.getSize().x;
-                    size.y = window.getSize().y;
-                    return new GameState(size, M_BASIC_MAP);
-                }
-        }
+Event MenuState::EventHandler(const sf::Event& sf_event) {
+    Event event(EventType::None);
+    switch (sf_event.type) {
+        case sf::Event::KeyPressed:
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                event.type = EventType(PushState);
+                event.state = new GameState(M_BASIC_MAP);
+            }
     }
-    return this;
+    return event;
 }
 
 void MenuState::Draw(sf::RenderWindow& window) {

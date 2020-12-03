@@ -16,6 +16,7 @@ Event Canvas::EventHandler(const Event& event) {
     switch (event.type)
     {
     case EventType::Resize:
+        Update(event.body);
         break;
     case EventType::MouseMovement:
         relative.x = (event.coords.x - body_.getPosition().x) / width_ * 100;
