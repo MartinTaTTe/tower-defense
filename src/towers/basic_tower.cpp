@@ -1,7 +1,7 @@
 #include "basic_tower.hpp"
 
-Basic_Tower::Basic_Tower(int price, float damage, int x_coord, int y_coord, float size, float speed, float range, int enemy_type, bool tile_type, const std::string& texturePath):
-Tower(price, damage, x_coord, y_coord, size, speed, range, enemy_type, tile_type, texturePath){
+Basic_Tower::Basic_Tower( const Vector4f& vector, int x, int y):
+Tower(vector, x, y, BASIC_TOWER_PRICE, BASIC_TOWER_DAMAGE, BASIC_TOWER_SPEED, BASIC_TOWER_RANGE, BASIC_TOWER_ENEMYTYPE, BASIC_TOWER_TILETYPE, T_BASIC_TOWER){
     upgrade_max_ = 3; // Kan laga mera upgrades om vi vill ha!
     upgrade_price_ = UPGRADE_PRICE;
 }

@@ -15,6 +15,12 @@ const float MAP_WIDTH = 0.8f; // 0-1
 
 // Tower constants
 const int UPGRADE_PRICE = 1000;
+const float BASIC_TOWER_DAMAGE = 3;
+const float BASIC_TOWER_SPEED = 3;
+const float BASIC_TOWER_RANGE = 3;
+const int BASIC_TOWER_ENEMYTYPE = 1; 
+const int BASIC_TOWER_PRICE = 1000; 
+const int BASIC_TOWER_TILETYPE = true; 
 
 // Enemy constants
 
@@ -28,6 +34,9 @@ const std::string T_TILES[] = {
 };
 const std::string T_DEFAULT_TOWER = "textures/tower.png";
 const std::string T_UTILITY_TOWER = "textures/utility_tower.png";
+const std::string T_BASIC_TOWER = "textures/basic_tower.png";
+const std::string T_FLYING_TOWER = "textures/flying_tower.png";
+const std::string T_WATER_TOWER = "textures/water_tower.png";
 
 // Map paths, name like "M_NAME_OF_MAP"
 const std::string M_BASIC_MAP = "map/maps/basic.map";

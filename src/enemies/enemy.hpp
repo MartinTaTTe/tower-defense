@@ -28,6 +28,9 @@ public:
     TypesOfEnemies      GetEnemyType() const;
     bool                IsLand() const;
     bool                IsAlive() const;
+    int                 GetX();
+    int                 GetY();
+    //Gör en Update funktion som får damage som parameter o tar bort den mängden hp
 
 private:
     float               hp_;
