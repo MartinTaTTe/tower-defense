@@ -7,10 +7,7 @@ test2: compile link run
 
 compile:
 	g++ -c *.cpp
-	g++ -c ./game/app.cpp
-	g++ -c ./game/state.cpp
-	g++ -c ./game/menu_state.cpp
-	g++ -c ./game/game_state.cpp
+	g++ -c ./game/*.cpp
 	g++ -c ./gui/*.cpp
 	g++ -c ./utils/*.cpp
 	g++ -c ./map/*.cpp
@@ -25,6 +22,5 @@ run:
 	main.exe
 
 ignored:
-	g++ -c ./game/*.cpp
 	g++ -c ./enemies/*.cpp
 	g++ -c ./towers/*.cpp

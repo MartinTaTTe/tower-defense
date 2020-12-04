@@ -1,7 +1,10 @@
+
 #include "app.hpp"
 #include "../utils/app_constants.hpp"
 #include "../utils/event.hpp"
+#include "menu_state.hpp"
 #include "game_state.hpp"
+#include "input_state.hpp"
 
 #include <chrono>
 #include <iostream>
@@ -25,6 +28,7 @@ void App::PopState() {
     if (!states_.empty()) {
         delete states_.back();
         states_.pop_back();
+        std::cout << "Switch to " << states_.back()->GetName() << std::endl;
     }
 }
 
@@ -49,6 +53,9 @@ void App::Run(int width, int height) {
                         break;
                     case EventType::PushGameState:
                         PushState(new GameState(width, height, M_BASIC_MAP));
+                        break;
+                    case EventType::PushInputState:
+                        PushState(new InputState(width, height));
                         break;
                 }
             }

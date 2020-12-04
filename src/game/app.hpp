@@ -4,7 +4,7 @@ App manages the whole program through States. The most recently added State is t
 */
 #include <vector>
 
-#include "menu_state.hpp"
+#include "state.hpp"
 
 class App {
 public:
