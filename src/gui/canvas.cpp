@@ -5,6 +5,7 @@ Canvas::Canvas(const Vector4i& body) {
     height_ = body.lower_right_y - body.upper_left_y;
     body_.setPosition(sf::Vector2f(body.upper_left_x, body.upper_left_y));
     body_.setSize(sf::Vector2f(width_, height_));
+    font_.loadFromFile(DEFAULT_FONT);
 }
 
 Canvas::~Canvas() {
@@ -53,6 +54,20 @@ Event Canvas::EventHandler(const Event& event) {
     return return_event;
 }
 
+void Canvas::Update(int upper_left_x, int upper_left_y, int lower_right_x, int lower_right_y) {
+    width_  = lower_right_x - upper_left_x;
+    height_ = lower_right_y - upper_left_y;
+    body_.setPosition((float)upper_left_x, (float)upper_left_y);
+    body_.setSize(sf::Vector2f((float)width_, (float)height_));
+    for (auto canvas : canvases_)
+        canvas.second->Update(
+            upper_left_x + canvas.first.upper_left_x  * width_,
+            upper_left_y + canvas.first.upper_left_y  * height_,
+            upper_left_x + canvas.first.lower_right_x * width_,
+            upper_left_y + canvas.first.lower_right_y * height_
+        );
+}
+
 void Canvas::Update(const Vector4i& corners) {
     Update(corners.upper_left_x, corners.upper_left_y, corners.lower_right_x, corners.lower_right_y);
 }
@@ -62,6 +77,10 @@ void Canvas::Draw(sf::RenderWindow& window) const {
         drawable.second->Draw(window);
     for (auto button : buttons_)
         button.second->Draw(window);
+    for (auto text : texts_) {
+        text.second.setFont(font_);
+        window.draw(text.second);
+    }
     for (auto canvas : canvases_)
         canvas.second->Draw(window);
 }
@@ -105,20 +124,26 @@ void Canvas::AddCanvas(const Vector4f& position) {
     );
 }
 
-Vector2i Canvas::GetPosition() {
-    return {(int)body_.getPosition().x, (int)body_.getPosition().y};
+void Canvas::AddText(const Vector2f& position, const std::string& string, int font_size, sf::Color color) {
+    sf::Text text;
+    text.setString(string);
+    text.setFont(font_);
+    text.setCharacterSize(font_size);
+    text.setPosition({
+        position.x * width_  + body_.getPosition().x,
+        position.y * height_ + body_.getPosition().y,
+    });
+    text.setFillColor(color);
+    texts_.push_back(
+        std::pair<Vector2f, sf::Text>
+        (position, text)
+    );
 }
 
-void Canvas::Update(int upper_left_x, int upper_left_y, int lower_right_x, int lower_right_y) {
-    width_  = lower_right_x - upper_left_x;
-    height_ = lower_right_y - upper_left_y;
-    body_.setPosition((float)upper_left_x, (float)upper_left_y);
-    body_.setSize(sf::Vector2f((float)width_, (float)height_));
-    for (auto canvas : canvases_)
-        canvas.second->Update(
-            upper_left_x + canvas.first.upper_left_x  * width_,
-            upper_left_y + canvas.first.upper_left_y  * height_,
-            upper_left_x + canvas.first.lower_right_x * width_,
-            upper_left_y + canvas.first.lower_right_y * height_
-        );
+void Canvas::UpdateString(int i, const std::string& string) {
+    texts_[i].second.setString(string);
+}
+
+Vector2i Canvas::GetPosition() {
+    return {(int)body_.getPosition().x, (int)body_.getPosition().y};
 }
