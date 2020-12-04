@@ -1,7 +1,7 @@
 #include "utility_tower.hpp"
 
-Utility_Tower::Utility_Tower(const Vector4f& vector,int x, int y, int price, float damage, float speed, float range, int enemy_type, bool tile_type, const std::string& texturePath):
-Tower(vector, x, y, price, damage, speed, range, enemy_type, tile_type,  texturePath){
+Utility_Tower::Utility_Tower(const Vector4f& vector,int x, int y):
+Tower(vector, x, y, UTILITY_TOWER_PRICE, UTILITY_TOWER_DAMAGE, UTILITY_TOWER_SPEED, UTILITY_TOWER_RANGE, UTILITY_TOWER_ENEMYTYPE, UTILITY_TOWER_TILETYPE, T_UTILITY_TOWER){
     upgrade_max_ = 3; // Kan laga mera upgrades om vi vill ha!
     upgrade_price_ = UPGRADE_PRICE;
     money_from_wave_ = 250;

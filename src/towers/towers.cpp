@@ -23,9 +23,9 @@
         radius_.setOutlineColor(sf::Color::Red);
     }
 
-    void Tower::Attack() const{
-        if(target_ != nullptr) {
-            target_->Update(damage_);
+    void Tower::Attack(Enemy* target) const{
+        if(target != nullptr) {
+            target->Update(damage_);
         }
     }
     
@@ -60,7 +60,7 @@
                 }
             }
         }else{
-            Attack();
+            Attack(target_);
             if(((target_->GetX() - x_)*(target_->GetX() - x_) + (target_->GetY() - y_)*(target_->GetY() - y_)) > range_*range_){
                     target_ = nullptr;
                     Update(enemies);

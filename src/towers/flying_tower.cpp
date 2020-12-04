@@ -1,7 +1,7 @@
 #include "flying_tower.hpp"
 
-Flying_Tower::Flying_Tower(const Vector4f& vector, int x, int y, int price, float damage, float speed, float range, int enemy_type,  bool tile_type, const std::string& texturePath):
-Tower( vector,x, y, price, damage, speed, range, enemy_type, tile_type,  texturePath){
+Flying_Tower::Flying_Tower(const Vector4f& vector, int x, int y):
+Tower( vector,x, y, FLYING_TOWER_PRICE, FLYING_TOWER_DAMAGE, FLYING_TOWER_SPEED, FLYING_TOWER_RANGE, FLYING_TOWER_ENEMYTYPE, FLYING_TOWER_TILETYPE, T_FLYING_TOWER){
     upgrade_max_ = 3; // Kan laga mera upgrades om vi vill ha!
     upgrade_price_ = UPGRADE_PRICE;
 }
