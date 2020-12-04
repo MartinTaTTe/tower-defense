@@ -12,8 +12,7 @@ struct Vector4f;
 
 class Drawable {
 public:
-    Drawable(const Vector4f& body, const std::string& texturePath);
-    Drawable(const std::string& texturePath);
+    Drawable(const Vector4i& body, const std::string& texturePath); // body is screen coordinates
     ~Drawable();
     void            Draw(sf::RenderWindow& window) const;
     virtual void    Highlight(bool highlight);
@@ -24,13 +23,13 @@ protected:
 
 // Vector structs
 struct Vector2i {
-    short x, y;
+    int x, y;
 };
 
 struct Vector4i {
     union {
         struct {
-            short upper_left_x, upper_left_y, lower_right_x, lower_right_y;
+            int upper_left_x, upper_left_y, lower_right_x, lower_right_y;
         };
         struct {
             Vector2i upper_left, lower_right;

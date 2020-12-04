@@ -2,15 +2,10 @@
 #include "../utils/texture_manager.hpp"
 #include "../utils/app_constants.hpp"
 
-Drawable::Drawable(const Vector4f& body, const std::string& texturePath)
-    : body_(sf::Vector2f(body.lower_right_x - body.upper_left_x, body.lower_right_y - body.upper_left_y)) {
+Drawable::Drawable(const Vector4i& body, const std::string& texturePath)
+    : body_(sf::Vector2f((float)(body.lower_right_x - body.upper_left_x), (float)(body.lower_right_y - body.upper_left_y))) {
     body_.setTexture(&GetTexture(texturePath));
-    body_.setPosition(sf::Vector2f(body.upper_left_x, body.upper_left_y));
-}
-
-Drawable::Drawable(const std::string& texturePath)
-    : Drawable(Vector4f({0, 0, 0, 0}), texturePath) {
-
+    body_.setPosition(sf::Vector2f((float)body.upper_left_x, (float)body.upper_left_y));
 }
 
 Drawable::~Drawable() {

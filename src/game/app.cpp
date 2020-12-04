@@ -5,9 +5,8 @@
 #include <chrono>
 #include <iostream>
 
-App::App(int height, int width)
-    : height_(height), width_(width) {
-    PushState(new MenuState());
+App::App() {
+
 }
 
 App::~App() {
@@ -28,10 +27,11 @@ void App::PopState() {
     }
 }
 
-void App::Run() {
-    sf::RenderWindow window(sf::VideoMode(width_, height_), WINDOW_TITLE);
-    
+void App::Run(int width, int height) {
     auto start = std::chrono::high_resolution_clock::now();
+
+    sf::RenderWindow window(sf::VideoMode(width, height), WINDOW_TITLE);
+    PushState(new MenuState(width, height));
 
     while (window.isOpen()) {
         sf::Event sf_event;
@@ -48,10 +48,6 @@ void App::Run() {
                         break;
                     case EventType::PushState:
                         PushState(event.state);
-                        sf_event.type = sf::Event::Closed;
-                        sf_event.size.width = window.getSize().x;
-                        sf_event.size.height = window.getSize().y;
-                        states_.back()->EventHandler(sf_event);
                         break;
                 }
             }

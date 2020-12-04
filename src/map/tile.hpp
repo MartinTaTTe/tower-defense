@@ -12,7 +12,7 @@ enum TileType : int8_t {
 
 class Tile : public Drawable {
 public: 
-    Tile(TileType type = Grass);
+    Tile(const Vector4i& body, TileType type = Grass);
     ~Tile() { };
     TileType GetType() const;
     

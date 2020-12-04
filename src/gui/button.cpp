@@ -1,6 +1,6 @@
 #include "button.hpp"
 
-Button::Button(const Vector4f& body, const std::string& texturePath, const Event& action)
+Button::Button(const Vector4i& body, const std::string& texturePath, const Event& action)
     : Drawable(body, texturePath), hasTexture_(true), action_(action) {
 
 }

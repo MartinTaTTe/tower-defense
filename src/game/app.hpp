@@ -8,13 +8,11 @@ App manages the whole program through States. The most recently added State is t
 
 class App {
 public:
-    App(int height, int width);
+    App();
     ~App();
     void                PushState(State*);
     void                PopState();
-    void                Run();
+    void                Run(int height, int width);
 private:
-    int                 height_;
-    int                 width_;
     std::vector<State*> states_;
 };

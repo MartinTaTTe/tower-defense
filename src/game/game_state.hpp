@@ -7,9 +7,5 @@ GameState is the actual game.
 
 class GameState : public State {
 public:
-    GameState(const std::string& mapPath);
-    Event EventHandler(const sf::Event& sf_event) override;
-    void  Draw(sf::RenderWindow& window) override;
-private:
-    Map*  map_;
+    GameState(int width, int height, const std::string& mapPath);
 };

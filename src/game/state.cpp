@@ -1,7 +1,10 @@
 #include "state.hpp"
+#include "../map/map.hpp"
 
-State::State(const std::string& state_name)
-    : state_name_(state_name) { }
+State::State(const std::string& state_name, int width, int height)
+    : state_name_(state_name), width_(width), height_(height) {
+
+}
 
 State::~State() {
     for (auto canvas : canvases_)
@@ -11,19 +14,17 @@ State::~State() {
 Event State::EventHandler(const sf::Event& sf_event) {
     Event event;
     switch (sf_event.type) {
-        case sf::Event::Closed:
-            OnResize(sf_event.size.width, sf_event.size.height);
-            break;
-        case sf::Event::Resized:
-            OnResize(sf_event.size.width, sf_event.size.height);
-            for (auto canvas : canvases_)
-                canvas.second->Update({
-                    canvas.first.upper_left_x  * width_  / 100,
-                    canvas.first.upper_left_y  * height_ / 100,
-                    canvas.first.lower_right_x * width_  / 100,
-                    canvas.first.lower_right_y * height_ / 100,
-                });
-            break;
+        // Resize is broken
+        // case sf::Event::Resized:
+        //     OnResize(sf_event.size.width, sf_event.size.height);
+        //     for (auto canvas : canvases_)
+        //         canvas.second->Update({
+        //             width_  * (int)canvas.first.upper_left_x,
+        //             height_ * (int)canvas.first.upper_left_y,
+        //             width_  * (int)canvas.first.lower_right_x,
+        //             height_ * (int)canvas.first.lower_right_y,
+        //         });
+        //     break;
         case sf::Event::MouseMoved:
             OnMouseMovement(sf_event.mouseMove.x, sf_event.mouseMove.y);
             break;
@@ -43,8 +44,8 @@ void State::OnResize(int x, int y) {
 
 void State::OnMouseMovement(int x, int y) {
     Vector2f relative = {
-        100.0f * x / width_,
-        100.0f * y / height_
+        (float)x / width_,
+        (float)y / height_
     };
     for (auto canvas : canvases_) {
         if (canvas.first.upper_left_x < relative.x &&
@@ -52,7 +53,7 @@ void State::OnMouseMovement(int x, int y) {
             canvas.first.upper_left_y < relative.y &&
             relative.y < canvas.first.lower_right_y) {
                 Event e(EventType::MouseMovement);
-                e.coords = {(short)x, (short)y};
+                e.coords = {x, y};
                 canvas.second->EventHandler(e);
         }
     }
@@ -61,8 +62,8 @@ void State::OnMouseMovement(int x, int y) {
 Event State::OnClick(int x, int y) {
     Event event;
     Vector2f relative = {
-        100.0f * x / width_,
-        100.0f * y / height_
+        (float)x / width_,
+        (float)y / height_
     };
     for (auto canvas : canvases_) {
         if (canvas.first.upper_left_x < relative.x &&
@@ -70,7 +71,7 @@ Event State::OnClick(int x, int y) {
             canvas.first.upper_left_y < relative.y &&
             relative.y < canvas.first.lower_right_y) {
                 Event e(EventType::MouseClick);
-                e.coords = {(short)x, (short)y};
+                e.coords = {x, y};
                 event = canvas.second->EventHandler(e);
         }
         if (event.type != EventType::None)
@@ -93,10 +94,23 @@ void State::AddCanvas(const Vector4f& position) {
         std::pair<Vector4f, Canvas*>
         (position,
         new Canvas({
-            position.upper_left_x * WINDOW_WIDTH / 100,
-            position.upper_left_y * WINDOW_HEIGHT / 100,
-            position.lower_right_x * WINDOW_WIDTH / 100,
-            position.lower_right_y * WINDOW_HEIGHT / 100
+            (int)(position.upper_left_x * width_),
+            (int)(position.upper_left_y * height_),
+            (int)(position.lower_right_x * width_),
+            (int)(position.lower_right_y * height_)
         }))
+    );
+}
+
+void State::AddMap(const Vector4f& position, const std::string& mapPath) {
+    canvases_.push_back(
+        std::pair<Vector4f, Canvas*>
+        (position,
+        new Map({
+            (int)(position.upper_left_x * width_),
+            (int)(position.upper_left_y * height_),
+            (int)(position.lower_right_x * width_),
+            (int)(position.lower_right_y * height_)
+        }, mapPath))
     );
 }

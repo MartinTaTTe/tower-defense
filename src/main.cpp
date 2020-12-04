@@ -6,8 +6,8 @@ void test();
 
 int main()
 {
-    App app(WINDOW_HEIGHT, WINDOW_WIDTH);
-    app.Run();
+    App app;
+    app.Run(WINDOW_WIDTH, WINDOW_HEIGHT);
     //test();
 }
 

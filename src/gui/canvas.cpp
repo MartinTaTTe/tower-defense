@@ -1,10 +1,6 @@
 #include "canvas.hpp"
 
-Canvas::Canvas(sf::RectangleShape body)
-    : body_(body) {
-}
-
-Canvas::Canvas(const Vector4f& body) {
+Canvas::Canvas(const Vector4i& body) {
     width_  = body.lower_right_x - body.upper_left_x;
     height_ = body.lower_right_y - body.upper_left_y;
     body_.setPosition(sf::Vector2f(body.upper_left_x, body.upper_left_y));
@@ -25,10 +21,10 @@ Event Canvas::EventHandler(const Event& event) {
     {
     case EventType::Resize:
         Update({
-            (float)event.body.upper_left_x,
-            (float)event.body.upper_left_y,
-            (float)event.body.lower_right_x,
-            (float)event.body.lower_right_y
+            event.body.upper_left_x,
+            event.body.upper_left_y,
+            event.body.lower_right_x,
+            event.body.lower_right_y
         });
         break;
     case EventType::MouseMovement:
@@ -57,21 +53,7 @@ Event Canvas::EventHandler(const Event& event) {
     return return_event;
 }
 
-void Canvas::Update(int upper_left_x, int upper_left_y, int lower_right_x, int lower_right_y) {
-    width_  = lower_right_x - upper_left_x;
-    height_ = lower_right_y - upper_left_y;
-    body_.setPosition((float)upper_left_x, (float)upper_left_y);
-    body_.setSize(sf::Vector2f((float)width_, (float)height_));
-    for (auto canvas : canvases_)
-        canvas.second->Update(
-            upper_left_x + canvas.first.upper_left_x  * width_,
-            upper_left_y + canvas.first.upper_left_y  * height_,
-            upper_left_x + canvas.first.lower_right_x * width_,
-            upper_left_y + canvas.first.lower_right_y * height_
-        );
-}
-
-void Canvas::Update(const Vector4f& corners) {
+void Canvas::Update(const Vector4i& corners) {
     Update(corners.upper_left_x, corners.upper_left_y, corners.lower_right_x, corners.lower_right_y);
 }
 
@@ -89,10 +71,10 @@ void Canvas::AddButton(const Vector4f& position, const std::string& texturePath,
         std::pair<Vector4f, Button*>
         (position,
         new Button({
-            body_.getPosition().x + position.upper_left_x  * width_,
-            body_.getPosition().y + position.upper_left_y  * height_,
-            body_.getPosition().x + position.lower_right_x * width_,
-            body_.getPosition().y + position.lower_right_y * height_
+            (int)(position.upper_left_x * width_)   + (int)body_.getPosition().x,
+            (int)(position.upper_left_y * height_)  + (int)body_.getPosition().y,
+            (int)(position.lower_right_x * width_)  + (int)body_.getPosition().x,
+            (int)(position.lower_right_y * height_) + (int)body_.getPosition().y
         }, texturePath, action))
     );
 }
@@ -102,10 +84,10 @@ void Canvas::AddDrawable(const Vector4f& position, const std::string& texturePat
         std::pair<Vector4f, Drawable*>
         (position,
         new Drawable({
-            body_.getPosition().x + position.upper_left_x  * width_,
-            body_.getPosition().y + position.upper_left_y  * height_,
-            body_.getPosition().x + position.lower_right_x * width_,
-            body_.getPosition().y + position.lower_right_y * height_
+            (int)(position.upper_left_x * width_)   + (int)body_.getPosition().x,
+            (int)(position.upper_left_y * height_)  + (int)body_.getPosition().y,
+            (int)(position.lower_right_x * width_)  + (int)body_.getPosition().x,
+            (int)(position.lower_right_y * height_) + (int)body_.getPosition().y
         }, texturePath))
     );
 }
@@ -115,14 +97,28 @@ void Canvas::AddCanvas(const Vector4f& position) {
         std::pair<Vector4f, Canvas*>
         (position,
         new Canvas({
-            body_.getPosition().x + position.upper_left_x  * width_,
-            body_.getPosition().y + position.upper_left_y  * height_,
-            body_.getPosition().x + position.lower_right_x * width_,
-            body_.getPosition().y + position.lower_right_y * height_
+            (int)(position.upper_left_x * width_)   + (int)body_.getPosition().x,
+            (int)(position.upper_left_y * height_)  + (int)body_.getPosition().y,
+            (int)(position.lower_right_x * width_)  + (int)body_.getPosition().x,
+            (int)(position.lower_right_y * height_) + (int)body_.getPosition().y
         }))
     );
 }
 
-Vector2f Canvas::GetPosition() {
-    return Vector2f({body_.getPosition().x, body_.getPosition().y});
+Vector2i Canvas::GetPosition() {
+    return {(int)body_.getPosition().x, (int)body_.getPosition().y};
+}
+
+void Canvas::Update(int upper_left_x, int upper_left_y, int lower_right_x, int lower_right_y) {
+    width_  = lower_right_x - upper_left_x;
+    height_ = lower_right_y - upper_left_y;
+    body_.setPosition((float)upper_left_x, (float)upper_left_y);
+    body_.setSize(sf::Vector2f((float)width_, (float)height_));
+    for (auto canvas : canvases_)
+        canvas.second->Update(
+            upper_left_x + canvas.first.upper_left_x  * width_,
+            upper_left_y + canvas.first.upper_left_y  * height_,
+            upper_left_x + canvas.first.lower_right_x * width_,
+            upper_left_y + canvas.first.lower_right_y * height_
+        );
 }
