@@ -20,7 +20,9 @@ public:
     virtual void        Upgrade() = 0;
     virtual             ~Tower(){};
 protected:
-    void                Attack() const;
+    int                 x_;
+    int                 y_;
+    void                Attack(Enemy* target) const;
     int                 upgrade_max_;
     int                 upgrade_;
     float               range_;
@@ -33,8 +35,7 @@ protected:
     Enemy*              target_;
  
 private:
-    int                 x_;
-    int                 y_;
+
     int                 price_;
     bool                active_;
     sf::CircleShape     radius_;

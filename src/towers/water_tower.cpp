@@ -1,7 +1,7 @@
 #include "water_tower.hpp"
 
-Water_Tower::Water_Tower(const Vector4f& vector, int x, int y, int price, float damage, float speed, float range, int enemy_type, bool tile_type,  const std::string& texturePath):
-Tower( vector, x, y, price, damage, speed, range, enemy_type, tile_type, texturePath){
+Water_Tower::Water_Tower(const Vector4f& vector, int x, int y):
+Tower( vector, x, y, WATER_TOWER_PRICE, WATER_TOWER_DAMAGE, WATER_TOWER_SPEED, WATER_TOWER_RANGE, WATER_TOWER_ENEMYTYPE, WATER_TOWER_TILETYPE, T_WATER_TOWER){
     upgrade_max_ = 3; // Kan laga mera upgrades om vi vill ha!
     upgrade_price_ = UPGRADE_PRICE;
 }
