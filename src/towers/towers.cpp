@@ -1,5 +1,5 @@
 #include "towers.hpp"
-#include "../game/texture_manager.hpp"
+#include "../utils/texture_manager.hpp"
 
     Tower::Tower( int price, float damage, int x_coord, int y_coord, float size, float speed, float range, int enemy_type, bool tile_type, const std::string& texturePath):
     price_(price), 
@@ -28,7 +28,7 @@
     bool Tower::Attack(Enemy& enemy) const{
         if( enemy.IsLand() && (enemy_type_ == 1 || enemy_type_ == 3)){
             enemy.SetHp(enemy.GetHp() - damage_);
-        }else if(!enemy.IsLand && enemy_type_ == 2){
+        }else if(!enemy.IsLand() && enemy_type_ == 2){
             enemy.SetHp(enemy.GetHp() - damage_);
         }
         
@@ -68,9 +68,9 @@
     void Tower::SetPosition(float xCoord, float yCoord){
         sprite_.setPosition(xCoord, yCoord);
     }
-    void Tower::SetScale(float size){
+    /*void Tower::SetScale(float size){
         sprite_.setScale(size / texture_.getSize().x_coord_, size / texture_.getSize().y_coord_)
-    } //Från tile -> räcker bara det här?
+    } //Från tile -> räcker bara det här?*/
 
 
     void Tower::SetActive(){

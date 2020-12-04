@@ -1,12 +1,12 @@
 #include "enemy.hpp"
-#include "../game/texture_manager.hpp"
+#include "../utils/texture_manager.hpp"
 
-Enemy::Enemy(float max_hp, float speed, float x, float y, float size,
-             float delay, bool ground, TypesOfEnemies type)
+Enemy::Enemy(float max_hp, float x, float y, float speed, float delay, bool ground, int size,
+          TypesOfEnemies type)
     : hp_(max_hp),
       max_hp_(max_hp),
-      x_(x),
-      y_(y),
+      x_cord_(x),
+      y_cord_(y),
       speed_(speed),
       delay_(delay),
       size_(size),
