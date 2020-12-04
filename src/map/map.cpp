@@ -6,8 +6,8 @@ Map::Map(const Vector4f& body, const std::string& filePath)
     std::ifstream file(filePath);
     std::string line;
     std::getline(file,line);
-    grid_width_  = stoi(line.substr(0, line.find(':')));
-    grid_height_ = stoi(line.substr(line.find(':') + 1));
+    grid_width_  = stoi(line.substr(0, line.find('x')));
+    grid_height_ = stoi(line.substr(line.find('x') + 1, line.find('x') + 2));
     float tile_width =  100.0f / grid_width_;
     float tile_height = 100.0f / grid_height_;
     int x = 0;

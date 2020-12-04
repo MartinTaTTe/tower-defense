@@ -27,6 +27,7 @@ const std::string T_TILES[] = {
     "textures/water.png"
 };
 const std::string T_DEFAULT_TOWER = "textures/tower.png";
+const std::string T_UTILITY_TOWER = "textures/utility_tower.png";
 
 // Map paths, name like "M_NAME_OF_MAP"
 const std::string M_BASIC_MAP = "map/maps/basic.map";

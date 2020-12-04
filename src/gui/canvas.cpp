@@ -1,4 +1,5 @@
 #include "canvas.hpp"
+#include "iostream"
 
 Canvas::Canvas(sf::RectangleShape body)
     : body_(body) {
@@ -23,10 +24,15 @@ Event Canvas::EventHandler(const Event& event) {
     switch (event.type)
     {
     case EventType::Resize:
-        Update(event.body);
+        Update({
+            (float)event.body.upper_left_x,
+            (float)event.body.upper_left_y,
+            (float)event.body.lower_right_x,
+            (float)event.body.lower_right_y
+        });
         break;
     case EventType::MouseMovement:
-        relative.x = (event.coords.x - body_.getPosition().x) / width_ * 100;
+        relative.x = (event.coords.x - body_.getPosition().x) / width_  * 100;
         relative.y = (event.coords.y - body_.getPosition().y) / height_ * 100;
         for (auto button : buttons_) {
             if (button.first.upper_left_x < relative.x && relative.x < button.first.lower_right_x &&
@@ -37,7 +43,7 @@ Event Canvas::EventHandler(const Event& event) {
         }
         break;
     case EventType::MouseClick:
-        relative.x = (event.coords.x - body_.getPosition().x) / width_ * 100;
+        relative.x = (event.coords.x - body_.getPosition().x) / width_  * 100;
         relative.y = (event.coords.y - body_.getPosition().y) / height_ * 100;
         for (auto button : buttons_) {
             if (button.first.upper_left_x < relative.x && relative.x < button.first.lower_right_x &&
@@ -56,35 +62,13 @@ void Canvas::Update(int upper_left_x, int upper_left_y, int lower_right_x, int l
     height_ = lower_right_y - upper_left_y;
     body_.setPosition((float)upper_left_x, (float)upper_left_y);
     body_.setSize(sf::Vector2f((float)width_, (float)height_));
-    for (auto button : buttons_)
-        button.second->SetCorners(
-            upper_left_x + button.first.upper_left_x  * width_ / 100,
-            upper_left_y + button.first.upper_left_y  * height_ / 100,
-            upper_left_x + button.first.lower_right_x * width_ / 100,
-            upper_left_y + button.first.lower_right_y * height_ / 100
-        );
-    for (auto drawable : drawables_)
-        drawable.second->SetCorners(
-            upper_left_x + drawable.first.upper_left_x  * width_ / 100,
-            upper_left_y + drawable.first.upper_left_y  * height_ / 100,
-            upper_left_x + drawable.first.lower_right_x * width_ / 100,
-            upper_left_y + drawable.first.lower_right_y * height_ / 100
-        );
     for (auto canvas : canvases_)
         canvas.second->Update(
-            upper_left_x + canvas.first.upper_left_x  * width_ / 100,
+            upper_left_x + canvas.first.upper_left_x  * width_  / 100,
             upper_left_y + canvas.first.upper_left_y  * height_ / 100,
-            upper_left_x + canvas.first.lower_right_x * width_ / 100,
+            upper_left_x + canvas.first.lower_right_x * width_  / 100,
             upper_left_y + canvas.first.lower_right_y * height_ / 100
         );
-}
-
-void Canvas::Update(const Vector2i& upper_left, const Vector2i& lower_right) {
-    Update(upper_left.x, upper_left.y, lower_right.x, lower_right.y);
-}
-
-void Canvas::Update(const Vector4i& corners) {
-    Update(corners.upper_left_x, corners.upper_left_y, corners.lower_right_x, corners.lower_right_y);
 }
 
 void Canvas::Update(const Vector4f& corners) {
@@ -105,9 +89,9 @@ void Canvas::AddButton(const Vector4f& position, const std::string& texturePath,
         std::pair<Vector4f, Button*>
         (position,
         new Button({
-            body_.getPosition().x + position.upper_left_x * width_ / 100,
-            body_.getPosition().y + position.upper_left_y * height_ / 100,
-            body_.getPosition().x + position.lower_right_x * width_ / 100,
+            body_.getPosition().x + position.upper_left_x  * width_  / 100,
+            body_.getPosition().y + position.upper_left_y  * height_ / 100,
+            body_.getPosition().x + position.lower_right_x * width_  / 100,
             body_.getPosition().y + position.lower_right_y * height_ / 100
         }, texturePath, action))
     );
@@ -118,8 +102,8 @@ void Canvas::AddDrawable(const Vector4f& position, const std::string& texturePat
         std::pair<Vector4f, Drawable*>
         (position,
         new Drawable({
-            body_.getPosition().x + position.upper_left_x * width_,
-            body_.getPosition().y + position.upper_left_y * height_,
+            body_.getPosition().x + position.upper_left_x  * width_,
+            body_.getPosition().y + position.upper_left_y  * height_,
             body_.getPosition().x + position.lower_right_x * width_,
             body_.getPosition().y + position.lower_right_y * height_
         }, texturePath))
@@ -131,8 +115,8 @@ void Canvas::AddCanvas(const Vector4f& position) {
         std::pair<Vector4f, Canvas*>
         (position,
         new Canvas({
-            body_.getPosition().x + position.upper_left_x * width_,
-            body_.getPosition().y + position.upper_left_y * height_,
+            body_.getPosition().x + position.upper_left_x  * width_,
+            body_.getPosition().y + position.upper_left_y  * height_,
             body_.getPosition().x + position.lower_right_x * width_,
             body_.getPosition().y + position.lower_right_y * height_
         }))

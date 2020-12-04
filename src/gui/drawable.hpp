@@ -16,14 +16,6 @@ public:
     Drawable(const std::string& texturePath);
     ~Drawable();
     void            Draw(sf::RenderWindow& window) const;
-    void            SetSize(float width, float height);
-    void            SetSize(int width, int height);
-    void            SetPosition(float x, float y);
-    void            SetPosition(int x, int y);
-    void            SetPosition(const Vector2i& pos);
-    void            SetCorners(int upper_left_x, int upper_left_y, int lower_right_x, int lower_right_y);
-    void            SetCorners(const Vector2i& upper_left, const Vector2i& lower_right);
-    void            SetCorners(const Vector4i& corners);
     virtual void    Highlight(bool highlight);
     virtual void    Disable(bool disable);
 protected:

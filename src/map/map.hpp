@@ -5,8 +5,6 @@ Map is custom Canvas used for controlling all objects on the game map, such as T
 #include "tile.hpp"
 #include "../gui/canvas.hpp"
 
-typedef std::vector<std::vector<Tile*>> Grid;
-
 class Map : public Canvas {
 public:
     Map(const Vector4f& body, const std::string& filePath);
