@@ -14,17 +14,9 @@ State::~State() {
 Event State::EventHandler(const sf::Event& sf_event) {
     Event event;
     switch (sf_event.type) {
-        // Resize is broken
-        // case sf::Event::Resized:
-        //     OnResize(sf_event.size.width, sf_event.size.height);
-        //     for (auto canvas : canvases_)
-        //         canvas.second->Update({
-        //             width_  * (int)canvas.first.upper_left_x,
-        //             height_ * (int)canvas.first.upper_left_y,
-        //             width_  * (int)canvas.first.lower_right_x,
-        //             height_ * (int)canvas.first.lower_right_y,
-        //         });
-        //     break;
+        case sf::Event::Resized:
+            OnResize(sf_event.size.width, sf_event.size.height);
+            break;
         case sf::Event::MouseMoved:
             OnMouseMovement(sf_event.mouseMove.x, sf_event.mouseMove.y);
             break;
@@ -40,6 +32,13 @@ Event State::EventHandler(const sf::Event& sf_event) {
 void State::OnResize(int x, int y) {
     width_ = x;
     height_ = y;
+    for (auto canvas : canvases_)
+        canvas.second->Update({
+            (int)(canvas.first.upper_left_x * width_),
+            (int)(canvas.first.upper_left_y * height_),
+            (int)(canvas.first.lower_right_x * width_),
+            (int)(canvas.first.lower_right_y * height_)
+        });
 }
 
 void State::OnMouseMovement(int x, int y) {
