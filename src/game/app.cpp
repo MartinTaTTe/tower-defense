@@ -1,3 +1,4 @@
+
 #include "app.hpp"
 #include "../utils/app_constants.hpp"
 #include "../utils/event.hpp"
@@ -27,6 +28,7 @@ void App::PopState() {
     if (!states_.empty()) {
         delete states_.back();
         states_.pop_back();
+        std::cout << "Switch to " << states_.back()->GetName() << std::endl;
     }
 }
 

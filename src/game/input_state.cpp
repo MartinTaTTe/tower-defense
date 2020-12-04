@@ -14,6 +14,8 @@ InputState::InputState(int width, int height)
     canvases_.back().second->AddButton({0.55f, 0.5f, 1, 0.7f}, T_DEFAULT_BUTTON, event);
     canvases_.back().second->AddText({0.2f, 0.3f}, "2", 50);
     canvases_.back().second->AddText({0.7f, 0.3f}, "2", 50);
+    AddCanvas({0.8f, 0, 1, 1});
+    canvases_.back().second->AddButton({0, 0.8f, 1, 1}, T_DEFAULT_BUTTON, Event(EventType::PopState));
 }
 
 Event InputState::EventHandler(const sf::Event& sf_event) {
@@ -41,8 +43,11 @@ Event InputState::CustomMouseClick(Event event) {
         case EventType::ChangeMapSize:
             grid_width_  = std::max(grid_width_  + event.increments.x, 2);
             grid_height_ = std::max(grid_height_ + event.increments.y, 2);
-            canvases_.back().second->UpdateString(0, std::to_string(grid_width_));
-            canvases_.back().second->UpdateString(1, std::to_string(grid_height_));
+            canvases_[0].second->UpdateString(0, std::to_string(grid_width_));
+            canvases_[0].second->UpdateString(1, std::to_string(grid_height_));
+            break;
+        case EventType::PopState:
+            return_event.type = EventType::PopState;
             break;
         default:
             break;
