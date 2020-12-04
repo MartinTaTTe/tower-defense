@@ -7,16 +7,15 @@
 
 class InputState : public State {
 public:
-    InputState();
+    InputState(int width, int height);
     Event EventHandler(const sf::Event& sf_event) override;
-    void  Draw(sf::RenderWindow& window) override;
 private:
+    Event CustomMouseClick(Event event);
     std::string string_;
     sf::Text text_;
     std::string playerInput_;
     sf::Text playerText_;
     sf::Font font_;
-    int width_;
-    int height_;
-    bool sizeGot_;
+    int grid_width_;
+    int grid_height_;
 };

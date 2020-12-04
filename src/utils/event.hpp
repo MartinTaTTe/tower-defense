@@ -11,9 +11,11 @@ enum EventType : int8_t {
     None,
     PopState,
     PushGameState,
+    PushInputState,
     MouseMovement,
     MouseClick,
-    Resize
+    Resize,
+    ChangeMapSize
 };
 
 struct Event
@@ -22,6 +24,7 @@ struct Event
     EventType type;
     union {
         Vector2i coords;
+        Vector2i increments;
         Vector4i body;
     };
 };
