@@ -1,5 +1,7 @@
 #include "map.hpp"
 #include <fstream>
+#include "../utils/path_finder.hpp"
+#include <iostream>
 
 Map::Map(const Vector4i& body, const std::string& filePath)
     : Canvas(body) {
@@ -10,6 +12,17 @@ Map::Map(const Vector4i& body, const std::string& filePath)
     grid_height_ = stoi(line.substr(line.find('x') + 1, line.find('x') + 2));
     float tile_width  = 1.0f / grid_width_;
     float tile_height = 1.0f / grid_height_;
+    //tar bort start och slut punkterna
+    std::getline(file,line);
+    std::getline(file,line);
+    //test som printar ut pathen för en map, för att kolla att den funkar
+    /*Path_Finder path(filePath);
+    std::cout << path.findPath() << std::endl;
+    auto stig = path.getPath();
+    for (auto it : stig){
+        std::cout << "(" << it.first << ":" << it.second << ")" << std::endl;
+    }*/
+    //test slut
     int x = 0;
     int y = 0;
     while(std::getline(file,line)) {
