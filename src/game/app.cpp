@@ -1,6 +1,7 @@
 #include "app.hpp"
 #include "../utils/app_constants.hpp"
 #include "../utils/event.hpp"
+#include "game_state.hpp"
 
 #include <chrono>
 #include <iostream>
@@ -46,8 +47,8 @@ void App::Run(int width, int height) {
                     case EventType::PopState:
                         PopState();
                         break;
-                    case EventType::PushState:
-                        PushState(event.state);
+                    case EventType::PushGameState:
+                        PushState(new GameState(width, height, M_BASIC_MAP));
                         break;
                 }
             }
