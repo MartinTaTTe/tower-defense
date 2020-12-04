@@ -8,7 +8,7 @@
 class InputState : public State {
 public:
     InputState(int width, int height);
-    Event EventHandler(const sf::Event& sf_event) override;
+    Event EventHandler(double d_time, const sf::Event& sf_event) override;
 private:
     Event CustomMouseClick(Event event);
     std::string string_;

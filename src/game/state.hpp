@@ -14,7 +14,7 @@ class State {
 public:
     State(const std::string& state_name, int width, int height);
     ~State();
-    virtual Event       EventHandler(const sf::Event& sf_event);
+    virtual Event       EventHandler(double d_time, const sf::Event& sf_event);
     virtual void        OnResize(int x, int y);
     virtual void        OnMouseMovement(int x, int y);
     virtual Event       OnClick(int x, int y);

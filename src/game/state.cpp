@@ -11,7 +11,7 @@ State::~State() {
         delete canvas.second;
 }
 
-Event State::EventHandler(const sf::Event& sf_event) {
+Event State::EventHandler(double d_time, const sf::Event& sf_event) {
     Event event;
     switch (sf_event.type) {
         case sf::Event::Resized:

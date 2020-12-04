@@ -77,6 +77,7 @@ const std::string T_WATER_TOWER = "textures/water_tower.png";
 const std::string T_HYBRID_TOWER = "textures/hybrid_tower.png";
 const std::string T_MULTIPLE_TOWER = "textures/multiple_tower.png";
 const std::string T_DEFAULT_ENEMY = "textures/enemy.png";
+const std::string T_RETURN_TO_MENU = "textures/return_to_menu.png";
 
 // Map paths, name like "M_NAME_OF_MAP"
 const std::string M_BASIC_MAP = "map/maps/basic.map";
