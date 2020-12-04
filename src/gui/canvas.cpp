@@ -1,5 +1,4 @@
 #include "canvas.hpp"
-#include "iostream"
 
 Canvas::Canvas(sf::RectangleShape body)
     : body_(body) {
@@ -20,6 +19,7 @@ Canvas::~Canvas() {
 }
 
 Event Canvas::EventHandler(const Event& event) {
+    Event return_event;
     Vector2f relative;
     switch (event.type)
     {
@@ -32,8 +32,8 @@ Event Canvas::EventHandler(const Event& event) {
         });
         break;
     case EventType::MouseMovement:
-        relative.x = (event.coords.x - body_.getPosition().x) / width_  * 100;
-        relative.y = (event.coords.y - body_.getPosition().y) / height_ * 100;
+        relative.x = (float)(event.coords.x - body_.getPosition().x) / width_;
+        relative.y = (float)(event.coords.y - body_.getPosition().y) / height_;
         for (auto button : buttons_) {
             if (button.first.upper_left_x < relative.x && relative.x < button.first.lower_right_x &&
                 button.first.upper_left_y < relative.y && relative.y < button.first.lower_right_y)
@@ -43,18 +43,18 @@ Event Canvas::EventHandler(const Event& event) {
         }
         break;
     case EventType::MouseClick:
-        relative.x = (event.coords.x - body_.getPosition().x) / width_  * 100;
-        relative.y = (event.coords.y - body_.getPosition().y) / height_ * 100;
+        relative.x = (float)(event.coords.x - body_.getPosition().x) / width_;
+        relative.y = (float)(event.coords.y - body_.getPosition().y) / height_;
         for (auto button : buttons_) {
             if (button.first.upper_left_x < relative.x && relative.x < button.first.lower_right_x &&
                 button.first.upper_left_y < relative.y && relative.y < button.first.lower_right_y)
-                button.second->Press(true);
+                return_event = button.second->Press(true);
         }
         break;
     default:
         break;
     }
-    return Event(EventType::None);
+    return return_event;
 }
 
 void Canvas::Update(int upper_left_x, int upper_left_y, int lower_right_x, int lower_right_y) {
@@ -64,10 +64,10 @@ void Canvas::Update(int upper_left_x, int upper_left_y, int lower_right_x, int l
     body_.setSize(sf::Vector2f((float)width_, (float)height_));
     for (auto canvas : canvases_)
         canvas.second->Update(
-            upper_left_x + canvas.first.upper_left_x  * width_  / 100,
-            upper_left_y + canvas.first.upper_left_y  * height_ / 100,
-            upper_left_x + canvas.first.lower_right_x * width_  / 100,
-            upper_left_y + canvas.first.lower_right_y * height_ / 100
+            upper_left_x + canvas.first.upper_left_x  * width_,
+            upper_left_y + canvas.first.upper_left_y  * height_,
+            upper_left_x + canvas.first.lower_right_x * width_,
+            upper_left_y + canvas.first.lower_right_y * height_
         );
 }
 
@@ -89,10 +89,10 @@ void Canvas::AddButton(const Vector4f& position, const std::string& texturePath,
         std::pair<Vector4f, Button*>
         (position,
         new Button({
-            body_.getPosition().x + position.upper_left_x  * width_  / 100,
-            body_.getPosition().y + position.upper_left_y  * height_ / 100,
-            body_.getPosition().x + position.lower_right_x * width_  / 100,
-            body_.getPosition().y + position.lower_right_y * height_ / 100
+            body_.getPosition().x + position.upper_left_x  * width_,
+            body_.getPosition().y + position.upper_left_y  * height_,
+            body_.getPosition().x + position.lower_right_x * width_,
+            body_.getPosition().y + position.lower_right_y * height_
         }, texturePath, action))
     );
 }
