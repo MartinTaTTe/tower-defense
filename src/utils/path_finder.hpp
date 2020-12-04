@@ -57,11 +57,11 @@ public:
     };
 
     std::pair<int,int> moveEnemy(Enemy enemy) {
-        int x = enemy.getx(); //finns int ännu
-        int y = enemy.gety(); // finns int ännu
-
-        setCurrent(x, y);
-        setNext(x, y);
+        //int x = enemy.getx(); //finns int ännu
+        //int y = enemy.gety(); // finns int ännu
+        current_tile_ = enemy.GetTile();
+        //setCurrent(x, y);
+        setNext(current_tile_.first, current_tile_.second);
         return move();
     };
 
