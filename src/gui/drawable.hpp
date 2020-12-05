@@ -17,7 +17,7 @@ public:
     void            Draw(sf::RenderWindow& window) const;
     virtual void    Highlight(bool highlight);
     virtual void    Disable(bool disable);
-    void            Move(int d_x, int d_y);
+    void            Move(float d_x, float d_y);
 protected:
     sf::RectangleShape body_;
 };
