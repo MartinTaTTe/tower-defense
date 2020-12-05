@@ -1,5 +1,4 @@
 #include "input_state.hpp"
-#include <windows.h>
 
 InputState::InputState(int width, int height)
     : State("Input State", width, height), grid_width_(2), grid_height_(2) {
@@ -20,27 +19,7 @@ InputState::InputState(int width, int height)
     canvases_.back().second->AddButton({0, 0, 1, 0.2f}, T_DEFAULT_BUTTON, Event(EventType::PushMapEditorState));
 }
 
-Event InputState::EventHandler(double d_time, const sf::Event& sf_event) {
-    Event event;
-    switch (sf_event.type) {
-        case sf::Event::Resized:
-            OnResize(sf_event.size.width, sf_event.size.height);
-            break;
-        case sf::Event::MouseMoved:
-            OnMouseMovement(sf_event.mouseMove.x, sf_event.mouseMove.y);
-            break;
-        case sf::Event::MouseButtonPressed:
-            event = OnClick(sf_event.mouseButton.x, sf_event.mouseButton.y);
-            event = CustomMouseClick(event);
-            Sleep(100);
-            break;
-        default:
-            break;
-    }
-    return event;
-}
-
-Event InputState::CustomMouseClick(Event event) {
+Event InputState::CustomOnClick(Event event) {
     Event return_event;
     switch (event.type) {
         case EventType::ChangeMapSize:

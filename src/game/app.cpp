@@ -49,6 +49,7 @@ void App::Run(int width, int height) {
         double frame_duration = frame.count();
         
         sf::Event sf_event;
+        sf_event.type = sf::Event::Count;
         window.pollEvent(sf_event);
 
         if (sf_event.type == sf::Event::Closed) {
@@ -62,13 +63,13 @@ void App::Run(int width, int height) {
                     PopState();
                     break;
                 case EventType::PushGameState:
-                    PushState(new GameState(width, height, M_BASIC_MAP));
+                    PushState(new GameState(window.getSize().x, window.getSize().y, M_BASIC_MAP));
                     break;
                 case EventType::PushInputState:
-                    PushState(new InputState(width, height));
+                    PushState(new InputState(window.getSize().x, window.getSize().y));
                     break;
                 case EventType::PushMapEditorState:
-                    PushState(new MapEditorState(width, height, event.increments.x, event.increments.y));
+                    PushState(new MapEditorState(window.getSize().x, window.getSize().y, event.increments.x, event.increments.y));
                     break;
             }
         }

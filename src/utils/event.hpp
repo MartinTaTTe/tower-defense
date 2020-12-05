@@ -30,6 +30,9 @@ struct Event
     Event(EventType type = EventType::None) : type(type) { }
     EventType type;
     union {
+        struct {
+            int x, y;
+        };
         Vector2i coords;
         Vector2i increments;
         Vector4i body;
