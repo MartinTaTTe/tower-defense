@@ -9,9 +9,9 @@ class Enemy : public Drawable {
 public:
     Enemy(
         const Vector4i& body,
-        float max_hp,
         float x,
         float y,
+        float max_hp,
         float speed,
         bool ground,
         const std::string& texturePath = T_DEFAULT_ENEMY
@@ -26,6 +26,5 @@ private:
     float               x_;
     float               y_;
     float               speed_;
-    int                 size_;
     bool                is_ground_;
 };

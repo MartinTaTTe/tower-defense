@@ -60,8 +60,10 @@ const float MULTIPLE_TOWER_RANGE = 3;
 const int MULTIPLE_TOWER_ENEMYTYPE = 3; 
 const int MULTIPLE_TOWER_PRICE = 1000; 
 const int MULTIPLE_TOWER_TILETYPE = true; 
-// Enemy constants
 
+// Enemy constants
+const float NORMAL_ENEMY_MAX_HP = 100.0f;
+const float NORMAL_ENEMY_SPEED = 10.0f;
 
 // Texture paths, name like "T_NAME_OF_TEXTURE"
 const std::string T_DEFAULT_BUTTON = "textures/default_button.png";
