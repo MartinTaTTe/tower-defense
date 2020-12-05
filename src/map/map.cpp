@@ -97,3 +97,13 @@ Tile* Map::GetTile(int x, int y) const {
         return dynamic_cast<Tile*>(drawables_[x + y * grid_width_].second);
     else return nullptr;
 }
+
+Event Map::EventHandler(int width, int height, double d_time) {
+    Event return_event;
+    float d_x = d_time * width_;
+    float d_y = d_time * height_;
+    for (auto enemy : enemies_) {
+        enemy->Update(0, d_x, d_y);
+    }
+    return return_event;
+}

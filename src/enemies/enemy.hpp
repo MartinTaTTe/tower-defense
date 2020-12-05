@@ -19,7 +19,7 @@ public:
     bool                IsGround() const;
     float               GetX();
     float               GetY();
-    virtual Event       Update(int damage);
+    virtual Event       Update(float damage, float d_x_, float d_y_);
 private:
     float               hp_;
     const float         max_hp_;

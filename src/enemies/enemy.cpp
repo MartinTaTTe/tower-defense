@@ -24,8 +24,14 @@ float Enemy::GetY() {
     return y_;
 }
 
-Event Enemy::Update(int damage) {
+Event Enemy::Update(float damage, float d_x_, float d_y_) {
     Event event;
-    // implement
+    float move_x_ = d_x_ * speed_;
+    float move_y_ = d_y_ * speed_;
+    hp_ = hp_ - damage;
+    if (hp_ <= 0) {
+        event.type = EventType::Dead;
+    }
+    Move(move_x_, move_y_);
     return event;
 }

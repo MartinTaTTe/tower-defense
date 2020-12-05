@@ -23,3 +23,8 @@ void Drawable::Highlight(bool highlight) {
 void Drawable::Disable(bool disable) {
     body_.setFillColor(sf::Color(255 - DISABLE * disable, 255 - DISABLE * disable, 255 - DISABLE * disable, 255));
 }
+
+void Drawable::Move(float d_x, float d_y) {
+    auto current_pos = body_.getPosition();
+    body_.setPosition(sf::Vector2f(d_x / WINDOW_WIDTH + current_pos.x, d_y / WINDOW_HEIGHT + current_pos.y));
+}
