@@ -78,23 +78,23 @@ Event MapEditorState::CustomMouseRelease(Event event) {
             }
             break;
     }
+    return return_event;
 }
 
 Event MapEditorState::Save() {
-    std::string fileName = "map/maps/jeff.map";
-    std::fstream mapFile;
+    std::ofstream mapFile;
     Map* map = dynamic_cast<Map*>(canvases_[0].second);
-    mapFile.open("jeff.map");
+    mapFile.open(DEFAULT_MAP_SAVE);
     if (mapFile.is_open()) {
         mapFile << grid_width_ << "x" << grid_height_ << std::endl;
-    for(int y = 0; y < grid_height_; y++) {
-        for(int x = 0; x < grid_width_; x++) {
-            Tile* tile = map->GetTile(x, y);
-            mapFile << (int)(tile->GetType());
+        for (int y = 0; y < grid_height_; y++) {
+            for(int x = 0; x < grid_width_; x++) {
+                Tile* tile = map->GetTile(x, y);
+                mapFile << (int)(tile->GetType());
+            }
+            mapFile << std::endl;
         }
-        mapFile << std::endl;
-    }
-    mapFile.close();
+        mapFile.close();
     }
     return Event(EventType::PopState);
 }

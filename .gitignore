@@ -1,3 +1,4 @@
 src/*.o
 src/main.exe
 .vscode
+src/map/maps/user.map

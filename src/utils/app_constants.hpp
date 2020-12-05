@@ -13,6 +13,7 @@ const int BACKGROUND_G = 200;
 const int BACKGROUND_B = 200;
 const float MAP_WIDTH = 0.8f; // 0-1
 const std::string DEFAULT_FONT = "utils/OpenSans.ttf";
+const std::string DEFAULT_MAP_SAVE = "map/maps/user.map";
 
 // Tower constants
 const int UPGRADE_PRICE = 1000;

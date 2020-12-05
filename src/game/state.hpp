@@ -1,6 +1,5 @@
 #pragma once
 /*
-Base class.
 A State manages everything that is currently happening, from graphics to logic.
 */
 #include <SFML/Graphics.hpp>
