@@ -1,6 +1,6 @@
 #include "map.hpp"
 #include <fstream>
-#include "../utils/path_finder.hpp"
+//#include "../utils/path_finder.hpp"
 #include <iostream>
 
 Map::Map(const Vector4i& body, const std::string& filePath)
@@ -47,6 +47,7 @@ Map::Map(const Vector4i& body, const std::string& filePath)
         }
         y++;
     }
+    file.close();
     Update(body);
 }
 
@@ -78,6 +79,17 @@ Map::Map(const Vector4i& body, int grid_width, int grid_height)
 
 Map::~Map() {
 
+}
+
+void Map::UpdateTile(int x, int y, TileType& tileType) {
+    delete drawables_[x + y * grid_width_].second;
+    Vector4f position = drawables_[x + y * grid_width_].first;
+    drawables_[x + y * grid_width_].second = new Tile({
+                    (int)(position.upper_left_x * width_)   + GetPosition().x,
+                    (int)(position.upper_left_y * height_)  + GetPosition().y,
+                    (int)(position.lower_right_x * width_)  + GetPosition().x,
+                    (int)(position.lower_right_y * height_) + GetPosition().y
+                }, tileType);
 }
 
 Tile* Map::GetTile(int x, int y) const {

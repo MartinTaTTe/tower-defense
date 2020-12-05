@@ -113,3 +113,16 @@ void State::AddMap(const Vector4f& position, const std::string& mapPath) {
         }, mapPath))
     );
 }
+
+void State::AddBlankMap(const Vector4f& position, int width, int height) {
+    canvases_.push_back(
+        std::pair<Vector4f, Canvas*>
+        (position,
+        new Map({
+            (int)(position.upper_left_x * width_),
+            (int)(position.upper_left_y * height_),
+            (int)(position.lower_right_x * width_),
+            (int)(position.lower_right_y * height_)
+        }, width, height))
+    );
+}

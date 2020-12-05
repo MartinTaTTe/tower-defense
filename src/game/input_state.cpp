@@ -17,6 +17,7 @@ InputState::InputState(int width, int height)
     canvases_.back().second->AddText({0.7f, 0.3f}, "2", 50); // y
     AddCanvas({0.8f, 0, 1, 1}); // sidebar
     canvases_.back().second->AddButton({0, 0.8f, 1, 1}, T_RETURN_TO_MENU, Event(EventType::PopState)); // return to menu
+    canvases_.back().second->AddButton({0, 0, 1, 0.2f}, T_DEFAULT_BUTTON, Event(EventType::PushMapEditorState));
 }
 
 Event InputState::EventHandler(double d_time, const sf::Event& sf_event) {
@@ -50,6 +51,11 @@ Event InputState::CustomMouseClick(Event event) {
             break;
         case EventType::PopState:
             return_event.type = EventType::PopState;
+            break;
+        case EventType::PushMapEditorState:
+            return_event.type = EventType::PushMapEditorState;
+            return_event.increments.x = grid_width_;
+            return_event.increments.y = grid_height_;
             break;
         default:
             break;

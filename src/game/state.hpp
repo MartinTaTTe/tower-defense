@@ -23,6 +23,7 @@ public:
 protected:
     void                AddCanvas(const Vector4f& position);
     void                AddMap(const Vector4f& position, const std::string& mapPath);
+    void                AddBlankMap(const Vector4f& position, int width, int height);
     Canvases            canvases_;
     int                 width_;
     int                 height_;

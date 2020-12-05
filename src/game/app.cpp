@@ -5,6 +5,7 @@
 #include "menu_state.hpp"
 #include "game_state.hpp"
 #include "input_state.hpp"
+#include "mapeditor_state.hpp"
 
 #include <chrono>
 #include <iostream>
@@ -49,6 +50,7 @@ void App::Run(int width, int height) {
         
         sf::Event sf_event;
         window.pollEvent(sf_event);
+
         if (sf_event.type == sf::Event::Closed) {
             window.close();
         } else {
@@ -64,6 +66,9 @@ void App::Run(int width, int height) {
                     break;
                 case EventType::PushInputState:
                     PushState(new InputState(width, height));
+                    break;
+                case EventType::PushMapEditorState:
+                    PushState(new MapEditorState(width, height, event.increments.x, event.increments.y));
                     break;
             }
         }

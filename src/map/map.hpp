@@ -11,6 +11,7 @@ public:
     Map(const Vector4i& body, int width, int height);
     ~Map();
     Tile* GetTile(int x, int y) const;
+    void UpdateTile(int x, int y, TileType& tileType);
 private:
     int grid_height_;
     int grid_width_;

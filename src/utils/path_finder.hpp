@@ -69,6 +69,7 @@ public:
         } else {
             return false;
         }
+        file.close();
     };
 
     /*friend bool operator!=(const std::pair<int,int> a, const std::pair<int,int> b){
