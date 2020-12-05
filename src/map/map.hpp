@@ -13,7 +13,7 @@ public:
     ~Map();
     void                UpdateTile(int x, int y, TileType& tileType);
     Tile*               GetTile(int x, int y) const;
-    Event               EventHandler(int width, int height, double d_time);
+    Event               CustomUpdate(int width, int height, double d_time);
 private:
     std::vector<Enemy*> enemies_;
     int                 grid_height_;

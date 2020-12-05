@@ -13,4 +13,5 @@ GameState::GameState(int width, int height, const std::string& mapPath)
 
 void GameState::Update(double d_time) {
     canvases_[0].second->UpdateString(0, std::to_string((int)(1.0 / d_time)) + " FPS");
+    dynamic_cast<Map*>(canvases_[0].second)->CustomUpdate(width_, height_, d_time);
 }

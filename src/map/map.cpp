@@ -98,7 +98,7 @@ Tile* Map::GetTile(int x, int y) const {
     else return nullptr;
 }
 
-Event Map::EventHandler(int width, int height, double d_time) {
+Event Map::CustomUpdate(int width, int height, double d_time) {
     Event return_event;
     float d_x = d_time * width_;
     float d_y = d_time * height_;
