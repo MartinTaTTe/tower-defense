@@ -16,6 +16,7 @@ public:
     Event               CustomUpdate(int width, int height, double d_time);
     Vector2i            GetStart();
     Vector2i            GetEnd();
+    Vector2i            GetGridSize();
 private:
     std::vector<Enemy*> enemies_;
     int                 grid_height_;

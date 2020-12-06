@@ -121,3 +121,7 @@ Vector2i Map::GetStart() {
 Vector2i Map::GetEnd() {
     return end_;
 }
+
+Vector2i Map::GetGridSize() {
+    return {grid_width_, grid_height_};
+}

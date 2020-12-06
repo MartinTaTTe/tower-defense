@@ -12,8 +12,9 @@ class GameState : public State {
 public:
     GameState(int width, int height, const std::string& mapPath);
 private:
-    void    Update(double d_time) override;
-    void    ReadWaves(const std::string& filePath = W_BASIC_WAVES);
-    void    SendWave();
-    Waves   waves_;
+    void        Update(double d_time) override;
+    void        ReadWaves(const std::string& filePath = W_BASIC_WAVES);
+    void        SendWave();
+    Waves       waves_;
+    Vector2i    start_;
 };
