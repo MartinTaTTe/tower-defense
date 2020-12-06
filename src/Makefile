@@ -11,6 +11,7 @@ compile:
 	g++ -c ./gui/*.cpp
 	g++ -c ./utils/*.cpp
 	g++ -c ./map/*.cpp
+	g++ -c ./enemies/*.cpp
 
 link:
 	g++ *.o -o main -lsfml-graphics -lsfml-window -lsfml-system
@@ -22,5 +23,4 @@ run:
 	main.exe
 
 ignored:
-	g++ -c ./enemies/*.cpp
 	g++ -c ./towers/*.cpp

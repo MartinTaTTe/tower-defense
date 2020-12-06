@@ -51,9 +51,9 @@
         if(target_ == nullptr){
             for(auto enemy: enemies){
                 if(((enemy->GetX() - x_)*(enemy->GetX() - x_) + (enemy->GetY() - y_)*(enemy->GetY() - y_)) <= range_*range_){
-                    if( enemy->IsLand() && (enemy_type_ == 1 || enemy_type_ == 3)){
+                    if( enemy->IsGround() && (enemy_type_ == 1 || enemy_type_ == 3)){
                         target_ = enemy;
-                    }else if(!enemy->IsLand() && enemy_type_ == 2){
+                    }else if(!enemy->IsGround() && enemy_type_ == 2){
                         target_ = enemy;
                     }
                     break;

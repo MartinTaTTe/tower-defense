@@ -7,5 +7,4 @@ MenuState is the main menu, the first State a user sees.
 class MenuState : public State {
 public:
     MenuState(int width, int height);
-private:
 };

@@ -18,7 +18,7 @@ class Canvas {
 public:
     Canvas(const Vector4i& body);
     ~Canvas();
-    Event               EventHandler(const Event& event);
+    virtual Event               EventHandler(const Event& event);
     void                Update(const Vector4i& corners);
     void                Draw(sf::RenderWindow& window) const;
     void                AddButton(const Vector4f& position, const std::string& texturePath = T_DEFAULT_BUTTON, const Event& action = Event());

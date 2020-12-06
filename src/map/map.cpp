@@ -1,6 +1,6 @@
 #include "map.hpp"
 #include <fstream>
-#include "../utils/path_finder.hpp"
+//#include "../utils/path_finder.hpp"
 #include <iostream>
 
 Map::Map(const Vector4i& body, const std::string& filePath)
@@ -47,6 +47,7 @@ Map::Map(const Vector4i& body, const std::string& filePath)
         }
         y++;
     }
+    file.close();
     Update(body);
 }
 
@@ -80,8 +81,29 @@ Map::~Map() {
 
 }
 
+void Map::UpdateTile(int x, int y, TileType& tileType) {
+    delete drawables_[x + y * grid_width_].second;
+    Vector4f position = drawables_[x + y * grid_width_].first;
+    drawables_[x + y * grid_width_].second = new Tile({
+                    (int)(position.upper_left_x * width_)   + GetPosition().x,
+                    (int)(position.upper_left_y * height_)  + GetPosition().y,
+                    (int)(position.lower_right_x * width_)  + GetPosition().x,
+                    (int)(position.lower_right_y * height_) + GetPosition().y
+                }, tileType);
+}
+
 Tile* Map::GetTile(int x, int y) const {
     if (x < grid_width_ && y < grid_height_)
         return dynamic_cast<Tile*>(drawables_[x + y * grid_width_].second);
     else return nullptr;
+}
+
+Event Map::CustomUpdate(int width, int height, double d_time) {
+    Event return_event;
+    float d_x = d_time * width_;
+    float d_y = d_time * height_;
+    for (auto enemy : enemies_) {
+        enemy->Update(0, d_x, d_y);
+    }
+    return return_event;
 }

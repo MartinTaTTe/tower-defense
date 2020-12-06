@@ -12,19 +12,30 @@ enum EventType : int8_t {
     PopState,
     PushGameState,
     PushInputState,
+    PushMapEditorState,
     MouseMovement,
     MouseClick,
+    MouseClickReleased,
     Resize,
-    ChangeMapSize
+    ChangeMapSize,
+    SelectTile,
+    Dead,
+    Save
 };
+
+enum TileType : int8_t;
 
 struct Event
 {
     Event(EventType type = EventType::None) : type(type) { }
     EventType type;
     union {
+        struct {
+            int x, y;
+        };
         Vector2i coords;
         Vector2i increments;
         Vector4i body;
+        TileType tileType;
     };
 };
