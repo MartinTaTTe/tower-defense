@@ -1,7 +1,7 @@
 #include "enemy.hpp"
 #include "../utils/texture_manager.hpp"
 
-Enemy::Enemy(const Vector4i& body, float max_hp, float x, float y, float speed, bool ground, const std::string& texturePath)
+Enemy::Enemy(const Vector4i& body, float x, float y, float max_hp, float speed, bool ground, const std::string& texturePath)
     : Drawable(body, texturePath),
     hp_(max_hp),
     max_hp_(max_hp),
