@@ -14,5 +14,6 @@ public:
 private:
     void    Update(double d_time) override;
     void    ReadWaves(const std::string& filePath = W_BASIC_WAVES);
+    void    SendWave();
     Waves   waves_;
 };
