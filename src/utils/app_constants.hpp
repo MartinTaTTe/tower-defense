@@ -64,6 +64,7 @@ const int MULTIPLE_TOWER_TILETYPE = true;
 
 // Texture paths, name like "T_NAME_OF_TEXTURE"
 const std::string T_DEFAULT_BUTTON = "textures/default_button.png";
+const std::string T_PLAY_BUTTON = "textures/Play-button.png";
 const std::string T_TILES[] = {
     "textures/path.png",
     "textures/grass.png",
