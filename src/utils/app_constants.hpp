@@ -14,15 +14,6 @@ const int BACKGROUND_B = 200;
 const float MAP_WIDTH = 0.8f; // 0-1
 const std::string DEFAULT_FONT = "utils/OpenSans.ttf";
 
-// Map paths
-const std::string MAPS[] = {
-    "map/maps/basic.map",
-    "map/maps/user.map"
-};
-
-// Waves paths, name like "W_NAME_OF_WAVES"
-const std::string W_BASIC_WAVES = "enemies/waves/basic.wave";
-
 // Tower constants
 const int UPGRADE_PRICE = 1000;
 const int UPGRADE_MAX = 3;
@@ -68,10 +59,8 @@ const float MULTIPLE_TOWER_RANGE = 3;
 const int MULTIPLE_TOWER_ENEMYTYPE = 3; 
 const int MULTIPLE_TOWER_PRICE = 1000; 
 const int MULTIPLE_TOWER_TILETYPE = true; 
-
 // Enemy constants
-const float NORMAL_ENEMY_MAX_HP = 100.0f;
-const float NORMAL_ENEMY_SPEED = 10.0f;
+
 
 const float FAST_ENEMY_MAX_HP = 75.0f;
 const float FAST_ENEMY_SPEED = 15.0f;
@@ -81,6 +70,12 @@ const float FLYING_ENEMY_SPEED = 5.0f;
 
 // Texture paths, name like "T_NAME_OF_TEXTURE"
 const std::string T_DEFAULT_BUTTON = "textures/default_button.png";
+const std::string T_PLAY_BUTTON = "textures/Play-button.png";
+const std::string T_TILES[] = {
+    "textures/path.png",
+    "textures/grass.png",
+    "textures/water.png"
+};
 const std::string T_DEFAULT_TOWER = "textures/tower.png";
 const std::string T_UTILITY_TOWER = "textures/utility_tower.png";
 const std::string T_BASIC_TOWER = "textures/basic_tower.png";
@@ -88,10 +83,6 @@ const std::string T_FLYING_TOWER = "textures/flying_tower.png";
 const std::string T_WATER_TOWER = "textures/water_tower.png";
 const std::string T_HYBRID_TOWER = "textures/hybrid_tower.png";
 const std::string T_MULTIPLE_TOWER = "textures/multiple_tower.png";
-const std::string T_DEFAULT_ENEMY = "textures/enemy.png";
-const std::string T_RETURN_TO_MENU = "textures/return_to_menu.png";
-const std::string T_TILES[] = {
-    "textures/path.png",
-    "textures/grass.png",
-    "textures/water.png"
-};
+
+// Map paths, name like "M_NAME_OF_MAP"
+const std::string M_BASIC_MAP = "map/maps/basic.map";
