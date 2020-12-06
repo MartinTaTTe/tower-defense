@@ -13,4 +13,8 @@ private:
     TileType    selectedTile;
     int         grid_width_;
     int         grid_height_;
+    Vector2i    start_;
+    Vector2i    end_;
+    bool        start_selected;
+    bool        end_selected;
 };
