@@ -20,7 +20,9 @@ enum EventType : int8_t {
     ChangeMapSize,
     SelectTile,
     Dead,
-    Save
+    Save,
+    Start,
+    End
 };
 
 enum TileType : int8_t;
@@ -37,5 +39,6 @@ struct Event
         Vector2i increments;
         Vector4i body;
         TileType tileType;
+        bool condition;
     };
 };
