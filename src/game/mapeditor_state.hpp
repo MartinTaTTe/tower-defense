@@ -17,4 +17,6 @@ private:
     Vector2i    end_;
     bool        start_selected;
     bool        end_selected;
+    double      counter_;
+    bool        errorMessage_;
 };

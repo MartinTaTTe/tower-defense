@@ -2,11 +2,12 @@
 #include "../utils/app_constants.hpp"
 #include "../utils/texture_manager.hpp"
 #include "../utils/path_finder.hpp"
+#include <windows.h>
 #include <iostream>
 #include <fstream>
 
 MapEditorState::MapEditorState(int width, int height, int grid_width, int grid_height)
-    : State("Map Editor State", width, height), grid_width_(grid_width), grid_height_(grid_height), start_({0,0}), end_({grid_width,grid_height}), start_selected(false), end_selected(false) {
+    : State("Map Editor State", width, height), grid_width_(grid_width), grid_height_(grid_height), start_({0,0}), end_({grid_width,grid_height}), start_selected(false), end_selected(false), errorMessage_(false) {
     AddCanvas({0, 0, 0.8f, 1}, grid_width, grid_height);
     AddCanvas({0.8f, 0, 1, 1}); // siderbar
     canvases_.back().second->AddButton({0, 0.9f, 1, 1}, T_RETURN_TO_MENU_BUTTON, Event(EventType::PopState)); // return to menu
@@ -25,6 +26,13 @@ MapEditorState::MapEditorState(int width, int height, int grid_width, int grid_h
 
 void MapEditorState::Update(double d_time) {
     canvases_[0].second->UpdateString(0, std::to_string((int)(1.0 / d_time)) + " FPS");
+    counter_ += d_time;
+    if (counter_ > 3 && errorMessage_) {
+        delete canvases_.back().second;
+        canvases_.pop_back();
+        counter_ = 0;
+        errorMessage_ = false;
+    }
 }
 
 Event MapEditorState::CustomOnClick(Event event) {
@@ -96,6 +104,11 @@ Event MapEditorState::Save() {
     Path_Finder finder(MAPS[1]);
     if (finder.findPath()) {
         return Event(EventType::PopState);
-    } 
+    } else {
+        AddCanvas({0,0,1,1});
+        canvases_.back().second->AddText({0,0.5f}, "A complete path was not found. \n Please make a viable path with start and end.", 30, sf::Color::Red);
+        errorMessage_ = true;
+        counter_ = 0;
+    }
     return Event(EventType::None);
 }
