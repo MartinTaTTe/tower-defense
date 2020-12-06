@@ -2,6 +2,7 @@
 #include <fstream>
 #include "../utils/path_finder.hpp"
 #include <iostream>
+#include "../enemies/normal_enemy.hpp"
 
 Map::Map(const Vector4i& body, const std::string& filePath)
     : Canvas(body) {
@@ -81,7 +82,8 @@ Map::Map(const Vector4i& body, int grid_width, int grid_height)
 }
 
 Map::~Map() {
-
+    for (auto enemy : enemies_)
+        delete enemy.second;
 }
 
 void Map::UpdateTile(int x, int y, TileType& tileType, bool high) {
@@ -110,7 +112,7 @@ Event Map::CustomUpdate(int width, int height, double d_time) {
     float d_x = d_time * width_;
     float d_y = d_time * height_;
     for (auto enemy : enemies_) {
-        enemy->Update(0, d_x, d_y);
+        enemy.second->Update(0, d_x, d_y);
     }
     return return_event;
 }
@@ -124,4 +126,32 @@ Vector2i Map::GetEnd() {
 
 Vector2i Map::GetGridSize() {
     return {grid_width_, grid_height_};
+}
+
+void Map::AddEnemy(const Vector4f& position, char type) {
+    Enemy* enemy;
+    switch (type)
+    {
+    case 'N':
+        enemy = new NormalEnemy(
+            {
+                (int)(position.upper_left_x * width_)   + GetPosition().x,
+                (int)(position.upper_left_y * height_)  + GetPosition().y,
+                (int)(position.lower_right_x * width_)  + GetPosition().x,
+                (int)(position.lower_right_y * height_) + GetPosition().y
+            }, start_.x, start_.y
+        );
+        break;
+    default:
+        break;
+    }
+    enemies_.push_back(
+        std::pair<Vector4f, Enemy*>
+        (position, enemy)
+    );
+}
+
+void Map::CustomDraw(sf::RenderWindow& window) const {
+    for (auto enemy : enemies_)
+        enemy.second->Draw(window);
 }

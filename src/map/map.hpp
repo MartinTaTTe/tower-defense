@@ -6,6 +6,8 @@ Map is custom Canvas used for controlling all objects on the game map, such as T
 #include "../gui/canvas.hpp"
 #include "../enemies/enemy.hpp"
 
+typedef std::vector<std::pair<Vector4f, Enemy*>> Enemies;
+
 class Map : public Canvas {
 public:
     Map(const Vector4i& body, const std::string& filePath);
@@ -17,8 +19,10 @@ public:
     Vector2i            GetStart();
     Vector2i            GetEnd();
     Vector2i            GetGridSize();
+    void                AddEnemy(const Vector4f& position, char type);
+    void                CustomDraw(sf::RenderWindow& window) const override;
 private:
-    std::vector<Enemy*> enemies_;
+    Enemies             enemies_;
     int                 grid_height_;
     int                 grid_width_;
     Vector2i            start_;

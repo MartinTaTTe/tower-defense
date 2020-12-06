@@ -21,6 +21,7 @@ public:
     virtual Event       EventHandler(const Event& event);
     void                Update(const Vector4i& corners);
     void                Draw(sf::RenderWindow& window) const;
+    virtual void        CustomDraw(sf::RenderWindow& window) const;
     void                AddButton(const Vector4f& position, const std::string& texturePath = T_DEFAULT_BUTTON, const Event& action = Event());
     void                AddDrawable(const Vector4f& position, const std::string& texturePath);
     void                AddCanvas(const Vector4f& position);

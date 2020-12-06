@@ -13,6 +13,7 @@ const int BACKGROUND_G = 200;
 const int BACKGROUND_B = 200;
 const float MAP_WIDTH = 0.8f; // 0-1
 const std::string DEFAULT_FONT = "utils/OpenSans.ttf";
+const double SPAWN_SPEED = 5.0;
 
 // Map paths
 const std::string MAPS[] = {
@@ -67,7 +68,8 @@ const float MULTIPLE_TOWER_SPEED = 3;
 const float MULTIPLE_TOWER_RANGE = 3;
 const int MULTIPLE_TOWER_ENEMYTYPE = 3; 
 const int MULTIPLE_TOWER_PRICE = 1000; 
-const int MULTIPLE_TOWER_TILETYPE = true; 
+const int MULTIPLE_TOWER_TILETYPE = true;
+
 // Enemy constants
 const float NORMAL_ENEMY_MAX_HP = 100.0f;
 const float NORMAL_ENEMY_SPEED = 10.0f;

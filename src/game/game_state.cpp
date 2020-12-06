@@ -6,7 +6,7 @@
 #include <iostream>
 
 GameState::GameState(int width, int height, const std::string& mapPath)
-    : State("Game State", width, height) {
+    : State("Game State", width, height), since_last_spawn_(SPAWN_SPEED - 1) {
     AddCanvas({0, 0, 0.8f, 1}, mapPath); // map
     start_ = dynamic_cast<Map*>(canvases_.back().second)->GetStart();
     AddCanvas({0.8f, 0, 1, 1}); // siderbar
@@ -14,11 +14,15 @@ GameState::GameState(int width, int height, const std::string& mapPath)
     canvases_[0].second->AddText({0, 0}, "0 FPS", 30); // FPS counter
 
     ReadWaves();
-    SendWave();
 }
 
 void GameState::Update(double d_time) {
     canvases_[0].second->UpdateString(0, std::to_string((int)(1.0 / d_time)) + " FPS");
+    since_last_spawn_ += d_time;
+    if (since_last_spawn_ > SPAWN_SPEED) {
+        SendWave();
+        since_last_spawn_ = 0;
+    }
     dynamic_cast<Map*>(canvases_[0].second)->CustomUpdate(width_, height_, d_time);
 }
 
@@ -47,15 +51,12 @@ void GameState::SendWave() {
         Map* map = dynamic_cast<Map*>(canvases_[0].second);
         Vector2i grid_size = map->GetGridSize();
         for (auto enemy : waves_.back()) {
-            map->AddDrawable(
-                {
-                    1.0f / grid_size.x * start_.x,
-                    1.0f / grid_size.y * start_.y,
-                    1.0f / grid_size.x * (start_.x + 1),
-                    1.0f / grid_size.y * (start_.y + 1)
-                },
-                T_DEFAULT_ENEMY
-            );
+            map->AddEnemy({
+                1.0f / grid_size.x * start_.x,
+                1.0f / grid_size.y * start_.y,
+                1.0f / grid_size.x * (start_.x + 1),
+                1.0f / grid_size.y * (start_.y + 1)
+            }, enemy.second);
         }
         waves_.pop_back();
     }

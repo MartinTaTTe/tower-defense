@@ -77,12 +77,17 @@ void Canvas::Draw(sf::RenderWindow& window) const {
         drawable.second->Draw(window);
     for (auto button : buttons_)
         button.second->Draw(window);
+    CustomDraw(window);
     for (auto text : texts_) {
         text.second.setFont(font_);
         window.draw(text.second);
     }
     for (auto canvas : canvases_)
         canvas.second->Draw(window);
+}
+
+void Canvas::CustomDraw(sf::RenderWindow& window) const {
+    
 }
 
 void Canvas::AddButton(const Vector4f& position, const std::string& texturePath, const Event& action) {

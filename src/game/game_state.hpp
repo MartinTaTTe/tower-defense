@@ -17,4 +17,5 @@ private:
     void        SendWave();
     Waves       waves_;
     Vector2i    start_;
+    double      since_last_spawn_;
 };
