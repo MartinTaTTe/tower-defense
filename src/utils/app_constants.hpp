@@ -60,7 +60,8 @@ const int MULTIPLE_TOWER_ENEMYTYPE = 3;
 const int MULTIPLE_TOWER_PRICE = 1000; 
 const int MULTIPLE_TOWER_TILETYPE = true; 
 // Enemy constants
-
+const float NORMAL_ENEMY_MAX_HP = 100.0f;
+const float NORMAL_ENEMY_SPEED = 10.0f;
 
 const float FAST_ENEMY_MAX_HP = 75.0f;
 const float FAST_ENEMY_SPEED = 15.0f;
@@ -71,6 +72,8 @@ const float FLYING_ENEMY_SPEED = 5.0f;
 // Texture paths, name like "T_NAME_OF_TEXTURE"
 const std::string T_DEFAULT_BUTTON = "textures/default_button.png";
 const std::string T_PLAY_BUTTON = "textures/Play-button.png";
+const std::string T_RETURN_TO_MENU = "textures/return_to_menu.png";
+const std::string T_DEFAULT_ENEMY = "textures/enemy.png";
 const std::string T_TILES[] = {
     "textures/path.png",
     "textures/grass.png",
