@@ -78,6 +78,12 @@ const float FAST_ENEMY_SPEED = 15.0f;
 const float FLYING_ENEMY_MAX_HP = 250.0f;
 const float FLYING_ENEMY_SPEED = 5.0f;
 
+const float REGEN_ENEMY_MAX_HP = 100.0f;
+const float REGEN_ENEMY_SPEED = 10.0f;
+
+const float SPAWN_ENEMY_MAX_HP = 100.0f;
+const float SPAWN_ENEMY_SPEED = 10.0f;
+
 // Texture paths, name like "T_NAME_OF_TEXTURE"
 //knappar
 const std::string T_DEFAULT_BUTTON = "textures/buttons/default_button.png";
