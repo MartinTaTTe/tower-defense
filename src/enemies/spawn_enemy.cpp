@@ -1,4 +1,4 @@
-#include "normal_enemy.hpp"
+#include "spawn_enemy.hpp"
 #include "../utils/app_constants.hpp"
 
 SpawnEnemy::SpawnEnemy(const Vector4i& body, float x, float y)
