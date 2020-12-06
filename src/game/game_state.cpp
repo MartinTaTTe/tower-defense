@@ -9,8 +9,10 @@ GameState::GameState(int width, int height, const std::string& mapPath)
     : State("Game State", width, height) {
     AddCanvas({0, 0, 0.8f, 1}, mapPath); // map
     AddCanvas({0.8f, 0, 1, 1}); // siderbar
-    canvases_.back().second->AddButton({0, 0.8f, 1, 1}, T_RETURN_TO_MENU, Event(EventType::PopState)); // return to menu
+    canvases_.back().second->AddButton({0, 0.8f, 1, 1}, T_RETURN_TO_MENU_BUTTON, Event(EventType::PopState)); // return to menu
     canvases_[0].second->AddText({0, 0}, "0 FPS", 30); // FPS counter
+
+    ReadWaves();
 }
 
 void GameState::Update(double d_time) {
@@ -35,5 +37,14 @@ void GameState::ReadWaves(const std::string& filePath) {
             }
         }
         file.close();
+    }
+}
+
+void GameState::SendWave() {
+    while(!waves_.empty()) {
+        for (auto enemy : waves_.back()) {
+
+        }
+        waves_.pop_back();
     }
 }
