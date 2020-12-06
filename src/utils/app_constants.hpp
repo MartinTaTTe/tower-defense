@@ -14,6 +14,15 @@ const int BACKGROUND_B = 200;
 const float MAP_WIDTH = 0.8f; // 0-1
 const std::string DEFAULT_FONT = "utils/OpenSans.ttf";
 
+// Map paths
+const std::string MAPS[] = {
+    "map/maps/basic.map",
+    "map/maps/user.map"
+};
+
+// Waves paths, name like "W_NAME_OF_WAVES"
+const std::string W_BASIC_WAVES = "enemies/waves/basic.wave";
+
 // Tower constants
 const int UPGRADE_PRICE = 1000;
 const int UPGRADE_MAX = 3;
@@ -91,5 +100,3 @@ const std::string T_WATER_TOWER = "textures/water_tower.png";
 const std::string T_HYBRID_TOWER = "textures/hybrid_tower.png";
 const std::string T_MULTIPLE_TOWER = "textures/multiple_tower.png";
 
-// Map paths, name like "M_NAME_OF_MAP"
-const std::string M_BASIC_MAP = "map/maps/basic.map";
