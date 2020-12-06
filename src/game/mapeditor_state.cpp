@@ -9,7 +9,7 @@ MapEditorState::MapEditorState(int width, int height, int grid_width, int grid_h
     : State("Map Editor State", width, height), grid_width_(grid_width), grid_height_(grid_height), start_({0,0}), end_({grid_width,grid_height}), start_selected(false), end_selected(false) {
     AddCanvas({0, 0, 0.8f, 1}, grid_width, grid_height);
     AddCanvas({0.8f, 0, 1, 1}); // siderbar
-    canvases_.back().second->AddButton({0, 0.9f, 1, 1}, T_RETURN_TO_MENU, Event(EventType::PopState)); // return to menu
+    canvases_.back().second->AddButton({0, 0.9f, 1, 1}, T_RETURN_TO_MENU_BUTTON, Event(EventType::PopState)); // return to menu
     Event event(EventType::SelectTile);
     event.tileType = TileType::Path;
     canvases_.back().second->AddButton({0, 0, 1, 0.15f}, T_TILES[0], event);
