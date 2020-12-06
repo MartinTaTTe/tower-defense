@@ -56,7 +56,7 @@ public:
             }
             array_.push_back(vect);
         }
-        
+         file.close();
         //sätter en variabel
         //kollar rutten
         while(current_tile_ != last_tile_ && current_tile_ != error_tile_){
@@ -69,7 +69,6 @@ public:
         } else {
             return false;
         }
-        file.close();
     };
 
     /*friend bool operator!=(const std::pair<int,int> a, const std::pair<int,int> b){
