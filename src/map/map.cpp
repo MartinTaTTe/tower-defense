@@ -1,6 +1,6 @@
 #include "map.hpp"
 #include <fstream>
-//#include "../utils/path_finder.hpp"
+#include "../utils/path_finder.hpp"
 #include <iostream>
 
 Map::Map(const Vector4i& body, const std::string& filePath)
@@ -12,9 +12,12 @@ Map::Map(const Vector4i& body, const std::string& filePath)
     grid_height_ = stoi(line.substr(line.find('x') + 1, line.find('x') + 2));
     float tile_width  = 1.0f / grid_width_;
     float tile_height = 1.0f / grid_height_;
-    //tar bort start och slut punkterna
     std::getline(file,line);
+    start_.x = stoi(line.substr(0, line.find(',')));
+    start_.y = stoi(line.substr(line.find(',') + 1, line.find(',') + 2));
     std::getline(file,line);
+    end_.x = stoi(line.substr(0, line.find(',')));
+    end_.y = stoi(line.substr(line.find(',') + 1, line.find(',') + 2));
     //test som printar ut pathen för en map, för att kolla att den funkar
     /*Path_Finder path(filePath);
     std::cout << path.findPath() << std::endl;
@@ -81,15 +84,19 @@ Map::~Map() {
 
 }
 
-void Map::UpdateTile(int x, int y, TileType& tileType) {
-    delete drawables_[x + y * grid_width_].second;
-    Vector4f position = drawables_[x + y * grid_width_].first;
-    drawables_[x + y * grid_width_].second = new Tile({
-                    (int)(position.upper_left_x * width_)   + GetPosition().x,
-                    (int)(position.upper_left_y * height_)  + GetPosition().y,
-                    (int)(position.lower_right_x * width_)  + GetPosition().x,
-                    (int)(position.lower_right_y * height_) + GetPosition().y
-                }, tileType);
+void Map::UpdateTile(int x, int y, TileType& tileType, bool high) {
+    if (high) {
+        drawables_[x + y * grid_width_].second->Highlight(high);
+    } else {
+        delete drawables_[x + y * grid_width_].second;
+        Vector4f position = drawables_[x + y * grid_width_].first;
+        drawables_[x + y * grid_width_].second = new Tile({
+                        (int)(position.upper_left_x * width_)   + GetPosition().x,
+                        (int)(position.upper_left_y * height_)  + GetPosition().y,
+                        (int)(position.lower_right_x * width_)  + GetPosition().x,
+                        (int)(position.lower_right_y * height_) + GetPosition().y
+                    }, tileType);
+    }
 }
 
 Tile* Map::GetTile(int x, int y) const {
@@ -106,4 +113,11 @@ Event Map::CustomUpdate(int width, int height, double d_time) {
         enemy->Update(0, d_x, d_y);
     }
     return return_event;
+}
+
+Vector2i Map::GetStart() {
+    return start_;
+}
+Vector2i Map::GetEnd() {
+    return end_;
 }
