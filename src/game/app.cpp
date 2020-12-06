@@ -63,7 +63,7 @@ void App::Run(int width, int height) {
                     PopState();
                     break;
                 case EventType::PushGameState:
-                    PushState(new GameState(window.getSize().x, window.getSize().y, M_BASIC_MAP));
+                    PushState(new GameState(window.getSize().x, window.getSize().y, MAPS[event.x]));
                     break;
                 case EventType::PushInputState:
                     PushState(new InputState(window.getSize().x, window.getSize().y));
