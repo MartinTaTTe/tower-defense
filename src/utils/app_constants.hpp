@@ -13,10 +13,12 @@ const int BACKGROUND_G = 200;
 const int BACKGROUND_B = 200;
 const float MAP_WIDTH = 0.8f; // 0-1
 const std::string DEFAULT_FONT = "utils/OpenSans.ttf";
-const std::string DEFAULT_MAP_SAVE = "map/maps/user.map";
 
-// Map paths, name like "M_NAME_OF_MAP"
-const std::string M_BASIC_MAP = "map/maps/basic.map";
+// Map paths
+const std::string MAPS[] = {
+    "map/maps/basic.map",
+    "map/maps/user.map"
+};
 
 // Waves paths, name like "W_NAME_OF_WAVES"
 const std::string W_BASIC_WAVES = "enemies/waves/basic.wave";

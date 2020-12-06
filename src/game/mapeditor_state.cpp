@@ -52,9 +52,11 @@ Event MapEditorState::CustomOnClick(Event event) {
 Event MapEditorState::Save() {
     std::ofstream mapFile;
     Map* map = dynamic_cast<Map*>(canvases_[0].second);
-    mapFile.open(DEFAULT_MAP_SAVE);
+    mapFile.open(MAPS[1]);
     if (mapFile.is_open()) {
         mapFile << grid_width_ << "x" << grid_height_ << std::endl;
+        mapFile << "start" << std::endl;
+        mapFile << "end" << std::endl;
         for (int y = 0; y < grid_height_; y++) {
             for(int x = 0; x < grid_width_; x++) {
                 Tile* tile = map->GetTile(x, y);
