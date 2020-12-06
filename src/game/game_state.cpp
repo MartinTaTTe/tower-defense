@@ -12,18 +12,35 @@ GameState::GameState(int width, int height, const std::string& mapPath)
     AddCanvas({0.8f, 0, 1, 1}); // siderbar
     canvases_.back().second->AddButton({0, 0.8f, 1, 1}, T_RETURN_TO_MENU_BUTTON, Event(EventType::PopState)); // return to menu
     canvases_[0].second->AddText({0, 0}, "0 FPS", 30); // FPS counter
-
+    canvases_.back().second->AddButton({0, 0.6f, 1, 0.8f}, T_DEFAULT_BUTTON, Event(EventType::Pause)); // pause button
     ReadWaves();
 }
 
 void GameState::Update(double d_time) {
     canvases_[0].second->UpdateString(0, std::to_string((int)(1.0 / d_time)) + " FPS");
-    since_last_spawn_ += d_time;
-    if (since_last_spawn_ > SPAWN_SPEED) {
-        SendWave();
-        since_last_spawn_ = 0;
+    if (!paused_) {
+        since_last_spawn_ += d_time;
+        if (since_last_spawn_ > SPAWN_SPEED) {
+            SendWave();
+            since_last_spawn_ = 0;
+        }
+        dynamic_cast<Map*>(canvases_[0].second)->CustomUpdate(width_, height_, d_time);
     }
-    dynamic_cast<Map*>(canvases_[0].second)->CustomUpdate(width_, height_, d_time);
+}
+
+Event GameState::CustomOnClick(Event event) {
+    Event return_event;
+    switch (event.type) {
+        case EventType::Pause:
+            paused_ = !paused_;
+            break;
+        case EventType::PopState:
+            return_event.type = EventType::PopState;
+            break;
+        default:
+            break;
+    }
+    return return_event;
 }
 
 void GameState::ReadWaves(const std::string& filePath) {

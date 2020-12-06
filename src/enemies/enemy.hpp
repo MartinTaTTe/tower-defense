@@ -20,6 +20,7 @@ public:
     float               GetX();
     float               GetY();
     virtual Event       Update(float damage, float d_x_, float d_y_);
+    int                 currentTile;
 private:
     float               hp_;
     const float         max_hp_;

@@ -1,14 +1,15 @@
 #include "enemy.hpp"
-#include "../utils/texture_manager.hpp"
+#include <iostream>
 
 Enemy::Enemy(const Vector4i& body, float x, float y, float max_hp, float speed, bool ground, const std::string& texturePath)
     : Drawable(body, texturePath),
-    hp_(max_hp),
-    max_hp_(max_hp),
     x_(x),
     y_(y),
+    hp_(max_hp),
+    max_hp_(max_hp),
     speed_(speed),
-    is_ground_(ground) {
+    is_ground_(ground),
+    currentTile(0) {
 
 }
 
@@ -30,6 +31,10 @@ Event Enemy::Update(float damage, float d_x_, float d_y_) {
     if (hp_ <= 0) {
         event.type = EventType::Dead;
     }
+    std::cout << "Update  " << d_x_ << ", " << d_y_ << std::endl;
+    x_ += d_x_ * speed_;
+    y_ += d_y_ * speed_;
+    std::cout << "Updated " << x_ << ", " << y_ << std::endl;
     Move(d_x_ * speed_, d_y_ * speed_);
     return event;
 }

@@ -26,5 +26,5 @@ void Drawable::Disable(bool disable) {
 
 void Drawable::Move(float d_x, float d_y) {
     auto current_pos = body_.getPosition();
-    body_.setPosition(sf::Vector2f(d_x / WINDOW_WIDTH + current_pos.x, d_y / WINDOW_HEIGHT + current_pos.y));
+    body_.setPosition(sf::Vector2f(d_x * 100 + current_pos.x, d_y * 62 + current_pos.y));
 }

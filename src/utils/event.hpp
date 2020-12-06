@@ -22,7 +22,8 @@ enum EventType : int8_t {
     Dead,
     Save,
     Start,
-    End
+    End,
+    Pause
 };
 
 enum TileType : int8_t;

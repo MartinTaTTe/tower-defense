@@ -1,11 +1,16 @@
 #include "map.hpp"
 #include <fstream>
-#include "../utils/path_finder.hpp"
 #include <iostream>
 #include "../enemies/normal_enemy.hpp"
+#include "../utils/path_finder.hpp"
+
 
 Map::Map(const Vector4i& body, const std::string& filePath)
     : Canvas(body) {
+    auto path_finder = Path_Finder(filePath);
+    path_finder.findPath();
+    path_ = path_finder.getPath();
+    path_length_ = path_.size();
     std::ifstream file(filePath);
     std::string line;
     std::getline(file,line);
@@ -109,10 +114,29 @@ Tile* Map::GetTile(int x, int y) const {
 
 Event Map::CustomUpdate(int width, int height, double d_time) {
     Event return_event;
-    float d_x = d_time * width_;
-    float d_y = d_time * height_;
     for (auto enemy : enemies_) {
-        enemy.second->Update(0, d_x, d_y);
+        if (enemy.second->currentTile != path_length_ - 1) {
+            std::cout << "Current tile " << enemy.second->currentTile << std::endl;
+            int d_x = 0, d_y = 0;
+            Vector2i next = GetNext(enemy.second->currentTile);
+            bool reached_x = std::abs((float)next.x - enemy.second->GetX()) < 0.05f;
+            bool reached_y = std::abs((float)next.y - enemy.second->GetY()) < 0.05f;
+            if (reached_x && reached_y)
+                enemy.second->currentTile++;
+            if (!reached_x && reached_y && (float)next.x > enemy.second->GetX())
+                d_x = 1;
+            else if (!reached_x && reached_y && (float)next.x < enemy.second->GetX())
+                d_x = -1;
+            else if (!reached_y && (float)next.y > enemy.second->GetY())
+                d_y = 1;
+            else if (!reached_y && (float)next.y < enemy.second->GetY())
+                d_y = -1;
+            return_event = enemy.second->Update(0, d_time * d_x, d_time * d_y);
+        } else {
+            delete enemy.second;
+            enemies_.pop_back();
+            return_event.type = EventType::Dead;
+        }
     }
     return return_event;
 }
@@ -154,4 +178,9 @@ void Map::AddEnemy(const Vector4f& position, char type) {
 void Map::CustomDraw(sf::RenderWindow& window) const {
     for (auto enemy : enemies_)
         enemy.second->Draw(window);
+}
+
+Vector2i Map::GetNext(int i) {
+    auto next = path_[i + 1];
+    return {next.first, next.second};
 }

@@ -72,7 +72,7 @@ const int MULTIPLE_TOWER_TILETYPE = true;
 
 // Enemy constants
 const float NORMAL_ENEMY_MAX_HP = 100.0f;
-const float NORMAL_ENEMY_SPEED = 10.0f;
+const float NORMAL_ENEMY_SPEED = 2.0f;
 
 const float FAST_ENEMY_MAX_HP = 75.0f;
 const float FAST_ENEMY_SPEED = 15.0f;
