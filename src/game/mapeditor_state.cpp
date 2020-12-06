@@ -19,7 +19,7 @@ MapEditorState::MapEditorState(int width, int height, int grid_width, int grid_h
     canvases_.back().second->AddButton({0, 0.3f, 1, 0.45f}, T_TILES[2], event);
     canvases_.back().second->AddButton({0, 0.45f, 1, 0.6f}, T_DEFAULT_BUTTON, Event(EventType::Start));
     canvases_.back().second->AddButton({0, 0.6f, 1, 0.75f}, T_DEFAULT_BUTTON, Event(EventType::End));
-    canvases_.back().second->AddButton({0, 0.75f, 1, 0.9f}, T_DEFAULT_BUTTON, Event(EventType::Save));
+    canvases_.back().second->AddButton({0, 0.75f, 1, 0.9f}, T_SAVE_BUTTON, Event(EventType::Save));
     canvases_[0].second->AddText({0, 0}, "0 FPS", 30); // FPS counter
 }
 

@@ -80,8 +80,8 @@ const float FLYING_ENEMY_SPEED = 5.0f;
 
 // Texture paths, name like "T_NAME_OF_TEXTURE"
 const std::string T_DEFAULT_BUTTON = "textures/buttons/default_button.png";
-const std::string T_PLAY_BUTTON = "textures/buttons/Play-button.png";
-const std::string T_RETURN_TO_MENU_BUTTON = "textures/buttons/Back_to_menu.png";
+const std::string T_PLAY_BUTTON = "textures/buttons/Play_button.png";
+const std::string T_RETURN_TO_MENU_BUTTON = "textures/buttons/Back_to_menu_button.png";
 const std::string T_PLUS_BUTTON = "textures/buttons/Plus_button.png";
 const std::string T_MINUS_BUTTON = "textures/buttons/Minus_button.png";
 const std::string T_SAVE_BUTTON = "textures/buttons/Save_button.png";
