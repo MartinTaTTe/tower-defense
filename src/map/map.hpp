@@ -12,21 +12,20 @@ typedef std::vector<std::pair<int, int>> MapPath;
 
 class Map : public Canvas {
 public:
-    Map(const Vector4i& body, const std::string& filePath);
-    Map(const Vector4i& body, int width, int height);
+    Map(const Vector4f& body, const std::string& filePath);
+    Map(const Vector4f& body, int grid_width, int grid_height);
     ~Map();
-    void                UpdateTile(int x, int y, TileType& tileType, bool high);
+    void                UpdateTile(int x, int y, TileType& tileType, bool highlight);
     Tile*               GetTile(int x, int y) const;
-    Event               UpdateEnemies(int width, int height, double d_time);
-    Event               UpdateTowers(int width, int height, double d_time, Event event);
+    Event               UpdateEnemies(double d_time);
+    Event               UpdateTowers(double d_time, Event event);
     Vector2i            GetStart();
     Vector2i            GetEnd();
     Vector2i            GetGridSize();
-    void                AddEnemy(const Vector4f& position, char type);
-    void                AddTower(const Vector4f& position, char type);
+    void                AddEnemy(const Vector2f& position, char type);
     void                CustomDraw(sf::RenderWindow& window) const override;
 private:
-    Vector2i            GetNext(int i);
+    Vector2i            GetNextTile(int i);
     Enemies             enemies_;
     int                 grid_height_;
     int                 grid_width_;

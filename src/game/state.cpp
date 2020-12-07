@@ -14,6 +14,7 @@ State::~State() {
 
 Event State::EventHandler(double d_time, const sf::Event& sf_event) {
     Event event;
+    Vector2f relative;
     switch (sf_event.type) {
         case sf::Event::Resized:
             OnResize(sf_event.size.width, sf_event.size.height);
@@ -27,9 +28,12 @@ Event State::EventHandler(double d_time, const sf::Event& sf_event) {
             Sleep(100);
             break;
         case sf::Event::MouseButtonReleased:
+            relative = {
+                (float)(sf_event.mouseButton.x) / width_,
+                (float)(sf_event.mouseButton.y) / height_
+            };
             event.type = EventType::MouseClickReleased;
-            event.x = sf_event.mouseButton.x;
-            event.y = sf_event.mouseButton.y;
+            event.body = {relative.x, relative.y};
             event = CustomOnClick(event);
             Sleep(100);
         default:
@@ -51,13 +55,6 @@ void State::Update(double d_time) {
 void State::OnResize(int x, int y) {
     width_ = x;
     height_ = y;
-    for (auto canvas : canvases_)
-        canvas.second->Update({
-            (int)(canvas.first.upper_left_x * width_),
-            (int)(canvas.first.upper_left_y * height_),
-            (int)(canvas.first.lower_right_x * width_),
-            (int)(canvas.first.lower_right_y * height_)
-        });
 }
 
 void State::OnMouseMovement(int x, int y) {
@@ -66,13 +63,15 @@ void State::OnMouseMovement(int x, int y) {
         (float)y / height_
     };
     for (auto canvas : canvases_) {
-        if (canvas.first.upper_left_x < relative.x &&
-            relative.x < canvas.first.lower_right_x &&
-            canvas.first.upper_left_y < relative.y &&
-            relative.y < canvas.first.lower_right_y) {
-                Event e(EventType::MouseMovement);
-                e.coords = {x, y};
-                canvas.second->EventHandler(e);
+        if (
+            canvas.first.upper_left_x  < relative.x &&
+            canvas.first.lower_right_x > relative.x &&
+            canvas.first.upper_left_y  < relative.y &&
+            canvas.first.lower_right_y > relative.y
+            ) {
+            Event event(EventType::MouseMovement);
+            event.body = {relative.x, relative.y};
+            canvas.second->EventHandler(event);
         }
     }
 }
@@ -84,13 +83,15 @@ Event State::OnClick(int x, int y) {
         (float)y / height_
     };
     for (auto canvas : canvases_) {
-        if (canvas.first.upper_left_x < relative.x &&
-            relative.x < canvas.first.lower_right_x &&
-            canvas.first.upper_left_y < relative.y &&
-            relative.y < canvas.first.lower_right_y) {
-                Event e(EventType::MouseClick);
-                e.coords = {x, y};
-                event = canvas.second->EventHandler(e);
+        if (
+            canvas.first.upper_left_x  < relative.x &&
+            canvas.first.lower_right_x > relative.x &&
+            canvas.first.upper_left_y  < relative.y &&
+            canvas.first.lower_right_y > relative.y
+            ) {
+            event.type = EventType::MouseClick;
+            event.body = {relative.x, relative.y};
+            event = canvas.second->EventHandler(event);
         }
         if (event.type != EventType::None)
             return event;
@@ -105,39 +106,21 @@ Event State::CustomOnClick(Event event) {
 void State::AddCanvas(const Vector4f& position) {
     canvases_.push_back(
         std::pair<Vector4f, Canvas*>
-        (position,
-        new Canvas({
-            (int)(position.upper_left_x * width_),
-            (int)(position.upper_left_y * height_),
-            (int)(position.lower_right_x * width_),
-            (int)(position.lower_right_y * height_)
-        }))
+        (position, new Canvas(position))
     );
 }
 
 void State::AddCanvas(const Vector4f& position, const std::string& mapPath) {
     canvases_.push_back(
         std::pair<Vector4f, Canvas*>
-        (position,
-        new Map({
-            (int)(position.upper_left_x * width_),
-            (int)(position.upper_left_y * height_),
-            (int)(position.lower_right_x * width_),
-            (int)(position.lower_right_y * height_)
-        }, mapPath))
+        (position, new Map(position, mapPath))
     );
 }
 
 void State::AddCanvas(const Vector4f& position, int width, int height) {
     canvases_.push_back(
         std::pair<Vector4f, Canvas*>
-        (position,
-        new Map({
-            (int)(position.upper_left_x * width_),
-            (int)(position.upper_left_y * height_),
-            (int)(position.lower_right_x * width_),
-            (int)(position.lower_right_y * height_)
-        }, width, height))
+        (position, new Map(position, width, height))
     );
 }
 

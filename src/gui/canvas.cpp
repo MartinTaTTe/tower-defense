@@ -1,10 +1,7 @@
 #include "canvas.hpp"
 
-Canvas::Canvas(const Vector4i& body) {
-    width_  = body.lower_right_x - body.upper_left_x;
-    height_ = body.lower_right_y - body.upper_left_y;
-    body_.setPosition(sf::Vector2f(body.upper_left_x, body.upper_left_y));
-    body_.setSize(sf::Vector2f(width_, height_));
+Canvas::Canvas(const Vector4f& body)
+    : body_(body) {
     font_.loadFromFile(DEFAULT_FONT);
 }
 
@@ -13,63 +10,43 @@ Canvas::~Canvas() {
         delete button.second;
     for (auto drawable : drawables_)
         delete drawable.second;
+    for (auto canvas : canvases_)
+        delete canvas.second;
 }
 
 Event Canvas::EventHandler(const Event& event) {
     Event return_event;
-    Vector2f relative;
+    Vector2f relative = body_ / event.position;
     switch (event.type)
     {
-    case EventType::Resize:
-        Update({
-            event.body.upper_left_x,
-            event.body.upper_left_y,
-            event.body.lower_right_x,
-            event.body.lower_right_y
-        });
-        break;
     case EventType::MouseMovement:
-        relative.x = (float)(event.coords.x - body_.getPosition().x) / width_;
-        relative.y = (float)(event.coords.y - body_.getPosition().y) / height_;
         for (auto button : buttons_) {
-            if (button.first.upper_left_x < relative.x && relative.x < button.first.lower_right_x &&
-                button.first.upper_left_y < relative.y && relative.y < button.first.lower_right_y)
+            if (
+                button.first.upper_left_x  < relative.x &&
+                button.first.lower_right_x > relative.x &&
+                button.first.upper_left_y  < relative.y &&
+                button.first.lower_right_y > relative.y
+            )
                 button.second->Highlight(true);
             else
                 button.second->Highlight(false);
         }
         break;
     case EventType::MouseClick:
-        relative.x = (float)(event.coords.x - body_.getPosition().x) / width_;
-        relative.y = (float)(event.coords.y - body_.getPosition().y) / height_;
         for (auto button : buttons_) {
-            if (button.first.upper_left_x < relative.x && relative.x < button.first.lower_right_x &&
-                button.first.upper_left_y < relative.y && relative.y < button.first.lower_right_y)
-                return_event = button.second->Press(true);
+            if (
+                button.first.upper_left_x  < relative.x &&
+                button.first.lower_right_x > relative.x &&
+                button.first.upper_left_y  < relative.y &&
+                button.first.lower_right_y > relative.y
+            )
+                return button.second->Press();
         }
         break;
     default:
         break;
     }
     return return_event;
-}
-
-void Canvas::Update(int upper_left_x, int upper_left_y, int lower_right_x, int lower_right_y) {
-    width_  = lower_right_x - upper_left_x;
-    height_ = lower_right_y - upper_left_y;
-    body_.setPosition((float)upper_left_x, (float)upper_left_y);
-    body_.setSize(sf::Vector2f((float)width_, (float)height_));
-    for (auto canvas : canvases_)
-        canvas.second->Update(
-            upper_left_x + canvas.first.upper_left_x  * width_,
-            upper_left_y + canvas.first.upper_left_y  * height_,
-            upper_left_x + canvas.first.lower_right_x * width_,
-            upper_left_y + canvas.first.lower_right_y * height_
-        );
-}
-
-void Canvas::Update(const Vector4i& corners) {
-    Update(corners.upper_left_x, corners.upper_left_y, corners.lower_right_x, corners.lower_right_y);
 }
 
 void Canvas::Draw(sf::RenderWindow& window) const {
@@ -93,39 +70,21 @@ void Canvas::CustomDraw(sf::RenderWindow& window) const {
 void Canvas::AddButton(const Vector4f& position, const std::string& texturePath, const Event& action) {
     buttons_.push_back(
         std::pair<Vector4f, Button*>
-        (position,
-        new Button({
-            (int)(position.upper_left_x * width_)   + (int)body_.getPosition().x,
-            (int)(position.upper_left_y * height_)  + (int)body_.getPosition().y,
-            (int)(position.lower_right_x * width_)  + (int)body_.getPosition().x,
-            (int)(position.lower_right_y * height_) + (int)body_.getPosition().y
-        }, texturePath, action))
+        (position, new Button(body_ * position, texturePath, action))
     );
 }
 
 void Canvas::AddDrawable(const Vector4f& position, const std::string& texturePath) {
     drawables_.push_back(
         std::pair<Vector4f, Drawable*>
-        (position,
-        new Drawable({
-            (int)(position.upper_left_x * width_)   + (int)body_.getPosition().x,
-            (int)(position.upper_left_y * height_)  + (int)body_.getPosition().y,
-            (int)(position.lower_right_x * width_)  + (int)body_.getPosition().x,
-            (int)(position.lower_right_y * height_) + (int)body_.getPosition().y
-        }, texturePath))
+        (position, new Drawable(body_ * position, texturePath))
     );
 }
 
 void Canvas::AddCanvas(const Vector4f& position) {
     canvases_.push_back(
         std::pair<Vector4f, Canvas*>
-        (position,
-        new Canvas({
-            (int)(position.upper_left_x * width_)   + (int)body_.getPosition().x,
-            (int)(position.upper_left_y * height_)  + (int)body_.getPosition().y,
-            (int)(position.lower_right_x * width_)  + (int)body_.getPosition().x,
-            (int)(position.lower_right_y * height_) + (int)body_.getPosition().y
-        }))
+        (position, new Canvas(body_ * position))
     );
 }
 
@@ -135,8 +94,8 @@ void Canvas::AddText(const Vector2f& position, const std::string& string, int fo
     text.setFont(font_);
     text.setCharacterSize(font_size);
     text.setPosition({
-        position.x * width_  + body_.getPosition().x,
-        position.y * height_ + body_.getPosition().y,
+        ((body_.lower_right_x - body_.upper_left_x) * position.x + body_.upper_left_x) * WINDOW_WIDTH,
+        ((body_.lower_right_y - body_.upper_left_y) * position.y + body_.upper_left_y) * WINDOW_HEIGHT
     });
     text.setFillColor(color);
     texts_.push_back(
@@ -147,8 +106,4 @@ void Canvas::AddText(const Vector2f& position, const std::string& string, int fo
 
 void Canvas::UpdateString(int i, const std::string& string) {
     texts_[i].second.setString(string);
-}
-
-Vector2i Canvas::GetPosition() {
-    return {(int)body_.getPosition().x, (int)body_.getPosition().y};
 }

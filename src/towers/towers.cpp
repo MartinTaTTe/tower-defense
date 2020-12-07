@@ -3,7 +3,7 @@
 
 
 Tower::Tower(
-    const Vector4i& vector,
+    const Vector4f& vector,
     int x, int y,
     float damage,
     float range,

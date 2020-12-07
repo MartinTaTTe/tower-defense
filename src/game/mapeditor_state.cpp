@@ -37,6 +37,7 @@ void MapEditorState::Update(double d_time) {
 
 Event MapEditorState::CustomOnClick(Event event) {
     Event return_event;
+    Map* map = dynamic_cast<Map*>(canvases_[0].second);
     switch (event.type) {
         case EventType::SelectTile:
             selectedTile = event.tileType;
@@ -51,23 +52,20 @@ Event MapEditorState::CustomOnClick(Event event) {
             return_event = Save();
             break;
         case EventType::MouseClickReleased:
-            if (event.coords.x < width_*0.8f && start_selected) {
-                Map* map = dynamic_cast<Map*>(canvases_[0].second);
-                Tile* tile = map->GetTile((int)((event.coords.x*grid_width_)/(width_*0.8f)), (int)(event.coords.y*grid_height_/height_));
-                if (tile->GetType() == TileType::Path) {
-                    start_ = Vector2i({(int)((event.coords.x*grid_width_)/(width_*0.8f)), (int)(event.coords.y*grid_height_/height_)});
+            if (event.body.upper_left_x < MAP_WIDTH && start_selected) {
+                Tile* tile = map->GetTile((int)((event.body.upper_left_x*grid_width_)/(width_*0.8f)), (int)(event.body.upper_left_y*grid_height_/height_));
+                if (tile->type == TileType::Path) {
+                    start_ = Vector2i({(int)((event.body.upper_left_x*grid_width_)/(width_*0.8f)), (int)(event.body.upper_left_y*grid_height_/height_)});
                     map->UpdateTile(start_.x, start_.y, selectedTile, true);
                 }
-            } else if (event.coords.x < width_*0.8f && end_selected) {
-                Map* map = dynamic_cast<Map*>(canvases_[0].second);
-                Tile* tile = map->GetTile((int)((event.coords.x*grid_width_)/(width_*0.8f)), (int)(event.coords.y*grid_height_/height_));
-                if (tile->GetType() == TileType::Path) {
-                    end_ = Vector2i({(int)((event.coords.x*grid_width_)/(width_*0.8f)), (int)(event.coords.y*grid_height_/height_)});
+            } else if (event.body.upper_left_x < width_*0.8f && end_selected) {
+                Tile* tile = map->GetTile((int)((event.body.upper_left_x*grid_width_)/(width_*0.8f)), (int)(event.body.upper_left_y*grid_height_/height_));
+                if (tile->type == TileType::Path) {
+                    end_ = Vector2i({(int)((event.body.upper_left_x*grid_width_)/(width_*0.8f)), (int)(event.body.upper_left_y*grid_height_/height_)});
                     map->UpdateTile(end_.x, end_.y, selectedTile, true);
                 }
-            } else if (event.coords.x < width_*0.8f) {
-                Map* map = dynamic_cast<Map*>(canvases_[0].second);
-                map->UpdateTile((event.coords.x*grid_width_)/(width_*0.8f), (event.coords.y*grid_height_/height_), selectedTile, false);
+            } else if (event.body.upper_left_x < width_*0.8f) {
+                map->UpdateTile((event.body.upper_left_x*grid_width_)/(width_*0.8f), (event.body.upper_left_y*grid_height_/height_), selectedTile, false);
             }
             break;
         case EventType::Start:
@@ -95,13 +93,13 @@ Event MapEditorState::Save() {
         for (int y = 0; y < grid_height_; y++) {
             for(int x = 0; x < grid_width_; x++) {
                 Tile* tile = map->GetTile(x, y);
-                mapFile << (int)(tile->GetType());
+                mapFile << (int)(tile->type);
             }
             mapFile << std::endl;
         }
         mapFile.close();
     }
-    Path_Finder finder(MAPS[1]);
+    PathFinder finder(MAPS[1]);
     if (finder.findPath()) {
         return Event(EventType::PopState);
     } else {

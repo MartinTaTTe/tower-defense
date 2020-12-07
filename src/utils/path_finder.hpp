@@ -9,10 +9,10 @@
 //#include "../map/map.hpp"
 
 
-class Path_Finder {
+class PathFinder {
 public:
 //skicka in map och start rutan
-    Path_Finder(const std::string& map) : map_(map){
+    PathFinder(const std::string& map) : map_(map){
         //findPath();
         error_tile_.first = -1;
         error_tile_.second = -1;

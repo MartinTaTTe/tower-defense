@@ -1,6 +1,5 @@
 #pragma once
-#include <vector>
-#include <string>
+
 #include "../gui/drawable.hpp"
 #include "../utils/app_constants.hpp"
 #include "../utils/event.hpp"
@@ -8,7 +7,7 @@
 class Enemy : public Drawable {
 public:
     Enemy(
-        const Vector4i& body,
+        const Vector4f& body,
         float x,
         float y,
         float max_hp,

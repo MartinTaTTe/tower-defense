@@ -1,13 +1,11 @@
 #include "map.hpp"
 #include <fstream>
-#include <iostream>
 #include "../enemies/normal_enemy.hpp"
 #include "../utils/path_finder.hpp"
 
-
-Map::Map(const Vector4i& body, const std::string& filePath)
+Map::Map(const Vector4f& body, const std::string& filePath)
     : Canvas(body) {
-    auto path_finder = Path_Finder(filePath);
+    auto path_finder = PathFinder(filePath);
     path_finder.findPath();
     path_ = path_finder.getPath();
     path_length_ = path_.size();
@@ -15,23 +13,16 @@ Map::Map(const Vector4i& body, const std::string& filePath)
     std::string line;
     std::getline(file,line);
     grid_width_  = stoi(line.substr(0, line.find('x')));
-    grid_height_ = stoi(line.substr(line.find('x') + 1, line.find('x') + 2));
-    tile_width_  = 1.0f / grid_width_;
+    grid_height_ = stoi(line.substr(line.find('x') + 1));
+    tile_width_  = 1.0f  / grid_width_;
     tile_height_ = 1.0f / grid_height_;
+    std::cout << "Tile " << tile_width_ << ", " << tile_height_ << std::endl;
     std::getline(file,line);
     start_.x = stoi(line.substr(0, line.find(',')));
-    start_.y = stoi(line.substr(line.find(',') + 1, line.find(',') + 2));
+    start_.y = stoi(line.substr(line.find(',') + 1));
     std::getline(file,line);
     end_.x = stoi(line.substr(0, line.find(',')));
-    end_.y = stoi(line.substr(line.find(',') + 1, line.find(',') + 2));
-    //test som printar ut pathen för en map, för att kolla att den funkar
-    /*Path_Finder path(filePath);
-    std::cout << path.findPath() << std::endl;
-    auto stig = path.getPath();
-    for (auto it : stig){
-        std::cout << "(" << it.first << ":" << it.second << ")" << std::endl;
-    }*/
-    //test slut
+    end_.y = stoi(line.substr(line.find(',') + 1));
     int x = 0;
     int y = 0;
     while(std::getline(file,line)) {
@@ -45,45 +36,37 @@ Map::Map(const Vector4i& body, const std::string& filePath)
             };
             drawables_.push_back(
                 std::pair<Vector4f, Drawable*>
-                (position,
-                new Tile({
-                    (int)(position.upper_left_x * width_)   + GetPosition().x,
-                    (int)(position.upper_left_y * height_)  + GetPosition().y,
-                    (int)(position.lower_right_x * width_)  + GetPosition().x,
-                    (int)(position.lower_right_y * height_) + GetPosition().y
-                }, static_cast<TileType>(i - '0'))));
+                (position, new Tile(body_ * position, static_cast<TileType>(i - '0')))
+            );
             x++;
         }
         y++;
     }
     file.close();
-    Update(body);
 }
 
-Map::Map(const Vector4i& body, int grid_width, int grid_height)
-    : Canvas(body), grid_width_(grid_width), grid_height_(grid_height) {
-    float tile_width =  1.0f / grid_width_;
-    float tile_height = 1.0f / grid_height_;
+Map::Map(const Vector4f& body, int grid_width, int grid_height)
+    : 
+    Canvas(body),
+    grid_width_(grid_width),
+    grid_height_(grid_height),
+    tile_width_(MAP_WIDTH  / grid_width_),
+    tile_height_(MAP_HEIGHT / grid_height_) 
+    {
     for(int y = 0; y < grid_height_; y++) {
         for (int x = 0; x < grid_width_; x++) {
            Vector4f position = {
-                tile_width * x,
-                tile_height * y,
-                tile_width * (x + 1),
-                tile_height * (y + 1)
+                tile_width_  * x,
+                tile_height_ * y,
+                tile_width_  * (x + 1),
+                tile_height_ * (y + 1)
             };
             drawables_.push_back(
                 std::pair<Vector4f, Drawable*>
-                (position,
-                new Tile({
-                    (int)(position.upper_left_x * width_)   + GetPosition().x,
-                    (int)(position.upper_left_y * height_)  + GetPosition().y,
-                    (int)(position.lower_right_x * width_)  + GetPosition().x,
-                    (int)(position.lower_right_y * height_) + GetPosition().y
-                }, TileType::Grass)));
+                (position, new Tile(body_ * position, TileType::Grass))
+            );
         }
     }
-    Update(body);
 }
 
 Map::~Map() {
@@ -91,19 +74,11 @@ Map::~Map() {
         delete enemy.second;
 }
 
-void Map::UpdateTile(int x, int y, TileType& tileType, bool high) {
-    if (high) {
-        drawables_[x + y * grid_width_].second->Highlight(high);
-    } else {
-        delete drawables_[x + y * grid_width_].second;
-        Vector4f position = drawables_[x + y * grid_width_].first;
-        drawables_[x + y * grid_width_].second = new Tile({
-                        (int)(position.upper_left_x * width_)   + GetPosition().x,
-                        (int)(position.upper_left_y * height_)  + GetPosition().y,
-                        (int)(position.lower_right_x * width_)  + GetPosition().x,
-                        (int)(position.lower_right_y * height_) + GetPosition().y
-                    }, tileType);
-    }
+void Map::UpdateTile(int x, int y, TileType& tileType, bool highlight) {
+    if (highlight)
+        drawables_[x + y * grid_width_].second->Highlight(highlight);
+    else
+        dynamic_cast<Tile*>(drawables_[x + y * grid_width_].second)->type = tileType;
 }
 
 Tile* Map::GetTile(int x, int y) const {
@@ -112,15 +87,15 @@ Tile* Map::GetTile(int x, int y) const {
     else return nullptr;
 }
 
-Event Map::UpdateEnemies(int width, int height, double d_time) {
+Event Map::UpdateEnemies(double d_time) {
     Event return_event;
     return_event.increments = {0, 0};
     for (auto enemy : enemies_) {
         if (enemy.second->currentTile != path_length_ - 1) {
             int d_x = 0, d_y = 0;
-            Vector2i next = GetNext(enemy.second->currentTile);
-            bool reached_x = std::abs((float)next.x - enemy.second->GetX()) < 0.05f;
-            bool reached_y = std::abs((float)next.y - enemy.second->GetY()) < 0.05f;
+            Vector2i next = GetNextTile(enemy.second->currentTile);
+            bool reached_x = std::abs((float)next.x - enemy.second->GetX()) < 0.01f;
+            bool reached_y = std::abs((float)next.y - enemy.second->GetY()) < 0.01f;
             if (reached_x && reached_y)
                 enemy.second->currentTile++;
             if (!reached_x && reached_y && (float)next.x > enemy.second->GetX())
@@ -131,11 +106,12 @@ Event Map::UpdateEnemies(int width, int height, double d_time) {
                 d_y = 1;
             else if (!reached_y && (float)next.y < enemy.second->GetY())
                 d_y = -1;
-            if (enemy.second->Update(0, d_time * d_x, d_time * d_y, tile_width_*width_, tile_height_*height_).type == EventType::Dead) {
+            if (enemy.second->Update(0, d_time * d_x, d_time * d_y, tile_width_ * MAP_WIDTH, tile_height_ * MAP_HEIGHT).type == EventType::Dead) { // damage on this line
                 return_event.type = EventType::Dead;
                 return_event.increments.y++;
             }
         } else {
+            delete enemies_.begin()->second;
             enemies_.erase(enemies_.begin());
             return_event.type = EventType::Dead;
             return_event.increments.x++;
@@ -144,33 +120,32 @@ Event Map::UpdateEnemies(int width, int height, double d_time) {
     return return_event;
 }
 
-Event Map::UpdateTowers(int width, int height, double d_time, Event event) {
+Event Map::UpdateTowers(double d_time, Event event) {
     if (event.type == EventType::MouseClickReleased) {
-        auto x = (int)((event.coords.x*grid_width_)/width_);
-        auto y = (event.coords.y*grid_height_/height_);
-        auto tile = GetTile(x, y);
-        Vector4f position = {
-            (float)x / grid_width_,
-            (float)y / grid_height_,
-            (float)(x+1) / grid_width_,
-            (float)(y+1) / grid_height_
-        };
+        Vector2f relative = body_ / event.position;
+        int x = relative.x * grid_width_;
+        int y = relative.y * grid_height_;
+        Tile* tile = GetTile(x, y);
         if (!tile->occupied) {
+            Vector4f position = {
+                (float)x     / grid_width_,
+                (float)y     / grid_height_,
+                (float)(x+1) / grid_width_,
+                (float)(y+1) / grid_height_
+            };
             Tower* tower;
             switch (event.tower_type)
             {
             case 'B':
-                if (GetTile(x, y)->GetType() == TileType::Grass) {
-                    tower = new Tower({
-                        (int)(position.upper_left_x * width_)   + GetPosition().x,
-                        (int)(position.upper_left_y * height_)  + GetPosition().y,
-                        (int)(position.lower_right_x * width_)  + GetPosition().x,
-                        (int)(position.lower_right_y * height_) + GetPosition().y
-                    }, x, y,
-                    BASIC_TOWER_DAMAGE,
-                    BASIC_TOWER_RANGE,
-                    true, true, true);
-                    buttons_.push_back(std::pair<Vector4f, Tower*>(position, tower));
+                if (tile->type == TileType::Grass) {
+                    tower = new Tower(body_ * position, x, y,
+                        BASIC_TOWER_DAMAGE,
+                        BASIC_TOWER_RANGE,
+                        true, true, true);
+                    buttons_.push_back(
+                        std::pair<Vector4f, Tower*>
+                        (position, tower)
+                    );
                     tile->occupied = true;
                 }
                 break;
@@ -200,19 +175,18 @@ Vector2i Map::GetGridSize() {
     return {grid_width_, grid_height_};
 }
 
-void Map::AddEnemy(const Vector4f& position, char type) {
+void Map::AddEnemy(const Vector2f& pos, char type) {
     Enemy* enemy;
+    Vector4f position = {
+        pos.x,
+        pos.y,
+        pos.x + tile_width_,
+        pos.y + tile_height_
+    };
     switch (type)
     {
     case 'N':
-        enemy = new NormalEnemy(
-            {
-                (int)(position.upper_left_x * width_)   + GetPosition().x,
-                (int)(position.upper_left_y * height_)  + GetPosition().y,
-                (int)(position.lower_right_x * width_)  + GetPosition().x,
-                (int)(position.lower_right_y * height_) + GetPosition().y
-            }, start_.x, start_.y
-        );
+        enemy = new NormalEnemy(body_ * position, start_.x, start_.y);
         break;
     default:
         break;
@@ -223,40 +197,12 @@ void Map::AddEnemy(const Vector4f& position, char type) {
     );
 }
 
-void Map::AddTower(const Vector4f& position, char type) {
-    Tower* tower;
-    switch (type)
-    {
-    case 'N':
-        tower = new Tower(
-            {
-                (int)(position.upper_left_x * width_)   + GetPosition().x,
-                (int)(position.upper_left_y * height_)  + GetPosition().y,
-                (int)(position.lower_right_x * width_)  + GetPosition().x,
-                (int)(position.lower_right_y * height_) + GetPosition().y
-            },
-            position.upper_left_x * MAP_WIDTH * WINDOW_WIDTH,
-            position.upper_left_y * WINDOW_HEIGHT,
-            BASIC_TOWER_DAMAGE,
-            BASIC_TOWER_RANGE,
-            true, true, true
-        );
-        break;
-    default:
-        break;
-    }
-    buttons_.push_back(
-        std::pair<Vector4f, Tower*>
-        (position, tower)
-    );
-}
-
 void Map::CustomDraw(sf::RenderWindow& window) const {
     for (auto enemy : enemies_)
         enemy.second->Draw(window);
 }
 
-Vector2i Map::GetNext(int i) {
+Vector2i Map::GetNextTile(int i) {
     auto next = path_[i + 1];
     return {next.first, next.second};
 }

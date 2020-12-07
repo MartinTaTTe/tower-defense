@@ -45,9 +45,12 @@ struct Event
             float damage;
             Enemy* enemy;
         };
-        Vector2i coords;
+        struct {
+            float x_f, y_f;
+        };
+        Vector2f position;
         Vector2i increments;
-        Vector4i body;
+        Vector4f body;
         TileType tileType;
         bool condition;
     };

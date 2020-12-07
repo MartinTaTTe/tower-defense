@@ -1,7 +1,7 @@
 #include "enemy.hpp"
 #include <iostream>
 
-Enemy::Enemy(const Vector4i& body, float x, float y, float max_hp, float speed, bool ground, const std::string& texturePath)
+Enemy::Enemy(const Vector4f& body, float x, float y, float max_hp, float speed, bool ground, const std::string& texturePath)
     : Drawable(body, texturePath),
     x_(x),
     y_(y),

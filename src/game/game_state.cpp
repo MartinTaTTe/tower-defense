@@ -7,10 +7,10 @@
 
 GameState::GameState(int width, int height, const std::string& mapPath)
     : State("Game State", width, height), since_last_spawn_(SPAWN_SPEED - 1), player_lives_(PLAYER_LIVES) {
-    AddCanvas({0, 0, 0.8f, 1}, mapPath); // map
+    AddCanvas({0, 0, MAP_WIDTH, MAP_HEIGHT}, mapPath); // map
     start_ = dynamic_cast<Map*>(canvases_.back().second)->GetStart();
     canvases_.back().second->AddText({0.8f, 0}, "10 lives", 30); // life counter
-    AddCanvas({0.8f, 0, 1, 1}); // siderbar
+    AddCanvas({MAP_WIDTH, 0, 1, 1}); // siderbar
     canvases_.back().second->AddButton({0, 0.8f, 1, 1}, T_RETURN_TO_MENU_BUTTON, Event(EventType::PopState)); // return to menu
     canvases_[0].second->AddText({0, 0}, "0 FPS", 30); // FPS counter
     canvases_.back().second->AddButton({0, 0.6f, 1, 0.8f}, T_DEFAULT_BUTTON, Event(EventType::Pause)); // pause button
@@ -23,14 +23,14 @@ GameState::GameState(int width, int height, const std::string& mapPath)
 
 void GameState::Update(double d_time) {
     canvases_[0].second->UpdateString(1, std::to_string((int)(1.0 / d_time)) + " FPS");
-    canvases_[0].second->UpdateString(0, std::to_string(player_lives_) + " lives");
+    canvases_[0].second->UpdateString(0, std::to_string(player_lives_) + (player_lives_ == 1 ? " life" : " lives"));
     if (!paused_) {
         since_last_spawn_ += d_time;
         if (!wave_.empty() && since_last_spawn_ > SPAWN_SPEED) {
             SendEnemy();
             since_last_spawn_ = 0;
         }
-        Event event = dynamic_cast<Map*>(canvases_[0].second)->UpdateEnemies(width_, height_, d_time);
+        Event event = dynamic_cast<Map*>(canvases_[0].second)->UpdateEnemies(d_time);
         switch(event.type) {
             case EventType::Dead:
                 player_lives_ = player_lives_ - event.increments.x;
@@ -38,7 +38,7 @@ void GameState::Update(double d_time) {
             default:
                 break;
         }
-        dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(width_, height_, d_time, Event());
+        dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(width_, Event());
     }
 }
 
@@ -58,9 +58,9 @@ Event GameState::CustomOnClick(Event event) {
             selected_tower_ = event.tower_type;
             break;
         case EventType::MouseClickReleased:
-            if (event.coords.x < width_ * MAP_WIDTH) {
+            if (event.x_f < MAP_WIDTH && event.y_f < MAP_HEIGHT) {
                 event.tower_type = selected_tower_;
-                dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(width_, height_, 0, event);
+                dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(0, event);
             }
             break;
         default:
@@ -105,9 +105,7 @@ void GameState::SendEnemy() {
     if (!wave_.empty()) {
         map->AddEnemy({
             1.0f / grid_size.x * start_.x,
-            1.0f / grid_size.y * start_.y,
-            1.0f / grid_size.x * (start_.x + 1),
-            1.0f / grid_size.y * (start_.y + 1)
+            1.0f / grid_size.y * start_.y
         }, wave_.back());
         wave_.pop_back();
     }

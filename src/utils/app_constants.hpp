@@ -12,6 +12,7 @@ const int BACKGROUND_R = 200;
 const int BACKGROUND_G = 200;
 const int BACKGROUND_B = 200;
 const float MAP_WIDTH = 0.8f; // 0-1
+const float MAP_HEIGHT = 1.0f; // 0-1
 const std::string DEFAULT_FONT = "utils/OpenSans.ttf";
 const double SPAWN_SPEED = 1.0;
 const int PLAYER_LIVES = 10;

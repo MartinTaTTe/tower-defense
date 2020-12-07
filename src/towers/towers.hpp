@@ -9,7 +9,7 @@ typedef std::vector<std::pair<Vector4f, Enemy*>> Enemies;
 class Tower: public Button {
 public:
     Tower(
-        const Vector4i& vector,
+        const Vector4f& vector,
         int x, int y,
         float damage,
         float range,
@@ -33,7 +33,7 @@ protected:
     int                 upgrade_price_;
     bool                can_attack_air_;
     bool                can_attack_ground_;
-    bool                ground_; //vilken sort av "underlag" -> true = ground, false = water
+    bool                ground_;
     Enemy*              target_;
     sf::CircleShape     radius_;
 };

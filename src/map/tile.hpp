@@ -12,10 +12,8 @@ enum TileType : int8_t {
 
 class Tile : public Drawable {
 public: 
-    Tile(const Vector4i& body, TileType type = Grass);
+    Tile(const Vector4f& body, TileType type = Grass);
     ~Tile() { };
-    TileType GetType() const;
+    TileType type;
     bool     occupied;
-private:
-    TileType type_;
 };
