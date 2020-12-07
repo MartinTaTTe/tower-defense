@@ -101,6 +101,7 @@ const std::string T_SELECT_START_BUTTON = "textures/buttons/Select_start_button.
 const std::string T_SELECT_END_BUTTON = "textures/buttons/Select_end_button.png";
 
 const std::string T_DEFAULT_ENEMY = "textures/enemy.png";
+const std::string T_FLYING_ENEMY = "textures/flying_enemy.png";
 const std::string T_TILES[] = {
     "textures/path.png",
     "textures/grass.png",
