@@ -23,7 +23,8 @@ enum EventType : int8_t {
     Save,
     Start,
     End,
-    Pause
+    Pause,
+    SendWave
 };
 
 enum TileType : int8_t;

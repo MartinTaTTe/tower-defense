@@ -13,6 +13,7 @@ GameState::GameState(int width, int height, const std::string& mapPath)
     canvases_.back().second->AddButton({0, 0.8f, 1, 1}, T_RETURN_TO_MENU_BUTTON, Event(EventType::PopState)); // return to menu
     canvases_[0].second->AddText({0, 0}, "0 FPS", 30); // FPS counter
     canvases_.back().second->AddButton({0, 0.6f, 1, 0.8f}, T_DEFAULT_BUTTON, Event(EventType::Pause)); // pause button
+    canvases_.back().second->AddButton({0, 0.4f, 1, 0.6f}, T_DEFAULT_BUTTON, Event(EventType::SendWave)); // pause button
     ReadWaves();
 }
 
@@ -20,7 +21,7 @@ void GameState::Update(double d_time) {
     canvases_[0].second->UpdateString(0, std::to_string((int)(1.0 / d_time)) + " FPS");
     if (!paused_) {
         since_last_spawn_ += d_time;
-        if (since_last_spawn_ > SPAWN_SPEED) {
+        if (!wave_.empty() && since_last_spawn_ > SPAWN_SPEED) {
             SendWave();
             since_last_spawn_ = 0;
         }
@@ -34,6 +35,8 @@ Event GameState::CustomOnClick(Event event) {
         case EventType::Pause:
             paused_ = !paused_;
             break;
+        case EventType::SendWave:
+            
         case EventType::PopState:
             return_event.type = EventType::PopState;
             break;
