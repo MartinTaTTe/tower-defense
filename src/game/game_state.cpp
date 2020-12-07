@@ -6,9 +6,10 @@
 #include <iostream>
 
 GameState::GameState(int width, int height, const std::string& mapPath)
-    : State("Game State", width, height), since_last_spawn_(SPAWN_SPEED - 1) {
+    : State("Game State", width, height), since_last_spawn_(SPAWN_SPEED - 1), player_lives_(PLAYER_LIVES) {
     AddCanvas({0, 0, 0.8f, 1}, mapPath); // map
     start_ = dynamic_cast<Map*>(canvases_.back().second)->GetStart();
+    canvases_.back().second->AddText({0.8f, 0}, "10 lives", 30); // life counter
     AddCanvas({0.8f, 0, 1, 1}); // siderbar
     canvases_.back().second->AddButton({0, 0.8f, 1, 1}, T_RETURN_TO_MENU_BUTTON, Event(EventType::PopState)); // return to menu
     canvases_[0].second->AddText({0, 0}, "0 FPS", 30); // FPS counter
@@ -18,14 +19,22 @@ GameState::GameState(int width, int height, const std::string& mapPath)
 }
 
 void GameState::Update(double d_time) {
-    canvases_[0].second->UpdateString(0, std::to_string((int)(1.0 / d_time)) + " FPS");
+    canvases_[0].second->UpdateString(1, std::to_string((int)(1.0 / d_time)) + " FPS");
+    canvases_[0].second->UpdateString(0, std::to_string(player_lives_) + " lives");
     if (!paused_) {
         since_last_spawn_ += d_time;
         if (!wave_.empty() && since_last_spawn_ > SPAWN_SPEED) {
-            SendWave();
+            SendEnemy();
             since_last_spawn_ = 0;
         }
-        dynamic_cast<Map*>(canvases_[0].second)->CustomUpdate(width_, height_, d_time);
+        Event event = dynamic_cast<Map*>(canvases_[0].second)->CustomUpdate(width_, height_, d_time);
+        switch(event.type) {
+            case EventType::Dead:
+                player_lives_ = player_lives_ - event.increments.x;
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -36,7 +45,8 @@ Event GameState::CustomOnClick(Event event) {
             paused_ = !paused_;
             break;
         case EventType::SendWave:
-            
+            AddWave();
+            break;
         case EventType::PopState:
             return_event.type = EventType::PopState;
             break;
@@ -66,18 +76,26 @@ void GameState::ReadWaves(const std::string& filePath) {
     }
 }
 
-void GameState::SendWave() {
+void GameState::AddWave() {
     if (!waves_.empty()) {
-        Map* map = dynamic_cast<Map*>(canvases_[0].second);
-        Vector2i grid_size = map->GetGridSize();
         for (auto enemy : waves_.back()) {
-            map->AddEnemy({
-                1.0f / grid_size.x * start_.x,
-                1.0f / grid_size.y * start_.y,
-                1.0f / grid_size.x * (start_.x + 1),
-                1.0f / grid_size.y * (start_.y + 1)
-            }, enemy.second);
+            for (int i = 0; i < enemy.first; i++) 
+                wave_.push_back(enemy.second);
         }
         waves_.pop_back();
+    }
+}
+
+void GameState::SendEnemy() {
+    Map* map = dynamic_cast<Map*>(canvases_[0].second);
+    Vector2i grid_size = map->GetGridSize();
+    if (!wave_.empty()) {
+        map->AddEnemy({
+            1.0f / grid_size.x * start_.x,
+            1.0f / grid_size.y * start_.y,
+            1.0f / grid_size.x * (start_.x + 1),
+            1.0f / grid_size.y * (start_.y + 1)
+        }, wave_.back());
+        wave_.pop_back();
     }
 }

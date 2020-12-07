@@ -24,7 +24,8 @@ enum EventType : int8_t {
     Start,
     End,
     Pause,
-    SendWave
+    SendWave,
+    EnemyEnd
 };
 
 enum TileType : int8_t;

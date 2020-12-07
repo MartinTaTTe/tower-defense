@@ -16,10 +16,12 @@ private:
     void        Update(double d_time) override;
     Event       CustomOnClick(Event event) override;
     void        ReadWaves(const std::string& filePath = W_BASIC_WAVES);
-    void        SendWave();
+    void        AddWave();
+    void        SendEnemy();
     Waves       waves_;
     Wave        wave_;
     Vector2i    start_;
     double      since_last_spawn_;
     bool        paused_;
+    int         player_lives_;
 };

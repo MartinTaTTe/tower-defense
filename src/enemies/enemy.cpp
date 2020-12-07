@@ -31,10 +31,8 @@ Event Enemy::Update(float damage, float d_x_, float d_y_, float tile_width, floa
     if (hp_ <= 0) {
         event.type = EventType::Dead;
     }
-    std::cout << "Update  " << d_x_ << ", " << d_y_ << std::endl;
     x_ += d_x_ * speed_;
     y_ += d_y_ * speed_;
-    std::cout << "Updated " << x_ << ", " << y_ << std::endl;
     Move(d_x_ * speed_*tile_width, d_y_ * speed_*tile_height);
     return event;
 }

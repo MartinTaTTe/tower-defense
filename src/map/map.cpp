@@ -114,9 +114,9 @@ Tile* Map::GetTile(int x, int y) const {
 
 Event Map::CustomUpdate(int width, int height, double d_time) {
     Event return_event;
+    return_event.increments = {0, 0};
     for (auto enemy : enemies_) {
         if (enemy.second->currentTile != path_length_ - 1) {
-            std::cout << "Current tile " << enemy.second->currentTile << std::endl;
             int d_x = 0, d_y = 0;
             Vector2i next = GetNext(enemy.second->currentTile);
             bool reached_x = std::abs((float)next.x - enemy.second->GetX()) < 0.05f;
@@ -131,11 +131,14 @@ Event Map::CustomUpdate(int width, int height, double d_time) {
                 d_y = 1;
             else if (!reached_y && (float)next.y < enemy.second->GetY())
                 d_y = -1;
-            return_event = enemy.second->Update(0, d_time * d_x, d_time * d_y, tile_width_*width_, tile_height_*height_);
+            if (enemy.second->Update(0, d_time * d_x, d_time * d_y, tile_width_*width_, tile_height_*height_).type == EventType::Dead) {
+                return_event.type = EventType::Dead;
+                return_event.increments.y++;
+            }
         } else {
-            delete enemy.second;
-            enemies_.pop_back();
+            enemies_.erase(enemies_.begin());
             return_event.type = EventType::Dead;
+            return_event.increments.x++;
         }
     }
     return return_event;
