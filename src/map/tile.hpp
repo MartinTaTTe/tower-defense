@@ -15,7 +15,7 @@ public:
     Tile(const Vector4i& body, TileType type = Grass);
     ~Tile() { };
     TileType GetType() const;
-    
+    bool     occupied;
 private:
     TileType type_;
 };

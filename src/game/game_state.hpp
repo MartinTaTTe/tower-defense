@@ -24,4 +24,5 @@ private:
     double      since_last_spawn_;
     bool        paused_;
     int         player_lives_;
+    char        selected_tower_;
 };

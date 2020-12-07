@@ -5,6 +5,7 @@ Map is custom Canvas used for controlling all objects on the game map, such as T
 #include "tile.hpp"
 #include "../gui/canvas.hpp"
 #include "../enemies/enemy.hpp"
+#include "../towers/towers.hpp"
 
 typedef std::vector<std::pair<Vector4f, Enemy*>> Enemies;
 typedef std::vector<std::pair<int, int>> MapPath;
@@ -16,11 +17,13 @@ public:
     ~Map();
     void                UpdateTile(int x, int y, TileType& tileType, bool high);
     Tile*               GetTile(int x, int y) const;
-    Event               CustomUpdate(int width, int height, double d_time);
+    Event               UpdateEnemies(int width, int height, double d_time);
+    Event               UpdateTowers(int width, int height, double d_time, Event event);
     Vector2i            GetStart();
     Vector2i            GetEnd();
     Vector2i            GetGridSize();
     void                AddEnemy(const Vector4f& position, char type);
+    void                AddTower(const Vector4f& position, char type);
     void                CustomDraw(sf::RenderWindow& window) const override;
 private:
     Vector2i            GetNext(int i);

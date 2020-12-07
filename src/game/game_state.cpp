@@ -15,6 +15,9 @@ GameState::GameState(int width, int height, const std::string& mapPath)
     canvases_[0].second->AddText({0, 0}, "0 FPS", 30); // FPS counter
     canvases_.back().second->AddButton({0, 0.6f, 1, 0.8f}, T_DEFAULT_BUTTON, Event(EventType::Pause)); // pause button
     canvases_.back().second->AddButton({0, 0.4f, 1, 0.6f}, T_DEFAULT_BUTTON, Event(EventType::SendWave)); // pause button
+    Event event(EventType::SelectTower);
+    event.tower_type = 'B';
+    canvases_.back().second->AddButton({0, 0, 1, 0.2f}, T_BASIC_TOWER, event); // tower button
     ReadWaves();
 }
 
@@ -27,7 +30,7 @@ void GameState::Update(double d_time) {
             SendEnemy();
             since_last_spawn_ = 0;
         }
-        Event event = dynamic_cast<Map*>(canvases_[0].second)->CustomUpdate(width_, height_, d_time);
+        Event event = dynamic_cast<Map*>(canvases_[0].second)->UpdateEnemies(width_, height_, d_time);
         switch(event.type) {
             case EventType::Dead:
                 player_lives_ = player_lives_ - event.increments.x;
@@ -35,6 +38,7 @@ void GameState::Update(double d_time) {
             default:
                 break;
         }
+        dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(width_, height_, d_time, Event());
     }
 }
 
@@ -48,7 +52,16 @@ Event GameState::CustomOnClick(Event event) {
             AddWave();
             break;
         case EventType::PopState:
-            return_event.type = EventType::PopState;
+            return event;
+            break;
+        case EventType::SelectTower:
+            selected_tower_ = event.tower_type;
+            break;
+        case EventType::MouseClickReleased:
+            if (event.coords.x < width_ * MAP_WIDTH) {
+                event.tower_type = selected_tower_;
+                dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(width_, height_, 0, event);
+            }
             break;
         default:
             break;

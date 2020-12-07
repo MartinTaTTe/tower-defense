@@ -2,67 +2,54 @@
 #include "../utils/texture_manager.hpp"
 
 
-    Tower::Tower(const Vector4f& vector, int x, int y, int price, float damage, float speed, float range, int enemy_type, bool tile_type, const std::string& texturePath):
-    x_(x),
-    y_(y),
-    
-    price_(price), 
-    damage_(damage), 
-    speed_(speed),
-    range_(range),
-    enemy_type_(enemy_type),
-    tile_type_(tile_type),
-    upgrade_(1),
-    money_from_wave_(0),
-    target_(nullptr),
-    Button(vector){
+Tower::Tower(
+    const Vector4i& vector,
+    int x, int y,
+    float damage,
+    float range,
+    bool can_attack_air,
+    bool can_attack_ground,
+    bool ground,
+    const std::string& texturePath
+):
+x_(x),
+y_(y),
+damage_(damage), 
+range_(range),
+can_attack_air_(can_attack_air),
+can_attack_ground_(can_attack_ground),
+ground_(ground),
+Button(vector, texturePath) {
 
-        radius_.setRadius(range);
-        radius_.setFillColor(sf::Color::Transparent);
-        radius_.setOutlineThickness(10);
-        radius_.setOutlineColor(sf::Color::Red);
-    }
+    radius_.setRadius(range);
+    radius_.setFillColor(sf::Color::Transparent);
+    radius_.setOutlineThickness(10);
+    radius_.setOutlineColor(sf::Color::Red);
+}
 
-    void Tower::Attack(Enemy* target) const{
-        if(target != nullptr) {
-            target->Update(damage_);
-        }
-    }
-    
-    int Tower::GetPrice() const{
-        return price_;
-    }
-    float Tower::GetSpeed() const{
-        return speed_;
-    }
-    int Tower::GetUpgrade() const{
-        return upgrade_;
-    }
-    float Tower::GetRange(){
-        return range_;
-    }
-    int Tower:: MoneyFromWave() const{
-        return money_from_wave_;
-    }
-    bool Tower::CanBeUpgraded() const{
-        return upgrade_ < upgrade_max_;
-    }
-    void Tower::Update(std::vector<Enemy*>& enemies){
-        if(target_ == nullptr){
-            for(auto enemy: enemies){
-                if(((enemy->GetX() - x_)*(enemy->GetX() - x_) + (enemy->GetY() - y_)*(enemy->GetY() - y_)) <= range_*range_){
-                    if( enemy->IsGround() && (enemy_type_ == 1 || enemy_type_ == 3)){
-                        target_ = enemy;
-                    }else if(!enemy->IsGround() && enemy_type_ == 2){
-                        target_ = enemy;
-                    }
-                    break;
+Event Tower::Update(const Enemies& enemies, Event event){
+    Event return_event;
+    if(target_ == nullptr){
+        for(auto enemy: enemies){
+            if(((enemy.second->GetX() - x_)*(enemy.second->GetX() - x_) + (enemy.second->GetY() - y_)*(enemy.second->GetY() - y_)) <= range_*range_){
+                if( enemy.second->IsGround() && can_attack_ground_){
+                    target_ = enemy.second;
+                }else if(!enemy.second->IsGround() && can_attack_air_){
+                    target_ = enemy.second;
                 }
+                break;
             }
-        }else{
-            Attack(target_);
-            if(((target_->GetX() - x_)*(target_->GetX() - x_) + (target_->GetY() - y_)*(target_->GetY() - y_)) > range_*range_){
-                    target_ = nullptr;
-                    Update(enemies);
         }
+        return_event.type = EventType::DamageEnemy;
+        return_event.damage = damage_;
+        return_event.enemy = target_;
+    }else{
+        if(((target_->GetX() - x_)*(target_->GetX() - x_) + (target_->GetY() - y_)*(target_->GetY() - y_)) > range_*range_)
+            target_ = nullptr;
     }
+    return return_event;
+}
+
+void Tower::Upgrade() {
+    
+}

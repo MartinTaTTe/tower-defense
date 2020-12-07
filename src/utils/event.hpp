@@ -25,10 +25,12 @@ enum EventType : int8_t {
     End,
     Pause,
     SendWave,
-    EnemyEnd
+    DamageEnemy,
+    SelectTower
 };
 
 enum TileType : int8_t;
+class Enemy;
 
 struct Event
 {
@@ -37,6 +39,11 @@ struct Event
     union {
         struct {
             int x, y;
+            char tower_type;
+        };
+        struct {
+            float damage;
+            Enemy* enemy;
         };
         Vector2i coords;
         Vector2i increments;

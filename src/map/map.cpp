@@ -112,7 +112,7 @@ Tile* Map::GetTile(int x, int y) const {
     else return nullptr;
 }
 
-Event Map::CustomUpdate(int width, int height, double d_time) {
+Event Map::UpdateEnemies(int width, int height, double d_time) {
     Event return_event;
     return_event.increments = {0, 0};
     for (auto enemy : enemies_) {
@@ -142,6 +142,51 @@ Event Map::CustomUpdate(int width, int height, double d_time) {
         }
     }
     return return_event;
+}
+
+Event Map::UpdateTowers(int width, int height, double d_time, Event event) {
+    if (event.type == EventType::MouseClickReleased) {
+        auto x = (int)((event.coords.x*grid_width_)/width_);
+        auto y = (event.coords.y*grid_height_/height_);
+        auto tile = GetTile(x, y);
+        Vector4f position = {
+            (float)x / grid_width_,
+            (float)y / grid_height_,
+            (float)(x+1) / grid_width_,
+            (float)(y+1) / grid_height_
+        };
+        if (!tile->occupied) {
+            Tower* tower;
+            switch (event.tower_type)
+            {
+            case 'B':
+                if (GetTile(x, y)->GetType() == TileType::Grass) {
+                    tower = new Tower({
+                        (int)(position.upper_left_x * width_)   + GetPosition().x,
+                        (int)(position.upper_left_y * height_)  + GetPosition().y,
+                        (int)(position.lower_right_x * width_)  + GetPosition().x,
+                        (int)(position.lower_right_y * height_) + GetPosition().y
+                    }, x, y,
+                    BASIC_TOWER_DAMAGE,
+                    BASIC_TOWER_RANGE,
+                    true, true, true);
+                    buttons_.push_back(std::pair<Vector4f, Tower*>(position, tower));
+
+                }
+                break;
+            default:
+                break;
+            }
+        }
+    } else {
+        for (auto button : buttons_) {
+            Tower* tower = dynamic_cast<Tower*>(button.second);
+            if (tower != nullptr) {
+                //tower->Update(enemies_, event);
+            }
+        }
+    }
+    return event;
 }
 
 Vector2i Map::GetStart() {
@@ -175,6 +220,34 @@ void Map::AddEnemy(const Vector4f& position, char type) {
     enemies_.push_back(
         std::pair<Vector4f, Enemy*>
         (position, enemy)
+    );
+}
+
+void Map::AddTower(const Vector4f& position, char type) {
+    Tower* tower;
+    switch (type)
+    {
+    case 'N':
+        tower = new Tower(
+            {
+                (int)(position.upper_left_x * width_)   + GetPosition().x,
+                (int)(position.upper_left_y * height_)  + GetPosition().y,
+                (int)(position.lower_right_x * width_)  + GetPosition().x,
+                (int)(position.lower_right_y * height_) + GetPosition().y
+            },
+            position.upper_left_x * MAP_WIDTH * WINDOW_WIDTH,
+            position.upper_left_y * WINDOW_HEIGHT,
+            BASIC_TOWER_DAMAGE,
+            BASIC_TOWER_RANGE,
+            true, true, true
+        );
+        break;
+    default:
+        break;
+    }
+    buttons_.push_back(
+        std::pair<Vector4f, Tower*>
+        (position, tower)
     );
 }
 

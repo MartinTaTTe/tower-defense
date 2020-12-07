@@ -2,7 +2,7 @@
 #include "../utils/app_constants.hpp"
 
 Tile::Tile(const Vector4i& body, TileType type)
-    : Drawable(body, T_TILES[type]), type_(type) {
+    : Drawable(body, T_TILES[type]), type_(type), occupied(false) {
 
 }
 

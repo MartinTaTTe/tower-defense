@@ -12,6 +12,7 @@ compile:
 	g++ -c ./utils/*.cpp
 	g++ -c ./map/*.cpp
 	g++ -c ./enemies/*.cpp
+	g++ -c ./towers/towers.cpp
 
 link:
 	g++ *.o -o main -lsfml-graphics -lsfml-window -lsfml-system
