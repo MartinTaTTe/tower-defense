@@ -31,4 +31,6 @@ private:
     Vector2i            end_;
     MapPath             path_;
     int                 path_length_;
+    float               tile_width_;
+    float               tile_height_;
 };
