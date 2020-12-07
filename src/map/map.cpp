@@ -171,7 +171,7 @@ Event Map::UpdateTowers(int width, int height, double d_time, Event event) {
                     BASIC_TOWER_RANGE,
                     true, true, true);
                     buttons_.push_back(std::pair<Vector4f, Tower*>(position, tower));
-
+                    tile->occupied = true;
                 }
                 break;
             default:
