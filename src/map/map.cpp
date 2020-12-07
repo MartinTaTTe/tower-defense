@@ -16,8 +16,8 @@ Map::Map(const Vector4i& body, const std::string& filePath)
     std::getline(file,line);
     grid_width_  = stoi(line.substr(0, line.find('x')));
     grid_height_ = stoi(line.substr(line.find('x') + 1, line.find('x') + 2));
-    float tile_width  = 1.0f / grid_width_;
-    float tile_height = 1.0f / grid_height_;
+    tile_width_  = 1.0f / grid_width_;
+    tile_height_ = 1.0f / grid_height_;
     std::getline(file,line);
     start_.x = stoi(line.substr(0, line.find(',')));
     start_.y = stoi(line.substr(line.find(',') + 1, line.find(',') + 2));
@@ -38,10 +38,10 @@ Map::Map(const Vector4i& body, const std::string& filePath)
         x = 0;
         for (auto i : line) {
             Vector4f position = {
-                tile_width  * x,
-                tile_height * y,
-                tile_width  * (x + 1),
-                tile_height * (y + 1)
+                tile_width_  * x,
+                tile_height_ * y,
+                tile_width_  * (x + 1),
+                tile_height_ * (y + 1)
             };
             drawables_.push_back(
                 std::pair<Vector4f, Drawable*>
@@ -131,7 +131,7 @@ Event Map::CustomUpdate(int width, int height, double d_time) {
                 d_y = 1;
             else if (!reached_y && (float)next.y < enemy.second->GetY())
                 d_y = -1;
-            return_event = enemy.second->Update(0, d_time * d_x, d_time * d_y);
+            return_event = enemy.second->Update(0, d_time * d_x, d_time * d_y, tile_width_*width_, tile_height_*height_);
         } else {
             delete enemy.second;
             enemies_.pop_back();

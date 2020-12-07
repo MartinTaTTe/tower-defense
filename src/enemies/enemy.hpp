@@ -19,7 +19,7 @@ public:
     bool                IsGround() const;
     float               GetX();
     float               GetY();
-    virtual Event       Update(float damage, float d_x_, float d_y_);
+    virtual Event       Update(float damage, float d_x_, float d_y_, float tile_width, float tile_height);
     int                 currentTile;
 private:
     float               hp_;

@@ -25,7 +25,7 @@ float Enemy::GetY() {
     return y_;
 }
 
-Event Enemy::Update(float damage, float d_x_, float d_y_) {
+Event Enemy::Update(float damage, float d_x_, float d_y_, float tile_width, float tile_height) {
     Event event;
     hp_ -= damage;
     if (hp_ <= 0) {
@@ -35,6 +35,6 @@ Event Enemy::Update(float damage, float d_x_, float d_y_) {
     x_ += d_x_ * speed_;
     y_ += d_y_ * speed_;
     std::cout << "Updated " << x_ << ", " << y_ << std::endl;
-    Move(d_x_ * speed_, d_y_ * speed_);
+    Move(d_x_ * speed_*tile_width, d_y_ * speed_*tile_height);
     return event;
 }
