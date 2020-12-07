@@ -51,4 +51,13 @@ struct Vector4f {
             Vector2f upper_left, lower_right;
         };
     };
+
+    Vector4f operator*(const Vector4f& other) {
+        return {
+            upper_left_x  * other.upper_left_x,
+            upper_left_y  * other.upper_left_y,
+            lower_right_x * other.lower_right_x,
+            lower_right_y * other.lower_right_y
+        };
+    }
 };
