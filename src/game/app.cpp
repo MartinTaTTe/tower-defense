@@ -37,6 +37,7 @@ void App::Run(int width, int height) {
     auto start = std::chrono::high_resolution_clock::now();
 
     sf::RenderWindow window(sf::VideoMode(width, height), WINDOW_TITLE);
+    window.setFramerateLimit(120);
     PushState(new MenuState(width, height));
     auto last_frame = start;
     auto this_frame = std::chrono::high_resolution_clock::now();
