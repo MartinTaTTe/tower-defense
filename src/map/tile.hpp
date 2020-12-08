@@ -14,6 +14,7 @@ class Tile : public Drawable {
 public: 
     Tile(const Vector4f& body, TileType type = Grass);
     ~Tile() { };
+    void     UpdateTexture();
     TileType type;
     bool     occupied;
 };

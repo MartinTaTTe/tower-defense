@@ -18,6 +18,7 @@ public:
     virtual void    Highlight(bool highlight);
     virtual void    Disable(bool disable);
     void            Move(float d_x, float d_y);
+    void            UpdateTexture(const std::string& texturePath);
 protected:
     sf::RectangleShape body_;
 };

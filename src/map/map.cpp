@@ -50,8 +50,8 @@ Map::Map(const Vector4f& body, int grid_width, int grid_height)
     Canvas(body),
     grid_width_(grid_width),
     grid_height_(grid_height),
-    tile_width_(MAP_WIDTH  / grid_width_),
-    tile_height_(MAP_HEIGHT / grid_height_) 
+    tile_width_(1.0f  / grid_width_),
+    tile_height_(1.0f / grid_height_) 
     {
     for(int y = 0; y < grid_height_; y++) {
         for (int x = 0; x < grid_width_; x++) {
@@ -74,11 +74,20 @@ Map::~Map() {
         delete enemy.second;
 }
 
-void Map::UpdateTile(int x, int y, TileType& tileType, bool highlight) {
-    if (highlight)
-        drawables_[x + y * grid_width_].second->Highlight(highlight);
-    else
-        dynamic_cast<Tile*>(drawables_[x + y * grid_width_].second)->type = tileType;
+Event Map::UpdateTile(Event event, TileType& tileType, bool highlight) {
+    Vector2f relative = body_ / event.position;
+    int x = relative.x * grid_width_;
+    int y = relative.y * grid_height_;
+    event.x = -1;
+    if (highlight && GetTile(x, y)->type == TileType::Path) {
+        event.x = x;
+        event.y = y;
+         GetTile(x, y)->Highlight(highlight);
+    } else if (!highlight) {
+        GetTile(x, y)->type = tileType;
+        GetTile(x, y)->UpdateTexture();
+    }
+    return event;
 }
 
 Tile* Map::GetTile(int x, int y) const {

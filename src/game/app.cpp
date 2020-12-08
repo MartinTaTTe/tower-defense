@@ -61,6 +61,10 @@ void App::Run(int width, int height) {
                     break;
                 case EventType::PopState:
                     PopState();
+                    sf_event.size.width  = window.getSize().x;
+                    sf_event.size.height = window.getSize().y;
+                    sf_event.type = sf::Event::Resized;
+                    states_.back()->EventHandler(0, sf_event);
                     break;
                 case EventType::PushGameState:
                     PushState(new GameState(window.getSize().x, window.getSize().y, MAPS[event.x]));

@@ -15,8 +15,8 @@ public:
     Map(const Vector4f& body, const std::string& filePath);
     Map(const Vector4f& body, int grid_width, int grid_height);
     ~Map();
-    void                UpdateTile(int x, int y, TileType& tileType, bool highlight);
     Tile*               GetTile(int x, int y) const;
+    Event               UpdateTile(Event event, TileType& tileType, bool highlight);
     Event               UpdateEnemies(double d_time);
     Event               UpdateTowers(double d_time, Event event);
     Vector2i            GetStart();

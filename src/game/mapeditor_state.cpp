@@ -53,19 +53,17 @@ Event MapEditorState::CustomOnClick(Event event) {
             break;
         case EventType::MouseClickReleased:
             if (event.body.upper_left_x < MAP_WIDTH && start_selected) {
-                Tile* tile = map->GetTile((int)((event.body.upper_left_x*grid_width_)/(width_*0.8f)), (int)(event.body.upper_left_y*grid_height_/height_));
-                if (tile->type == TileType::Path) {
-                    start_ = Vector2i({(int)((event.body.upper_left_x*grid_width_)/(width_*0.8f)), (int)(event.body.upper_left_y*grid_height_/height_)});
-                    map->UpdateTile(start_.x, start_.y, selectedTile, true);
+                event = map->UpdateTile(event, selectedTile, true);
+                if (event.x != -1)
+                    start_ = event.increments;
+            } else if (event.body.upper_left_x < MAP_WIDTH && end_selected) {
+                event = map->UpdateTile(event, selectedTile, true);
+                if (event.x != -1) {
+                    end_ = event.increments;
                 }
-            } else if (event.body.upper_left_x < width_*0.8f && end_selected) {
-                Tile* tile = map->GetTile((int)((event.body.upper_left_x*grid_width_)/(width_*0.8f)), (int)(event.body.upper_left_y*grid_height_/height_));
-                if (tile->type == TileType::Path) {
-                    end_ = Vector2i({(int)((event.body.upper_left_x*grid_width_)/(width_*0.8f)), (int)(event.body.upper_left_y*grid_height_/height_)});
-                    map->UpdateTile(end_.x, end_.y, selectedTile, true);
-                }
-            } else if (event.body.upper_left_x < width_*0.8f) {
-                map->UpdateTile((event.body.upper_left_x*grid_width_)/(width_*0.8f), (event.body.upper_left_y*grid_height_/height_), selectedTile, false);
+            } else if (event.body.upper_left_x < MAP_WIDTH) {
+                std::cout << "Update Tile " << std::endl;
+                map->UpdateTile(event, selectedTile, false);
             }
             break;
         case EventType::Start:

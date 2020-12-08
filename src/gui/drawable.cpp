@@ -28,3 +28,7 @@ void Drawable::Move(float d_x, float d_y) {
     auto current_pos = body_.getPosition();
     body_.setPosition({current_pos.x + d_x * WINDOW_WIDTH, current_pos.y + d_y * WINDOW_HEIGHT});
 }
+
+void Drawable::UpdateTexture(const std::string& texturePath) {
+    body_.setTexture(&GetTexture(texturePath));
+}
