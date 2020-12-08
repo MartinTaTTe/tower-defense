@@ -25,4 +25,5 @@ private:
     bool        paused_;
     int         player_lives_;
     char        selected_tower_;
+    int         wave_count_;
 };

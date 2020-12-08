@@ -6,10 +6,11 @@
 #include <iostream>
 
 GameState::GameState(int width, int height, const std::string& mapPath)
-    : State("Game State", width, height), since_last_spawn_(SPAWN_SPEED - 1), player_lives_(PLAYER_LIVES) {
+    : State("Game State", width, height), since_last_spawn_(SPAWN_SPEED - 1), player_lives_(PLAYER_LIVES), wave_count_(0) {
     AddCanvas({0, 0, MAP_WIDTH, MAP_HEIGHT}, mapPath); // map
     start_ = dynamic_cast<Map*>(canvases_.back().second)->GetStart();
     canvases_.back().second->AddText({0.8f, 0}, "10 lives", 30); // life counter
+    canvases_.back().second->AddText({0.4f, 0}, "Wave 0", 30); // wave counter
     AddCanvas({MAP_WIDTH, 0, 1, 1}); // siderbar
     canvases_.back().second->AddButton({0, 0.8f, 1, 1}, T_RETURN_TO_MENU_BUTTON, Event(EventType::PopState)); // return to menu
     canvases_[0].second->AddText({0, 0}, "0 FPS", 30); // FPS counter
@@ -22,7 +23,7 @@ GameState::GameState(int width, int height, const std::string& mapPath)
 }
 
 void GameState::Update(double d_time) {
-    canvases_[0].second->UpdateString(1, std::to_string((int)(1.0 / d_time)) + " FPS");
+    canvases_[0].second->UpdateString(2, std::to_string((int)(1.0 / d_time)) + " FPS");
     canvases_[0].second->UpdateString(0, std::to_string(player_lives_) + (player_lives_ == 1 ? " life" : " lives"));
     if (!paused_) {
         since_last_spawn_ += d_time;
@@ -96,6 +97,8 @@ void GameState::AddWave() {
                 wave_.push_back(enemy.second);
         }
         waves_.pop_back();
+        wave_count_++;
+        canvases_[0].second->UpdateString(1, "Wave " + std::to_string(wave_count_));
     }
 }
 
