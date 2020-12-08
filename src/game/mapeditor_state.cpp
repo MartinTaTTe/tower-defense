@@ -2,7 +2,6 @@
 #include "../utils/app_constants.hpp"
 #include "../utils/texture_manager.hpp"
 #include "../utils/path_finder.hpp"
-#include <windows.h>
 #include <iostream>
 #include <fstream>
 
@@ -21,11 +20,9 @@ MapEditorState::MapEditorState(int width, int height, int grid_width, int grid_h
     canvases_.back().second->AddButton({0, 0.45f, 1, 0.6f}, T_SELECT_START_BUTTON, Event(EventType::Start));
     canvases_.back().second->AddButton({0, 0.6f, 1, 0.75f}, T_SELECT_END_BUTTON, Event(EventType::End));
     canvases_.back().second->AddButton({0, 0.75f, 1, 0.9f}, T_SAVE_BUTTON, Event(EventType::Save));
-    canvases_[0].second->AddText({0, 0}, "0 FPS", 30); // FPS counter
 }
 
 void MapEditorState::Update(double d_time) {
-    canvases_[0].second->UpdateString(0, std::to_string((int)(1.0 / d_time)) + " FPS");
     counter_ += d_time;
     if (counter_ > 3 && errorMessage_) {
         delete canvases_.back().second;
@@ -48,7 +45,6 @@ Event MapEditorState::CustomOnClick(Event event) {
             return_event.type = EventType::PopState;
             break;
         case EventType::Save:
-            //Sleep(1000);
             return_event = Save();
             break;
         case EventType::MouseClickReleased:
@@ -62,7 +58,6 @@ Event MapEditorState::CustomOnClick(Event event) {
                     end_ = event.increments;
                 }
             } else if (event.body.upper_left_x < MAP_WIDTH) {
-                std::cout << "Update Tile " << std::endl;
                 map->UpdateTile(event, selectedTile, false);
             }
             break;

@@ -9,7 +9,6 @@
 
 #include <chrono>
 #include <iostream>
-#include <windows.h>
 
 App::App() {
 
@@ -81,7 +80,6 @@ void App::Run(int width, int height) {
         window.clear(sf::Color(BACKGROUND_R, BACKGROUND_G, BACKGROUND_B));
         states_.back()->Draw(window);
         window.display();
-        Sleep(10);
     }
 
     auto end = std::chrono::high_resolution_clock::now();

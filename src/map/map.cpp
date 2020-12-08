@@ -97,31 +97,37 @@ Tile* Map::GetTile(int x, int y) const {
 }
 
 Event Map::UpdateEnemies(double d_time) {
+    death_occured_ = false;
     Event return_event;
     return_event.increments = {0, 0};
-    for (auto enemy : enemies_) {
-        if (enemy.second->currentTile != path_length_ - 1) {
+    for (auto enemy = enemies_.begin(); enemy != enemies_.end(); enemy++) {
+        if (enemy->second->currentTile != path_length_ - 1) {
             int d_x = 0, d_y = 0;
-            Vector2i next = GetNextTile(enemy.second->currentTile);
-            bool reached_x = std::abs((float)next.x - enemy.second->GetX()) < 0.01f;
-            bool reached_y = std::abs((float)next.y - enemy.second->GetY()) < 0.01f;
+            Vector2i next = GetNextTile(enemy->second->currentTile);
+            bool reached_x = std::abs((float)next.x - enemy->second->GetX()) < 0.01f;
+            bool reached_y = std::abs((float)next.y - enemy->second->GetY()) < 0.01f;
             if (reached_x && reached_y)
-                enemy.second->currentTile++;
-            if (!reached_x && reached_y && (float)next.x > enemy.second->GetX())
+                enemy->second->currentTile++;
+            if (!reached_x && reached_y && (float)next.x > enemy->second->GetX())
                 d_x = 1;
-            else if (!reached_x && reached_y && (float)next.x < enemy.second->GetX())
+            else if (!reached_x && reached_y && (float)next.x < enemy->second->GetX())
                 d_x = -1;
-            else if (!reached_y && (float)next.y > enemy.second->GetY())
+            else if (!reached_y && (float)next.y > enemy->second->GetY())
                 d_y = 1;
-            else if (!reached_y && (float)next.y < enemy.second->GetY())
+            else if (!reached_y && (float)next.y < enemy->second->GetY())
                 d_y = -1;
-            if (enemy.second->Update(0, d_time * d_x, d_time * d_y, tile_width_ * MAP_WIDTH, tile_height_ * MAP_HEIGHT).type == EventType::Dead) { // damage on this line
+            if (enemy->second->Update(0, d_time * d_x, d_time * d_y, tile_width_ * MAP_WIDTH, tile_height_ * MAP_HEIGHT).type == EventType::Dead) { // damage on this line
                 return_event.type = EventType::Dead;
-                return_event.increments.y++;
+                return_event.increments.y += enemy->second->GetValue();
+                death_occured_ = true;
+                delete enemy->second;
+                enemies_.erase(enemy);
+                if (enemies_.empty()) break;
             }
         } else {
-            delete enemies_.begin()->second;
-            enemies_.erase(enemies_.begin());
+            death_occured_ = true;
+            delete enemy->second;
+            enemies_.erase(enemy);
             return_event.type = EventType::Dead;
             return_event.increments.x++;
         }
@@ -153,17 +159,25 @@ Event Map::UpdateTowers(double d_time, Event event) {
                         (position, tower)
                     );
                     tile->occupied = true;
+                    event.condition = true;
+                } else {
+                    event.condition = false;
                 }
                 break;
             default:
+                event.condition = false;
                 break;
             }
+        } else {
+            event.condition = false;
         }
+        
     } else {
         for (auto button : buttons_) {
             Tower* tower = dynamic_cast<Tower*>(button.second);
+            event.condition = death_occured_;
             if (tower != nullptr) {
-                //tower->Update(enemies_, event);
+                tower->Update(enemies_, event, d_time);
             }
         }
     }
@@ -204,8 +218,10 @@ void Map::AddEnemy(const Vector2f& pos, char type) {
 }
 
 void Map::CustomDraw(sf::RenderWindow& window) const {
-    for (auto enemy : enemies_)
+    for (auto enemy : enemies_) {
         enemy.second->Draw(window);
+        enemy.second->DrawHP(window);
+    }
 }
 
 Vector2i Map::GetNextTile(int i) {

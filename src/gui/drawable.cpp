@@ -32,3 +32,7 @@ void Drawable::Move(float d_x, float d_y) {
 void Drawable::UpdateTexture(const std::string& texturePath) {
     body_.setTexture(&GetTexture(texturePath));
 }
+
+void Drawable::SetSize(const Vector2f& size) {
+    body_.setSize({size.x, size.y});
+}

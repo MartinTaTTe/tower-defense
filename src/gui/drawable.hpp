@@ -19,6 +19,7 @@ public:
     virtual void    Disable(bool disable);
     void            Move(float d_x, float d_y);
     void            UpdateTexture(const std::string& texturePath);
+    void            SetSize(const Vector2f& size);
 protected:
     sf::RectangleShape body_;
 };

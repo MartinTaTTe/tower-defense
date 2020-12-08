@@ -20,7 +20,7 @@ public:
     ); 
 
     int                 GetPrice() const;
-    virtual Event       Update(const Enemies& enemies, Event event);
+    virtual Event       Update(const Enemies& enemies, Event event, double d_time);
     virtual void        Upgrade() = 0;
     virtual             ~Tower(){};
 protected:

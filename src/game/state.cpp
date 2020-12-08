@@ -1,6 +1,5 @@
 #include "state.hpp"
 #include "../map/map.hpp"
-#include <windows.h>
 
 State::State(const std::string& state_name, int width, int height)
     : state_name_(state_name), width_(width), height_(height) {
@@ -25,7 +24,6 @@ Event State::EventHandler(double d_time, const sf::Event& sf_event) {
         case sf::Event::MouseButtonPressed:
             event = OnClick(sf_event.mouseButton.x, sf_event.mouseButton.y);
             event = CustomOnClick(event);
-            Sleep(100);
             break;
         case sf::Event::MouseButtonReleased:
             relative = {
@@ -35,7 +33,6 @@ Event State::EventHandler(double d_time, const sf::Event& sf_event) {
             event.type = EventType::MouseClickReleased;
             event.body = {relative.x, relative.y};
             event = CustomOnClick(event);
-            Sleep(100);
         default:
             break;
     }

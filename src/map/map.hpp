@@ -35,4 +35,5 @@ private:
     int                 path_length_;
     float               tile_width_;
     float               tile_height_;
+    bool                death_occured_;
 };
