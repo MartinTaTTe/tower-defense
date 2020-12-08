@@ -12,6 +12,7 @@ compile:
 	g++ -c ./utils/*.cpp
 	g++ -c ./map/*.cpp
 	g++ -c ./towers/towers.cpp
+	g++ -c ./towers/basic_tower.cpp
 	g++ -c ./enemies/enemy.cpp
 	g++ -c ./enemies/normal_enemy.cpp
 

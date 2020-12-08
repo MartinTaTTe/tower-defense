@@ -1,10 +1,10 @@
 // A basic tower that shoots enemies within its range
 #pragma once
 #include "towers.hpp"
-#include "utils/app_constants.hpp"
+#include "../utils/app_constants.hpp"
 
-class Basic_Tower : public Tower{
+class BasicTower : public Tower{
     public:
-        Basic_Tower( const Vector4f& vector, int x, int y);
+        BasicTower(const Vector4f& vector, int x, int y);
         void Upgrade();
 };

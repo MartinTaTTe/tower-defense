@@ -21,7 +21,7 @@ public:
 
     int                 GetPrice() const;
     virtual Event       Update(const Enemies& enemies, Event event);
-    virtual void        Upgrade();
+    virtual void        Upgrade() = 0;
     virtual             ~Tower(){};
 protected:
     int                 x_;
@@ -37,13 +37,3 @@ protected:
     Enemy*              target_;
     sf::CircleShape     radius_;
 };
-
-
-
-
-
-
-
-
-
-    

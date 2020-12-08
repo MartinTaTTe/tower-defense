@@ -2,6 +2,7 @@
 #include <fstream>
 #include "../enemies/normal_enemy.hpp"
 #include "../utils/path_finder.hpp"
+#include "../towers/basic_tower.hpp"
 
 Map::Map(const Vector4f& body, const std::string& filePath)
     : Canvas(body) {
@@ -16,7 +17,6 @@ Map::Map(const Vector4f& body, const std::string& filePath)
     grid_height_ = stoi(line.substr(line.find('x') + 1));
     tile_width_  = 1.0f  / grid_width_;
     tile_height_ = 1.0f / grid_height_;
-    std::cout << "Tile " << tile_width_ << ", " << tile_height_ << std::endl;
     std::getline(file,line);
     start_.x = stoi(line.substr(0, line.find(',')));
     start_.y = stoi(line.substr(line.find(',') + 1));
@@ -138,10 +138,7 @@ Event Map::UpdateTowers(double d_time, Event event) {
             {
             case 'B':
                 if (tile->type == TileType::Grass) {
-                    tower = new Tower(body_ * position, x, y,
-                        BASIC_TOWER_DAMAGE,
-                        BASIC_TOWER_RANGE,
-                        true, true, true);
+                    tower = new BasicTower(body_ * position, x, y);
                     buttons_.push_back(
                         std::pair<Vector4f, Tower*>
                         (position, tower)

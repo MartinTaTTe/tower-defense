@@ -49,7 +49,3 @@ Event Tower::Update(const Enemies& enemies, Event event){
     }
     return return_event;
 }
-
-void Tower::Upgrade() {
-    
-}
