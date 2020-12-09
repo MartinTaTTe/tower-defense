@@ -34,7 +34,7 @@ GameState::GameState(int width, int height, const std::string& mapPath)
 
 void GameState::Update(double d_time) {
     canvases_[0].second->UpdateString(0, std::to_string(player_lives_) + (player_lives_ == 1 ? " life" : " lives"));
-    canvases_[0].second->UpdateString(2, "Gold " + std::to_string(player_gold_));
+    canvases_[0].second->UpdateString(2, "Gold " + std::to_string((int)player_gold_));
     if (player_lives_ <= 0) {
         paused_ = true;
         canvases_[0].second->AddText({0, 0.4f}, "GAME OVER", 100, sf::Color::Red);
@@ -58,7 +58,7 @@ void GameState::Update(double d_time) {
         switch (towerEvent.type)
         {
         case EventType::AddGold:
-            player_gold_ = player_gold_ + towerEvent.increments.x;
+            player_gold_ = player_gold_ + towerEvent.damage;
             break;
         
         default:
