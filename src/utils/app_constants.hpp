@@ -55,9 +55,9 @@ const float HYBRID_TOWER_DAMAGE = 20;
 const float HYBRID_TOWER_RANGE = 3;
 const int HYBRID_TOWER_PRICE = 500;
 
-const float MULTIPLE_TOWER_DAMAGE = 3;
-const float MULTIPLE_TOWER_RANGE = 3;
-const int MULTIPLE_TOWER_PRICE = 1000;
+const float MULTIPLE_TOWER_DAMAGE = 10;
+const float MULTIPLE_TOWER_RANGE = 2;
+const int MULTIPLE_TOWER_PRICE = 500;
 
 // Enemy constants
 const float NORMAL_ENEMY_MAX_HP = 100.0f;

@@ -5,7 +5,7 @@ Map is custom Canvas used for controlling all objects on the game map, such as T
 #include "tile.hpp"
 #include "../gui/canvas.hpp"
 #include "../enemies/enemy.hpp"
-#include "../towers/towers.hpp"
+#include "../towers/tower.hpp"
 
 typedef std::vector<std::pair<Vector4f, Enemy*>> Enemies;
 typedef std::vector<std::pair<int, int>> MapPath;

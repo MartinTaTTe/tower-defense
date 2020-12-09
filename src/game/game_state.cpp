@@ -27,6 +27,8 @@ GameState::GameState(int width, int height, const std::string& mapPath)
     canvases_.back().second->AddButton({0, 0.3f, 1, 0.4f}, T_HYBRID_TOWER, event);
     event.tower_type = 'U';
     canvases_.back().second->AddButton({0, 0.4f, 1, 0.5f}, T_UTILITY_TOWER, event);
+    event.tower_type = 'M';
+    canvases_.back().second->AddButton({0, 0.5f, 1, 0.6f}, T_MULTIPLE_TOWER, event);
     ReadWaves();
 }
 
@@ -109,6 +111,11 @@ Event GameState::CustomOnClick(Event event) {
                     if (player_gold_ >= UTILITY_TOWER_PRICE)
                         if (dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(0, event).condition)
                             player_gold_ -= UTILITY_TOWER_PRICE;
+                    break;
+                case 'M':
+                    if (player_gold_ >= MULTIPLE_TOWER_PRICE)
+                        if (dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(0, event).condition)
+                            player_gold_ -= MULTIPLE_TOWER_PRICE;
                     break;
                 default:
                     break;

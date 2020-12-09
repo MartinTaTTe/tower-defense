@@ -1,4 +1,4 @@
-#include "towers.hpp"
+#include "tower.hpp"
 #include "../utils/texture_manager.hpp"
 #include <iostream>
 
@@ -71,5 +71,4 @@ void Tower::DrawLine(sf::RenderWindow& window, float tile_width, float tile_heig
         line_[1].position = sf::Vector2f(target_->GetX()*xMult + xMult/2, target_->GetY()*yMult + yMult/2);
         window.draw(line_);
     }
-
 }
