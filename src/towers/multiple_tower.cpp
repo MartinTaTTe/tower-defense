@@ -71,12 +71,10 @@ void MultipleTower::DrawLine(sf::RenderWindow& window, float tile_width, float t
         window.draw(line_);
     }
     if (targetVector_.size() > 1) {
-        std::cout << "after upper" << std::endl;
         line1_[1].position = sf::Vector2f(targetVector_[1]->GetX()*xMult + xMult/2, targetVector_[1]->GetY()*yMult + yMult/2);
         window.draw(line1_);
     }
     if (targetVector_.size() > 2) {
-        std::cout << "after upper 1" << std::endl;
         line2_[1].position = sf::Vector2f(targetVector_[2]->GetX()*xMult + xMult/2, targetVector_[2]->GetY()*yMult + yMult/2);
         window.draw(line2_);
     }

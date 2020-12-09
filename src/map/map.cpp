@@ -3,6 +3,7 @@
 #include "../utils/path_finder.hpp"
 #include "../enemies/enemies.hpp"
 #include "../towers/towers.hpp"
+#include <iostream>
 
 Map::Map(const Vector4f& body, const std::string& filePath)
     : Canvas(body) {
@@ -117,7 +118,7 @@ Event Map::UpdateEnemies(double d_time) {
             else if (!reached_y && (float)next.y < enemy->second->GetY())
                 d_y = -1;
             Event newEvent = enemy->second->Update(0, d_time * d_x, d_time * d_y, tile_width_ * MAP_WIDTH, tile_height_ * MAP_HEIGHT);
-            if (newEvent.type == EventType::Dead) { // damage on this line
+            if (newEvent.type == EventType::Dead) {
                 return_event.type = EventType::Dead;
                 return_event.increments.y += enemy->second->GetValue();
                 death_occured_ = true;
@@ -129,10 +130,26 @@ Event Map::UpdateEnemies(double d_time) {
                 return_event.type = EventType::Dead;
                 return_event.increments.y += enemy->second->GetValue();
                 death_occured_ = true;
+                int tile = enemy->second->currentTile;
                 delete enemy->second;
                 enemies_.erase(enemy);
+                Vector2f pos = {
+                    1.0f / grid_width_ * newEvent.x_f,
+                    1.0f / grid_height_ * newEvent.y_f
+                };
+                Vector4f position = {
+                    pos.x,
+                    pos.y,
+                    pos.x + tile_width_,
+                    pos.y + tile_height_
+                };
+                enemies_.push_back(
+                    std::pair<Vector4f, Enemy*>
+                    (position, 
+                    new NormalEnemy(body_ * position, newEvent.x_f, newEvent.y_f))
+                );
+                enemies_.back().second->currentTile = tile;
                 if (enemies_.empty()) break;
-                //AddEnemy({newEvent.position.x, newEvent.position.y}, 'E');
             }
         } else {
             return_event.type = EventType::Dead;
@@ -278,6 +295,7 @@ Vector2i Map::GetGridSize() {
 }
 
 void Map::AddEnemy(const Vector2f& pos, char type) {
+    std::cout << "Add enemy " << pos.x << ", " << pos.y << ", " << type << std::endl;
     Enemy* enemy;
     Vector4f position = {
         pos.x,

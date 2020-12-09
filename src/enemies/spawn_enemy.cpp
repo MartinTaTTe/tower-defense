@@ -11,8 +11,8 @@ Event SpawnEnemy::Update(float damage, float d_x_, float d_y_, float tile_width,
     hp_ -= damage;
     if (hp_ <= 0) {
         event.type = EventType::SpawnKill;
-        event.position.x = x_;
-        event.position.y = y_;
+        event.x_f = x_;
+        event.y_f = y_;
     }
     hp_bar_.SetSize({
         body_.getSize().x * hp_ / max_hp_,
