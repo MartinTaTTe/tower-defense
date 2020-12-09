@@ -10,9 +10,7 @@ Event RegenEnemy::Update(float damage, float d_x_, float d_y_, float tile_width,
     Event event;
     hp_ -= damage;
     if (hp_ <= 0) {
-        event.type = EventType::SpawnKill;
-        event.position.x = x_;
-        event.position.y = y_;
+        event.type = EventType::Dead;
     } else if (hp_ < max_hp_)
         hp_ += REGEN_ENEMY_HPREGEN;
     hp_bar_.SetSize({
