@@ -22,6 +22,9 @@ const int START_GOLD = 5000;
 // Map paths
 const std::string MAPS[] = {
     "map/maps/user.map",
+    "map/maps/easy.map",
+    "map/maps/medium.map",
+    "map/maps/hard.map",
     "map/maps/basic.map"
 };
 
@@ -108,6 +111,11 @@ const std::string T_MAP_EDITOR_BUTTON = "textures/buttons/Map_editor_button.png"
 const std::string T_CUSTOM_MODE_BUTTON = "textures/buttons/Custom_mode_button.png";
 const std::string T_SELECT_START_BUTTON = "textures/buttons/Select_start_button.png";
 const std::string T_SELECT_END_BUTTON = "textures/buttons/Select_end_button.png";
+
+const std::string T_EASY_MAP = "textures/maps/easy.png";
+const std::string T_MEDIUM_MAP = "textures/maps/medium.png";
+const std::string T_HARD_MAP = "textures/maps/hard.png";
+const std::string T_BASIC_MAP = "textures/maps/basic.png";
 
 // 
 const std::string T_HP_BAR = "textures/hp_bar.png";

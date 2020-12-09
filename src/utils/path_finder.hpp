@@ -23,7 +23,6 @@ public:
 
     //lagar en path och kollar om den e ok eller int.
     bool findPath() {
-       
         std::ifstream file(map_);
         std::string line;
         std::getline(file,line);
