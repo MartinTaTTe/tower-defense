@@ -22,6 +22,7 @@ public:
     int                 GetPrice() const;
     virtual Event       Update(const Enemies& enemies, Event event, double d_time);
     virtual void        Upgrade() = 0;
+    void                DrawLine(sf::RenderWindow& window, float tile_width, float tile_height);
     virtual             ~Tower(){};
 protected:
     int                 x_;
@@ -36,4 +37,5 @@ protected:
     bool                ground_;
     Enemy*              target_;
     sf::CircleShape     radius_;
+    sf::VertexArray     line_;
 };

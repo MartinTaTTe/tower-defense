@@ -13,12 +13,20 @@ GameState::GameState(int width, int height, const std::string& mapPath)
     canvases_.back().second->AddText({0.4f, 0}, "Wave 0", 30); // wave counter
     canvases_.back().second->AddText({0.2f, 0}, "Gold " + std::to_string(player_gold_), 30); // Gold counter
     AddCanvas({MAP_WIDTH, 0, 1, 1}); // siderbar
-    canvases_.back().second->AddButton({0, 0.8f, 1, 1}, T_RETURN_TO_MENU_BUTTON, Event(EventType::PopState)); // return to menu
-    canvases_.back().second->AddButton({0, 0.6f, 1, 0.8f}, T_DEFAULT_BUTTON, Event(EventType::Pause)); // pause button
-    canvases_.back().second->AddButton({0, 0.4f, 1, 0.6f}, T_DEFAULT_BUTTON, Event(EventType::SendWave)); // pause button
+    canvases_.back().second->AddButton({0, 0.9f, 1, 1}, T_RETURN_TO_MENU_BUTTON, Event(EventType::PopState)); // return to menu
+    canvases_.back().second->AddButton({0, 0.8f, 1, 0.9f}, T_DEFAULT_BUTTON, Event(EventType::Pause)); // pause button
+    canvases_.back().second->AddButton({0, 0.7f, 1, 0.8f}, T_DEFAULT_BUTTON, Event(EventType::SendWave)); // pause button
     Event event(EventType::SelectTower);
     event.tower_type = 'B';
-    canvases_.back().second->AddButton({0, 0, 1, 0.2f}, T_BASIC_TOWER, event); // tower button
+    canvases_.back().second->AddButton({0, 0, 1, 0.1f}, T_BASIC_TOWER, event); // tower button
+    event.tower_type = 'F';
+    canvases_.back().second->AddButton({0, 0.1f, 1, 0.2f}, T_FLYING_TOWER, event);
+    event.tower_type = 'W';
+    canvases_.back().second->AddButton({0, 0.2f, 1, 0.3f}, T_WATER_TOWER, event);
+    event.tower_type = 'H';
+    canvases_.back().second->AddButton({0, 0.3f, 1, 0.4f}, T_HYBRID_TOWER, event);
+    event.tower_type = 'U';
+    canvases_.back().second->AddButton({0, 0.4f, 1, 0.5f}, T_UTILITY_TOWER, event);
     ReadWaves();
 }
 
@@ -44,7 +52,16 @@ void GameState::Update(double d_time) {
             default:
                 break;
         }
-        dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(d_time, Event());
+        Event towerEvent = dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(d_time, Event());
+        switch (towerEvent.type)
+        {
+        case EventType::AddGold:
+            player_gold_ = player_gold_ + towerEvent.increments.x;
+            break;
+        
+        default:
+            break;
+        }
     }
 }
 
@@ -72,6 +89,26 @@ Event GameState::CustomOnClick(Event event) {
                     if (player_gold_ >= BASIC_TOWER_PRICE)
                         if (dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(0, event).condition)
                             player_gold_ -= BASIC_TOWER_PRICE;
+                    break;
+                case 'F':
+                    if (player_gold_ >= FLYING_TOWER_PRICE)
+                        if (dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(0, event).condition)
+                            player_gold_ -= FLYING_TOWER_PRICE;
+                    break;
+                case 'W':
+                    if (player_gold_ >= WATER_TOWER_PRICE)
+                        if (dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(0, event).condition)
+                            player_gold_ -= WATER_TOWER_PRICE;
+                    break;
+                case 'H':
+                    if (player_gold_ >= HYBRID_TOWER_PRICE)
+                        if (dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(0, event).condition)
+                            player_gold_ -= HYBRID_TOWER_PRICE;
+                    break;
+                case 'U':
+                    if (player_gold_ >= UTILITY_TOWER_PRICE)
+                        if (dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(0, event).condition)
+                            player_gold_ -= UTILITY_TOWER_PRICE;
                     break;
                 default:
                     break;

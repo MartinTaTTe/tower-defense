@@ -2,10 +2,10 @@
 
 #pragma once
 #include "towers.hpp"
-#include "utils/app_constants.hpp"
+#include "../utils/app_constants.hpp"
 
-class Hybrid_Tower : public Tower{
+class HybridTower : public Tower{
     public:
-        Hybrid_Tower(const Vector4f& vector, int x, int y);
+        HybridTower(const Vector4f& vector, int x, int y);
         void Upgrade();
 };

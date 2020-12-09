@@ -1,8 +1,13 @@
 #include "map.hpp"
 #include <fstream>
 #include "../enemies/normal_enemy.hpp"
+
 #include "../utils/path_finder.hpp"
 #include "../towers/basic_tower.hpp"
+#include "../towers/flying_tower.hpp"
+#include "../towers/water_tower.hpp"
+#include "../towers/hybrid_tower.hpp"
+#include "../towers/utility_tower.hpp"
 
 Map::Map(const Vector4f& body, const std::string& filePath)
     : Canvas(body) {
@@ -125,11 +130,12 @@ Event Map::UpdateEnemies(double d_time) {
                 if (enemies_.empty()) break;
             }
         } else {
+            return_event.type = EventType::Dead;
+            return_event.increments.x++;
             death_occured_ = true;
             delete enemy->second;
             enemies_.erase(enemy);
-            return_event.type = EventType::Dead;
-            return_event.increments.x++;
+            if (enemies_.empty()) break;
         }
     }
     return return_event;
@@ -164,6 +170,58 @@ Event Map::UpdateTowers(double d_time, Event event) {
                     event.condition = false;
                 }
                 break;
+            case 'F':
+                if (tile->type == TileType::Grass) {
+                    tower = new FlyingTower(body_ * position, x, y);
+                    buttons_.push_back(
+                        std::pair<Vector4f, Tower*>
+                        (position, tower)
+                    );
+                    tile->occupied = true;
+                    event.condition = true;
+                } else {
+                    event.condition = false;
+                }
+                break;
+            case 'W':
+                if (tile->type == TileType::Water) {
+                    tower = new WaterTower(body_ * position, x, y);
+                    buttons_.push_back(
+                        std::pair<Vector4f, Tower*>
+                        (position, tower)
+                    );
+                    tile->occupied = true;
+                    event.condition = true;
+                } else {
+                    event.condition = false;
+                }
+                break;
+            case 'H':
+                if (tile->type == TileType::Grass) {
+                    tower = new HybridTower(body_ * position, x, y);
+                    buttons_.push_back(
+                        std::pair<Vector4f, Tower*>
+                        (position, tower)
+                    );
+                    tile->occupied = true;
+                    event.condition = true;
+                } else {
+                    event.condition = false;
+                }
+                break;
+            case 'U':
+                if (tile->type == TileType::Grass) {
+                    tower = new UtilityTower(body_ * position, x, y);
+                    buttons_.push_back(
+                        std::pair<Vector4f, Tower*>
+                        (position, tower)
+                    );
+                    tile->occupied = true;
+                    event.condition = true;
+                } else {
+                    event.condition = false;
+                }
+                break;
             default:
                 event.condition = false;
                 break;
@@ -177,7 +235,10 @@ Event Map::UpdateTowers(double d_time, Event event) {
             Tower* tower = dynamic_cast<Tower*>(button.second);
             event.condition = death_occured_;
             if (tower != nullptr) {
-                tower->Update(enemies_, event, d_time);
+                Event newEvent = tower->Update(enemies_, event, d_time);
+                if (newEvent.tower_type == 'U' && !enemies_.empty()) {
+                    event = newEvent;
+                }
             }
         }
     }
@@ -221,6 +282,12 @@ void Map::CustomDraw(sf::RenderWindow& window) const {
     for (auto enemy : enemies_) {
         enemy.second->Draw(window);
         enemy.second->DrawHP(window);
+    }
+    for (auto button : buttons_) {
+        Tower* tower = dynamic_cast<Tower*>(button.second);
+        if (tower != nullptr) {
+            tower->DrawLine(window, tile_width_, tile_height_);
+        }
     }
 }
 

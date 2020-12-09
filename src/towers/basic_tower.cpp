@@ -5,7 +5,7 @@ BasicTower::BasicTower(const Vector4f& vector, int x, int y)
     Tower(vector, x, y,
     BASIC_TOWER_DAMAGE,
     BASIC_TOWER_RANGE,
-    true, true, true,
+    false, true, true,
     T_BASIC_TOWER) {
     upgrade_price_ = UPGRADE_PRICE;
 }

@@ -26,7 +26,8 @@ enum EventType : int8_t {
     Pause,
     SendWave,
     DamageEnemy,
-    SelectTower
+    SelectTower,
+    AddGold
 };
 
 enum TileType : int8_t;

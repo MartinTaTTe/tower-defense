@@ -46,7 +46,7 @@ const int FLYING_TOWER_ENEMYTYPE = 2;
 const int FLYING_TOWER_PRICE = 1000; 
 const int FLYING_TOWER_TILETYPE = true; 
 
-const float UTILITY_TOWER_DAMAGE = 3; 
+const float UTILITY_TOWER_DAMAGE = 1; 
 const float UTILITY_TOWER_SPEED = 3;
 const float UTILITY_TOWER_RANGE = 3;
 const int UTILITY_TOWER_ENEMYTYPE = 2; 
@@ -112,6 +112,9 @@ const std::string T_SELECT_END_BUTTON = "textures/buttons/Select_end_button.png"
 const std::string T_HP_BAR = "textures/hp_bar.png";
 const std::string T_DEFAULT_ENEMY = "textures/enemy.png";
 const std::string T_FLYING_ENEMY = "textures/flying_enemy.png";
+const std::string T_FAST_ENEMY = "textures/fast_enemy.png";
+const std::string T_REGEN_ENEMY = "textures/regen_enemy.png";
+const std::string T_SPAWN_ENEMY = "textures/spawn_enemy.png";
 const std::string T_TILES[] = {
     "textures/path.png",
     "textures/grass.png",
