@@ -4,5 +4,5 @@
 
 class FlyingEnemy : public Enemy {
 public:
-    FlyingEnemy(const Vector4f& body, float x, float y);
+    FlyingEnemy(const Vector4f& body, float x, float y, char type);
 };

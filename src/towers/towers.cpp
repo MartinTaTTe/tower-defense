@@ -38,6 +38,7 @@ Button(vector, texturePath) {
 
 Event Tower::Update(const Enemies& enemies, Event event, double d_time){
     Event return_event;
+    return_event.increments.x = 0;
     if (target_ == nullptr || event.condition){
         target_ = nullptr;
         if (!can_attack_air_ && !can_attack_ground_) {

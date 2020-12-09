@@ -90,6 +90,7 @@ const int FLYING_ENEMY_VALUE = 50;
 const float REGEN_ENEMY_MAX_HP = 300.0f;
 const float REGEN_ENEMY_SPEED = 0.25f;
 const int REGEN_ENEMY_VALUE = 80;
+const float REGEN_ENEMY_HPREGEN = 0.03f;
 
 const float SPAWN_ENEMY_MAX_HP = 100.0f;
 const float SPAWN_ENEMY_SPEED = 0.5f;

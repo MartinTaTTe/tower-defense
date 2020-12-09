@@ -14,6 +14,7 @@ public:
         float speed,
         bool ground,
         int value,
+        char type,
         const std::string& texturePath = T_DEFAULT_ENEMY
     );
     bool                IsGround() const;
@@ -32,4 +33,5 @@ private:
     bool                is_ground_;
     Drawable            hp_bar_;
     int                 value_;
+    char                EnemyType_;
 };

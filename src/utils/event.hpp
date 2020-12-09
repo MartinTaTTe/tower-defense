@@ -27,7 +27,8 @@ enum EventType : int8_t {
     SendWave,
     DamageEnemy,
     SelectTower,
-    AddGold
+    AddGold,
+    SpawnKill
 };
 
 enum TileType : int8_t;

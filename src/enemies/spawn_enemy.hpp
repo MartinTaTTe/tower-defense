@@ -4,5 +4,5 @@
 
 class SpawnEnemy : public Enemy {
 public:
-    SpawnEnemy(const Vector4f& body, float x, float y);
+    SpawnEnemy(const Vector4f& body, float x, float y, char type);
 };
