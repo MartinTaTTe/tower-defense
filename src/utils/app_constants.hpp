@@ -80,19 +80,19 @@ const float NORMAL_ENEMY_SPEED = 0.5f;
 const int NORMAL_ENEMY_VALUE = 10;
 
 const float FAST_ENEMY_MAX_HP = 75.0f;
-const float FAST_ENEMY_SPEED = 15.0f;
+const float FAST_ENEMY_SPEED = 1.2f;
 const int FAST_ENEMY_VALUE = 15;
 
-const float FLYING_ENEMY_MAX_HP = 250.0f;
-const float FLYING_ENEMY_SPEED = 5.0f;
+const float FLYING_ENEMY_MAX_HP = 100.0f;
+const float FLYING_ENEMY_SPEED = 0.5f;
 const int FLYING_ENEMY_VALUE = 50;
 
-const float REGEN_ENEMY_MAX_HP = 100.0f;
-const float REGEN_ENEMY_SPEED = 10.0f;
+const float REGEN_ENEMY_MAX_HP = 300.0f;
+const float REGEN_ENEMY_SPEED = 0.25f;
 const int REGEN_ENEMY_VALUE = 80;
 
 const float SPAWN_ENEMY_MAX_HP = 100.0f;
-const float SPAWN_ENEMY_SPEED = 10.0f;
+const float SPAWN_ENEMY_SPEED = 0.5f;
 const int SPAWN_ENEMY_VALUE = 15;
 
 // Texture paths, name like "T_NAME_OF_TEXTURE"

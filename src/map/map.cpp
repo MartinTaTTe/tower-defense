@@ -1,7 +1,10 @@
 #include "map.hpp"
 #include <fstream>
 #include "../enemies/normal_enemy.hpp"
-
+#include "../enemies/flying_enemy.hpp"
+#include "../enemies/fast_enemy.hpp"
+#include "../enemies/regen_enemy.hpp"
+#include "../enemies/spawn_enemy.hpp"
 #include "../utils/path_finder.hpp"
 #include "../towers/basic_tower.hpp"
 #include "../towers/flying_tower.hpp"
@@ -231,16 +234,19 @@ Event Map::UpdateTowers(double d_time, Event event) {
         }
         
     } else {
+        float counter = 0;
         for (auto button : buttons_) {
             Tower* tower = dynamic_cast<Tower*>(button.second);
             event.condition = death_occured_;
             if (tower != nullptr) {
                 Event newEvent = tower->Update(enemies_, event, d_time);
                 if (newEvent.tower_type == 'U' && !enemies_.empty()) {
-                    event = newEvent;
+                    counter += newEvent.increments.x;
                 }
             }
         }
+        event.type = EventType::AddGold;
+        event.increments.x = counter;
     }
     return event;
 }
@@ -268,6 +274,18 @@ void Map::AddEnemy(const Vector2f& pos, char type) {
     {
     case 'N':
         enemy = new NormalEnemy(body_ * position, start_.x, start_.y);
+        break;
+    case 'F':
+        enemy = new FastEnemy(body_ * position, start_.x, start_.y);
+        break;
+    case 'A':
+        enemy = new FlyingEnemy(body_ * position, start_.x, start_.y);
+        break;
+    case 'R':
+        enemy = new RegenEnemy(body_ * position, start_.x, start_.y);
+        break;
+    case 'S':
+        enemy = new SpawnEnemy(body_ * position, start_.x, start_.y);
         break;
     default:
         break;
