@@ -3,7 +3,6 @@
 #include "../utils/path_finder.hpp"
 #include "../enemies/enemies.hpp"
 #include "../towers/towers.hpp"
-#include <iostream>
 
 Map::Map(const Vector4f& body, const std::string& filePath)
     : Canvas(body) {
@@ -295,7 +294,6 @@ Vector2i Map::GetGridSize() {
 }
 
 void Map::AddEnemy(const Vector2f& pos, char type) {
-    std::cout << "Add enemy " << pos.x << ", " << pos.y << ", " << type << std::endl;
     Enemy* enemy;
     Vector4f position = {
         pos.x,
