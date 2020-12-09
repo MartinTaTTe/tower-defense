@@ -101,21 +101,21 @@ const std::string T_BASIC_MAP = "textures/maps/basic.png";
 
 // 
 const std::string T_HP_BAR = "textures/hp_bar.png";
-const std::string T_DEFAULT_ENEMY = "textures/enemy.png";
-const std::string T_FLYING_ENEMY = "textures/flying_enemy.png";
-const std::string T_FAST_ENEMY = "textures/fast_enemy.png";
-const std::string T_REGEN_ENEMY = "textures/regen_enemy.png";
-const std::string T_SPAWN_ENEMY = "textures/spawn_enemy.png";
+const std::string T_DEFAULT_ENEMY = "textures/enemies/zombie.png";
+const std::string T_FLYING_ENEMY = "textures/enemies/ufo.png";
+const std::string T_FAST_ENEMY = "textures/enemies/ghost.png";
+const std::string T_REGEN_ENEMY = "textures/enemies/sorcerer.png";
+const std::string T_SPAWN_ENEMY = "textures/enemies/demon.png";
 const std::string T_TILES[] = {
     "textures/path.png",
     "textures/grass.png",
     "textures/water.png"
 };
 const std::string T_DEFAULT_TOWER = "textures/tower.png";
-const std::string T_UTILITY_TOWER = "textures/utility_tower.png";
-const std::string T_BASIC_TOWER = "textures/basic_tower.png";
-const std::string T_FLYING_TOWER = "textures/flying_tower.png";
-const std::string T_WATER_TOWER = "textures/water_tower.png";
-const std::string T_HYBRID_TOWER = "textures/hybrid_tower.png";
-const std::string T_MULTIPLE_TOWER = "textures/multiple_tower.png";
+const std::string T_UTILITY_TOWER = "textures/towers/bank.png";
+const std::string T_BASIC_TOWER = "textures/towers/tower.png";
+const std::string T_FLYING_TOWER = "textures/towers/baloon.png";
+const std::string T_WATER_TOWER = "textures/towers/ship.png";
+const std::string T_HYBRID_TOWER = "textures/towers/hybrid_tower.png";
+const std::string T_MULTIPLE_TOWER = "textures/towers/multiple_tower.png";
 
