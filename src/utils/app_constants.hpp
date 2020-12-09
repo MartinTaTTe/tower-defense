@@ -93,6 +93,8 @@ const std::string T_MAP_EDITOR_BUTTON = "textures/buttons/Map_editor_button.png"
 const std::string T_CUSTOM_MODE_BUTTON = "textures/buttons/Custom_mode_button.png";
 const std::string T_SELECT_START_BUTTON = "textures/buttons/Select_start_button.png";
 const std::string T_SELECT_END_BUTTON = "textures/buttons/Select_end_button.png";
+const std::string T_PLAY_PAUSE_BUTTON = "textures/buttons/play_pause_button.png";
+const std::string T_NEXT_WAVE_BUTTON = "textures/buttons/next_wave_button.png";
 
 const std::string T_EASY_MAP = "textures/maps/easy.png";
 const std::string T_MEDIUM_MAP = "textures/maps/medium.png";
