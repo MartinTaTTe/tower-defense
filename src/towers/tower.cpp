@@ -1,4 +1,4 @@
-#include "towers.hpp"
+#include "tower.hpp"
 #include "../utils/texture_manager.hpp"
 #include <iostream>
 
@@ -43,7 +43,7 @@ Event Tower::Update(const Enemies& enemies, Event event, double d_time){
         target_ = nullptr;
         if (!can_attack_air_ && !can_attack_ground_) {
             return_event.tower_type = 'U';
-            return_event.increments.x = UTILITY_TOWER_DAMAGE;
+            return_event.damage = UTILITY_TOWER_DAMAGE*d_time;
             return_event.type = EventType::AddGold;
             return return_event;
         }
@@ -71,5 +71,4 @@ void Tower::DrawLine(sf::RenderWindow& window, float tile_width, float tile_heig
         line_[1].position = sf::Vector2f(target_->GetX()*xMult + xMult/2, target_->GetY()*yMult + yMult/2);
         window.draw(line_);
     }
-
 }

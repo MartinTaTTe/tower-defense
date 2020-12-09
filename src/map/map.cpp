@@ -1,16 +1,8 @@
 #include "map.hpp"
 #include <fstream>
-#include "../enemies/normal_enemy.hpp"
-#include "../enemies/flying_enemy.hpp"
-#include "../enemies/fast_enemy.hpp"
-#include "../enemies/regen_enemy.hpp"
-#include "../enemies/spawn_enemy.hpp"
 #include "../utils/path_finder.hpp"
-#include "../towers/basic_tower.hpp"
-#include "../towers/flying_tower.hpp"
-#include "../towers/water_tower.hpp"
-#include "../towers/hybrid_tower.hpp"
-#include "../towers/utility_tower.hpp"
+#include "../enemies/enemies.hpp"
+#include "../towers/towers.hpp"
 
 Map::Map(const Vector4f& body, const std::string& filePath)
     : Canvas(body) {
@@ -225,6 +217,19 @@ Event Map::UpdateTowers(double d_time, Event event) {
             case 'U':
                 if (tile->type == TileType::Grass) {
                     tower = new UtilityTower(body_ * position, x, y);
+                    buttons_.push_back(
+                        std::pair<Vector4f, Tower*>
+                        (position, tower)
+                    );
+                    tile->occupied = true;
+                    event.condition = true;
+                } else {
+                    event.condition = false;
+                }
+                break;
+            case 'M':
+                if (tile->type == TileType::Grass) {
+                    tower = new MultipleTower(body_ * position, x, y);
                     buttons_.push_back(
                         std::pair<Vector4f, Tower*>
                         (position, tower)

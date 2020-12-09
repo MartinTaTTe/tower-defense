@@ -1,6 +1,6 @@
 // A basic tower that shoots enemies within its range
 #pragma once
-#include "towers.hpp"
+#include "tower.hpp"
 #include "../utils/app_constants.hpp"
 
 class BasicTower : public Tower{

@@ -24,7 +24,7 @@ private:
     double      since_last_spawn_;
     bool        paused_;
     int         player_lives_;
-    int         player_gold_;
+    float       player_gold_;
     char        selected_tower_;
     int         wave_count_;
 };
