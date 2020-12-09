@@ -13,6 +13,7 @@ enum EventType : int8_t {
     PushGameState,
     PushInputState,
     PushMapEditorState,
+    PushMapSelectState,
     MouseMovement,
     MouseClick,
     MouseClickReleased,

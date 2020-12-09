@@ -21,8 +21,8 @@ const int START_GOLD = 5000;
 
 // Map paths
 const std::string MAPS[] = {
-    "map/maps/basic.map",
-    "map/maps/user.map"
+    "map/maps/user.map",
+    "map/maps/basic.map"
 };
 
 // Waves paths, name like "W_NAME_OF_WAVES"

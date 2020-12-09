@@ -6,6 +6,7 @@
 #include "game_state.hpp"
 #include "input_state.hpp"
 #include "mapeditor_state.hpp"
+#include "mapselect_state.hpp"
 
 #include <chrono>
 #include <iostream>
@@ -74,6 +75,9 @@ void App::Run(int width, int height) {
                     break;
                 case EventType::PushMapEditorState:
                     PushState(new MapEditorState(window.getSize().x, window.getSize().y, event.increments.x, event.increments.y));
+                    break;
+                case EventType::PushMapSelectState:
+                    PushState(new MapSelectState(window.getSize().x, window.getSize().y));
                     break;
             }
         }

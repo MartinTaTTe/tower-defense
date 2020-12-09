@@ -78,7 +78,7 @@ Event MapEditorState::CustomOnClick(Event event) {
 Event MapEditorState::Save() {
     std::ofstream mapFile;
     Map* map = dynamic_cast<Map*>(canvases_[0].second);
-    mapFile.open(MAPS[1]);
+    mapFile.open(MAPS[0]);
     if (mapFile.is_open()) {
         mapFile << grid_width_ << "x" << grid_height_ << std::endl;
         mapFile << start_.x << "," << start_.y << std::endl;
@@ -92,7 +92,7 @@ Event MapEditorState::Save() {
         }
         mapFile.close();
     }
-    PathFinder finder(MAPS[1]);
+    PathFinder finder(MAPS[0]);
     if (finder.findPath()) {
         return Event(EventType::PopState);
     } else {
