@@ -1,6 +1,6 @@
 #include "enemy.hpp"
 
-Enemy::Enemy(const Vector4f& body, float x, float y, float max_hp, float speed, bool ground, int value, char type, const std::string& texturePath)
+Enemy::Enemy(const Vector4f& body, float x, float y, float max_hp, float speed, bool ground, int value, const std::string& texturePath)
     : Drawable(body, texturePath),
     x_(x),
     y_(y),
@@ -9,7 +9,6 @@ Enemy::Enemy(const Vector4f& body, float x, float y, float max_hp, float speed, 
     speed_(speed),
     is_ground_(ground),
     currentTile(0),
-    EnemyType_(type),
     hp_bar_({
         body.upper_left_x,
         body.upper_left_y,
@@ -17,7 +16,7 @@ Enemy::Enemy(const Vector4f& body, float x, float y, float max_hp, float speed, 
         body.lower_right_y * HP_BAR_THICC
     }, T_HP_BAR),
     value_(value) {
-
+    hp_bar_.Highlight(true);
 }
 
 bool Enemy::IsGround() const {
@@ -35,14 +34,8 @@ float Enemy::GetY() {
 Event Enemy::Update(float damage, float d_x_, float d_y_, float tile_width, float tile_height) {
     Event event;
     hp_ -= damage;
-    if (EnemyType_ == 'S' && hp_ <= 0) {
-        event.type = EventType::SpawnKill;
-        event.position.x = x_;
-        event.position.y = y_;
-    } else if (hp_ <= 0) {
+    if (hp_ <= 0) {
         event.type = EventType::Dead;
-    } else if (EnemyType_ == 'R' && hp_ <= max_hp_) {
-        hp_ += REGEN_ENEMY_HPREGEN;
     }
     hp_bar_.SetSize({
         body_.getSize().x * hp_ / max_hp_,

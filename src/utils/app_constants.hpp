@@ -17,7 +17,7 @@ const std::string DEFAULT_FONT = "utils/OpenSans.ttf";
 const double SPAWN_SPEED = 1.0;
 const int PLAYER_LIVES = 10;
 const float HP_BAR_THICC = 0.1f;
-const int START_GOLD = 5000;
+const int START_GOLD = 500;
 
 // Map paths
 const std::string MAPS[] = {
@@ -35,47 +35,29 @@ const std::string W_BASIC_WAVES = "enemies/waves/basic.wave";
 const int UPGRADE_PRICE = 1000;
 const int UPGRADE_MAX = 3;
 
-const float BASIC_TOWER_DAMAGE = 3.0f;
-const float BASIC_TOWER_SPEED = 3;
+const float BASIC_TOWER_DAMAGE = 10;
 const float BASIC_TOWER_RANGE = 3;
-const int BASIC_TOWER_ENEMYTYPE = 1; 
-const int BASIC_TOWER_PRICE = 100; 
-const int BASIC_TOWER_TILETYPE = true; 
+const int BASIC_TOWER_PRICE = 100;
 
-const float FLYING_TOWER_DAMAGE = 3;
-const float FLYING_TOWER_SPEED = 3;
-const float FLYING_TOWER_RANGE = 3;
-const int FLYING_TOWER_ENEMYTYPE = 2; 
-const int FLYING_TOWER_PRICE = 1000; 
-const int FLYING_TOWER_TILETYPE = true; 
+const float FLYING_TOWER_DAMAGE = 20;
+const float FLYING_TOWER_RANGE = 5;
+const int FLYING_TOWER_PRICE = 100;
 
-const float UTILITY_TOWER_DAMAGE = 1; 
-const float UTILITY_TOWER_SPEED = 3;
-const float UTILITY_TOWER_RANGE = 3;
-const int UTILITY_TOWER_ENEMYTYPE = 2; 
-const int UTILITY_TOWER_PRICE = 1000; 
-const int UTILITY_TOWER_TILETYPE = true; 
+const float UTILITY_TOWER_DAMAGE = 1;
+const float UTILITY_TOWER_RANGE = 0;
+const int UTILITY_TOWER_PRICE = 500;
 
-const float WATER_TOWER_DAMAGE = 3; 
-const float WATER_TOWER_SPEED = 3;
-const float WATER_TOWER_RANGE = 3;
-const int WATER_TOWER_ENEMYTYPE = 2; 
-const int WATER_TOWER_PRICE = 1000; 
-const int WATER_TOWER_TILETYPE = false; 
+const float WATER_TOWER_DAMAGE = 20;
+const float WATER_TOWER_RANGE = 2;
+const int WATER_TOWER_PRICE = 300;
 
-const float HYBRID_TOWER_DAMAGE = 3; 
-const float HYBRID_TOWER_SPEED = 3;
+const float HYBRID_TOWER_DAMAGE = 20;
 const float HYBRID_TOWER_RANGE = 3;
-const int HYBRID_TOWER_ENEMYTYPE = 3; 
-const int HYBRID_TOWER_PRICE = 1000; 
-const int HYBRID_TOWER_TILETYPE = true; 
+const int HYBRID_TOWER_PRICE = 500;
 
-const float MULTIPLE_TOWER_DAMAGE = 3; 
-const float MULTIPLE_TOWER_SPEED = 3;
+const float MULTIPLE_TOWER_DAMAGE = 3;
 const float MULTIPLE_TOWER_RANGE = 3;
-const int MULTIPLE_TOWER_ENEMYTYPE = 3; 
-const int MULTIPLE_TOWER_PRICE = 1000; 
-const int MULTIPLE_TOWER_TILETYPE = true;
+const int MULTIPLE_TOWER_PRICE = 1000;
 
 // Enemy constants
 const float NORMAL_ENEMY_MAX_HP = 100.0f;

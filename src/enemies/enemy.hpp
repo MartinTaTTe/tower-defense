@@ -14,7 +14,6 @@ public:
         float speed,
         bool ground,
         int value,
-        char type,
         const std::string& texturePath = T_DEFAULT_ENEMY
     );
     bool                IsGround() const;
@@ -24,14 +23,13 @@ public:
     void                DrawHP(sf::RenderWindow& window);
     int                 GetValue();
     int                 currentTile;
-private:
+protected:
     float               hp_;
     const float         max_hp_;
     float               x_;
     float               y_;
     float               speed_;
     bool                is_ground_;
-    Drawable            hp_bar_;
     int                 value_;
-    char                EnemyType_;
+    Drawable            hp_bar_;
 };

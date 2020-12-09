@@ -49,12 +49,11 @@ Event Tower::Update(const Enemies& enemies, Event event, double d_time){
         }
         for(auto enemy: enemies){
             if(((enemy.second->GetX() - x_)*(enemy.second->GetX() - x_) + (enemy.second->GetY() - y_)*(enemy.second->GetY() - y_)) <= range_*range_){
-                if( enemy.second->IsGround() && can_attack_ground_){
+                if ((enemy.second->IsGround() && can_attack_ground_) ||
+                    (!enemy.second->IsGround() && can_attack_air_)) {
                     target_ = enemy.second;
-                }else if(!enemy.second->IsGround() && can_attack_air_){
-                    target_ = enemy.second;
+                    break;
                 }
-                break;
             }
         }
     }else{

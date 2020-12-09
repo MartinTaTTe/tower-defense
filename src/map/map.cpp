@@ -130,9 +130,11 @@ Event Map::UpdateEnemies(double d_time) {
                 return_event.increments.y += enemy->second->GetValue();
                 death_occured_ = true;
                 delete enemy->second;
-                enemies_.erase(enemy);
+                enemy = enemies_.erase(enemy);
+                if (enemy == enemies_.end()) break;
                 if (enemies_.empty()) break;
             } else if (newEvent.type == EventType::SpawnKill) {
+                return_event.type = EventType::Dead;
                 return_event.increments.y += enemy->second->GetValue();
                 death_occured_ = true;
                 delete enemy->second;
@@ -281,22 +283,19 @@ void Map::AddEnemy(const Vector2f& pos, char type) {
     switch (type)
     {
     case 'N':
-        enemy = new NormalEnemy(body_ * position, start_.x, start_.y, 'N');
+        enemy = new NormalEnemy(body_ * position, start_.x, start_.y);
         break;
     case 'F':
-        enemy = new FastEnemy(body_ * position, start_.x, start_.y, 'F');
+        enemy = new FastEnemy(body_ * position, start_.x, start_.y);
         break;
     case 'A':
-        enemy = new FlyingEnemy(body_ * position, start_.x, start_.y, 'A');
+        enemy = new FlyingEnemy(body_ * position, start_.x, start_.y);
         break;
     case 'R':
-        enemy = new RegenEnemy(body_ * position, start_.x, start_.y, 'R');
+        enemy = new RegenEnemy(body_ * position, start_.x, start_.y);
         break;
     case 'S':
-        enemy = new SpawnEnemy(body_ * position, start_.x, start_.y, 'S');
-        break;
-    case 'E':
-        enemy = new NormalEnemy(body_ * position, pos.x, pos.y, 'N');
+        enemy = new SpawnEnemy(body_ * position, start_.x, start_.y);
         break;
     default:
         break;
@@ -308,9 +307,9 @@ void Map::AddEnemy(const Vector2f& pos, char type) {
 }
 
 void Map::CustomDraw(sf::RenderWindow& window) const {
-    for (auto enemy : enemies_) {
-        enemy.second->Draw(window);
-        enemy.second->DrawHP(window);
+    for (auto enemy = enemies_.rbegin(); enemy != enemies_.rend(); ++enemy) {
+        enemy->second->Draw(window);
+        enemy->second->DrawHP(window);
     }
     for (auto button : buttons_) {
         Tower* tower = dynamic_cast<Tower*>(button.second);
