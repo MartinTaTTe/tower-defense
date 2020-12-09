@@ -27,14 +27,12 @@ GameState::GameState(int width, int height, const std::string& mapPath)
     canvases_.back().second->AddButton({0, 0.3f, 1, 0.4f}, T_HYBRID_TOWER, event);
     event.tower_type = 'U';
     canvases_.back().second->AddButton({0, 0.4f, 1, 0.5f}, T_UTILITY_TOWER, event);
-    event.tower_type = 'M';
-    canvases_.back().second->AddButton({0, 0.5f, 1, 0.6f}, T_MULTIPLE_TOWER, event);
     ReadWaves();
 }
 
 void GameState::Update(double d_time) {
     canvases_[0].second->UpdateString(0, std::to_string(player_lives_) + (player_lives_ == 1 ? " life" : " lives"));
-    canvases_[0].second->UpdateString(2, "Gold " + std::to_string((int)player_gold_));
+    canvases_[0].second->UpdateString(2, "Gold " + std::to_string(player_gold_));
     if (player_lives_ <= 0) {
         paused_ = true;
         canvases_[0].second->AddText({0, 0.4f}, "GAME OVER", 100, sf::Color::Red);
@@ -58,7 +56,7 @@ void GameState::Update(double d_time) {
         switch (towerEvent.type)
         {
         case EventType::AddGold:
-            player_gold_ = player_gold_ + towerEvent.damage;
+            player_gold_ = player_gold_ + towerEvent.increments.x;
             break;
         
         default:
@@ -111,11 +109,6 @@ Event GameState::CustomOnClick(Event event) {
                     if (player_gold_ >= UTILITY_TOWER_PRICE)
                         if (dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(0, event).condition)
                             player_gold_ -= UTILITY_TOWER_PRICE;
-                    break;
-                case 'M':
-                    if (player_gold_ >= MULTIPLE_TOWER_PRICE)
-                        if (dynamic_cast<Map*>(canvases_[0].second)->UpdateTowers(0, event).condition)
-                            player_gold_ -= MULTIPLE_TOWER_PRICE;
                     break;
                 default:
                     break;
