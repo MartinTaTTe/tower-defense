@@ -112,10 +112,10 @@ const std::string T_TILES[] = {
     "textures/water.png"
 };
 const std::string T_DEFAULT_TOWER = "textures/tower.png";
-const std::string T_UTILITY_TOWER = "textures/utility_tower.png";
-const std::string T_BASIC_TOWER = "textures/basic_tower.png";
-const std::string T_FLYING_TOWER = "textures/flying_tower.png";
-const std::string T_WATER_TOWER = "textures/water_tower.png";
-const std::string T_HYBRID_TOWER = "textures/hybrid_tower.png";
-const std::string T_MULTIPLE_TOWER = "textures/multiple_tower.png";
+const std::string T_UTILITY_TOWER = "textures/towers/bank.png";
+const std::string T_BASIC_TOWER = "textures/towers/tower.png";
+const std::string T_FLYING_TOWER = "textures/towers/baloon.png";
+const std::string T_WATER_TOWER = "textures/towers/ship.png";
+const std::string T_HYBRID_TOWER = "textures/towers/hybrid_tower.png";
+const std::string T_MULTIPLE_TOWER = "textures/towers/multiple_tower.png";
 
