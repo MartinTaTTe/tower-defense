@@ -17,7 +17,8 @@ const std::string DEFAULT_FONT = "utils/OpenSans.ttf";
 const double SPAWN_SPEED = 1.0;
 const int PLAYER_LIVES = 10;
 const float HP_BAR_THICC = 0.1f;
-const int START_GOLD = 500;
+const int START_GOLD = 300;
+const int WAVE_GOLD = 150;
 
 // Map paths
 const std::string MAPS[] = {
@@ -32,31 +33,29 @@ const std::string MAPS[] = {
 const std::string W_BASIC_WAVES = "enemies/waves/basic.wave";
 
 // Tower constants
-const int UPGRADE_PRICE = 1000;
-const int UPGRADE_MAX = 3;
 
 const float BASIC_TOWER_DAMAGE = 10;
-const float BASIC_TOWER_RANGE = 3;
+const float BASIC_TOWER_RANGE = 7;
 const int BASIC_TOWER_PRICE = 100;
 
 const float FLYING_TOWER_DAMAGE = 20;
-const float FLYING_TOWER_RANGE = 5;
+const float FLYING_TOWER_RANGE = 8;
 const int FLYING_TOWER_PRICE = 100;
 
-const float UTILITY_TOWER_DAMAGE = 1;
+const float UTILITY_TOWER_DAMAGE = 10;
 const float UTILITY_TOWER_RANGE = 0;
-const int UTILITY_TOWER_PRICE = 500;
+const int UTILITY_TOWER_PRICE = 400;
 
 const float WATER_TOWER_DAMAGE = 20;
-const float WATER_TOWER_RANGE = 2;
+const float WATER_TOWER_RANGE = 5;
 const int WATER_TOWER_PRICE = 300;
 
 const float HYBRID_TOWER_DAMAGE = 20;
-const float HYBRID_TOWER_RANGE = 3;
+const float HYBRID_TOWER_RANGE = 7;
 const int HYBRID_TOWER_PRICE = 500;
 
 const float MULTIPLE_TOWER_DAMAGE = 10;
-const float MULTIPLE_TOWER_RANGE = 2;
+const float MULTIPLE_TOWER_RANGE = 6;
 const int MULTIPLE_TOWER_PRICE = 500;
 
 // Enemy constants
