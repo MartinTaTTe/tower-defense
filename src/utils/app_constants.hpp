@@ -48,7 +48,7 @@ const float FLYING_TOWER_DAMAGE = 20;
 const float FLYING_TOWER_RANGE = 7;
 const int FLYING_TOWER_PRICE = 100;
 
-const float UTILITY_TOWER_DAMAGE = 10;
+const float UTILITY_TOWER_DAMAGE = 5;
 const float UTILITY_TOWER_RANGE = 0;
 const int UTILITY_TOWER_PRICE = 400;
 

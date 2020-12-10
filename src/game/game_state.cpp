@@ -19,22 +19,22 @@ GameState::GameState(int width, int height, const std::string& mapPath, const st
     Event event(EventType::SelectTower);
     event.tower_type = 'B';
     canvases_.back().second->AddButton({0, 0, 0.5f, 0.116f}, T_BASIC_TOWER, event); // tower button
-    canvases_.back().second->AddText({0.5f, 0}, MakeDesc(BASIC_TOWER_PRICE, BASIC_TOWER_DAMAGE, BASIC_TOWER_RANGE, true, false), 11);
+    canvases_.back().second->AddText({0.5f, 0}, MakeDesc(BASIC_TOWER_PRICE, BASIC_TOWER_DAMAGE, BASIC_TOWER_RANGE, true, false), 10);
     event.tower_type = 'F';
     canvases_.back().second->AddButton({0, 0.116f, 0.5f, 0.232f}, T_FLYING_TOWER, event);
-    canvases_.back().second->AddText({0.5f, 0.116f}, MakeDesc(FLYING_TOWER_PRICE, FLYING_TOWER_DAMAGE, FLYING_TOWER_RANGE, false, true), 11);
+    canvases_.back().second->AddText({0.5f, 0.116f}, MakeDesc(FLYING_TOWER_PRICE, FLYING_TOWER_DAMAGE, FLYING_TOWER_RANGE, false, true), 10);
     event.tower_type = 'W';
     canvases_.back().second->AddButton({0, 0.232f, 0.5f, 0.348f}, T_WATER_TOWER, event);
-    canvases_.back().second->AddText({0.5f, 0.232f}, MakeDesc(WATER_TOWER_PRICE, WATER_TOWER_DAMAGE, WATER_TOWER_RANGE, true, false), 11);
+    canvases_.back().second->AddText({0.5f, 0.232f}, MakeDesc(WATER_TOWER_PRICE, WATER_TOWER_DAMAGE, WATER_TOWER_RANGE, true, false), 10);
     event.tower_type = 'H';
     canvases_.back().second->AddButton({0, 0.348f, 0.5f, 0.464f}, T_HYBRID_TOWER, event);
-    canvases_.back().second->AddText({0.5f, 0.348f}, MakeDesc(HYBRID_TOWER_PRICE, HYBRID_TOWER_DAMAGE, HYBRID_TOWER_RANGE, true, true), 11);
+    canvases_.back().second->AddText({0.5f, 0.348f}, MakeDesc(HYBRID_TOWER_PRICE, HYBRID_TOWER_DAMAGE, HYBRID_TOWER_RANGE, true, true), 10);
     event.tower_type = 'U';
     canvases_.back().second->AddButton({0, 0.464f, 0.5f, 0.58f}, T_UTILITY_TOWER, event);
-    canvases_.back().second->AddText({0.5f, 0.464f}, MakeDesc(UTILITY_TOWER_PRICE, 0, 0, false, false), 11);
+    canvases_.back().second->AddText({0.5f, 0.464f}, MakeDesc(UTILITY_TOWER_PRICE, 0, 0, false, false), 10);
     event.tower_type = 'M';
     canvases_.back().second->AddButton({0, 0.58f, 0.5f, 0.696f}, T_MULTIPLE_TOWER, event);
-    canvases_.back().second->AddText({0.5f, 0.58f}, MakeDesc(MULTIPLE_TOWER_PRICE, MULTIPLE_TOWER_DAMAGE, MULTIPLE_TOWER_RANGE, true, false), 11);
+    canvases_.back().second->AddText({0.5f, 0.58f}, MakeDesc(MULTIPLE_TOWER_PRICE, MULTIPLE_TOWER_DAMAGE, MULTIPLE_TOWER_RANGE, true, false), 10);
     ReadWaves(wavePath);
 }
 
