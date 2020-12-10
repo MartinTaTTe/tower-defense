@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 
-GameState::GameState(int width, int height, const std::string& mapPath)
+GameState::GameState(int width, int height, const std::string& mapPath, const std::string& wavePath)
     : State("Game State", width, height), since_last_spawn_(SPAWN_SPEED - 1), player_lives_(PLAYER_LIVES), wave_count_(0), player_gold_(START_GOLD), paused_(false) {
     AddCanvas({0, 0, MAP_WIDTH, MAP_HEIGHT}, mapPath); // map
     start_ = dynamic_cast<Map*>(canvases_.back().second)->GetStart();
@@ -35,7 +35,7 @@ GameState::GameState(int width, int height, const std::string& mapPath)
     event.tower_type = 'M';
     canvases_.back().second->AddButton({0, 0.58f, 0.5f, 0.696f}, T_MULTIPLE_TOWER, event);
     canvases_.back().second->AddText({0.5f, 0.58f}, MakeDesc(MULTIPLE_TOWER_PRICE, MULTIPLE_TOWER_DAMAGE, MULTIPLE_TOWER_RANGE, true, false), 11);
-    ReadWaves();
+    ReadWaves(wavePath);
 }
 
 void GameState::Update(double d_time) {

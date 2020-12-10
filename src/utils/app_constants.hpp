@@ -29,8 +29,14 @@ const std::string MAPS[] = {
     "map/maps/basic.map"
 };
 
-// Waves paths, name like "W_NAME_OF_WAVES"
-const std::string W_BASIC_WAVES = "enemies/waves/basic.wave";
+// Wave paths
+const std::string WAVES[] = {
+    "enemies/waves/basic.wave",
+    "enemies/waves/easy.wave",
+    "enemies/waves/medium.wave",
+    "enemies/waves/hard.wave",
+    "enemies/waves/basic.wave"
+};
 
 // Tower constants
 

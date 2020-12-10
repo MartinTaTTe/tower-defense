@@ -68,7 +68,7 @@ void App::Run(int width, int height) {
                     states_.back()->EventHandler(0, sf_event);
                     break;
                 case EventType::PushGameState:
-                    PushState(new GameState(window.getSize().x, window.getSize().y, MAPS[event.x]));
+                    PushState(new GameState(window.getSize().x, window.getSize().y, MAPS[event.x], WAVES[event.x]));
                     break;
                 case EventType::PushInputState:
                     PushState(new InputState(window.getSize().x, window.getSize().y));

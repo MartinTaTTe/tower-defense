@@ -11,11 +11,11 @@ typedef std::vector<char> Wave;
 
 class GameState : public State {
 public:
-    GameState(int width, int height, const std::string& mapPath);
+    GameState(int width, int height, const std::string& mapPath, const std::string& wavePath);
 private:
     void        Update(double d_time) override;
     Event       CustomOnClick(Event event) override;
-    void        ReadWaves(const std::string& filePath = W_BASIC_WAVES);
+    void        ReadWaves(const std::string& filePath);
     void        AddWave();
     void        SendEnemy();
     std::string MakeDesc(int price, float damage, int range, bool ground, bool air);
