@@ -18,17 +18,23 @@ GameState::GameState(int width, int height, const std::string& mapPath)
     canvases_.back().second->AddButton({0, 0.7f, 1, 0.8f}, T_NEXT_WAVE_BUTTON, Event(EventType::SendWave)); // next wave button
     Event event(EventType::SelectTower);
     event.tower_type = 'B';
-    canvases_.back().second->AddButton({0, 0, 1, 0.1f}, T_BASIC_TOWER, event); // tower button
+    canvases_.back().second->AddButton({0, 0, 0.5f, 0.116f}, T_BASIC_TOWER, event); // tower button
+    canvases_.back().second->AddText({0.5f, 0}, MakeDesc(BASIC_TOWER_PRICE, BASIC_TOWER_DAMAGE, BASIC_TOWER_RANGE, true, false), 11);
     event.tower_type = 'F';
-    canvases_.back().second->AddButton({0, 0.1f, 1, 0.2f}, T_FLYING_TOWER, event);
+    canvases_.back().second->AddButton({0, 0.116f, 0.5f, 0.232f}, T_FLYING_TOWER, event);
+    canvases_.back().second->AddText({0.5f, 0.116f}, MakeDesc(FLYING_TOWER_PRICE, FLYING_TOWER_DAMAGE, FLYING_TOWER_RANGE, false, true), 11);
     event.tower_type = 'W';
-    canvases_.back().second->AddButton({0, 0.2f, 1, 0.3f}, T_WATER_TOWER, event);
+    canvases_.back().second->AddButton({0, 0.232f, 0.5f, 0.348f}, T_WATER_TOWER, event);
+    canvases_.back().second->AddText({0.5f, 0.232f}, MakeDesc(WATER_TOWER_PRICE, WATER_TOWER_DAMAGE, WATER_TOWER_RANGE, true, false), 11);
     event.tower_type = 'H';
-    canvases_.back().second->AddButton({0, 0.3f, 1, 0.4f}, T_HYBRID_TOWER, event);
+    canvases_.back().second->AddButton({0, 0.348f, 0.5f, 0.464f}, T_HYBRID_TOWER, event);
+    canvases_.back().second->AddText({0.5f, 0.348f}, MakeDesc(HYBRID_TOWER_PRICE, HYBRID_TOWER_DAMAGE, HYBRID_TOWER_RANGE, true, true), 11);
     event.tower_type = 'U';
-    canvases_.back().second->AddButton({0, 0.4f, 1, 0.5f}, T_UTILITY_TOWER, event);
+    canvases_.back().second->AddButton({0, 0.464f, 0.5f, 0.58f}, T_UTILITY_TOWER, event);
+    canvases_.back().second->AddText({0.5f, 0.464f}, MakeDesc(UTILITY_TOWER_PRICE, 0, 0, false, false), 11);
     event.tower_type = 'M';
-    canvases_.back().second->AddButton({0, 0.5f, 1, 0.6f}, T_MULTIPLE_TOWER, event);
+    canvases_.back().second->AddButton({0, 0.58f, 0.5f, 0.696f}, T_MULTIPLE_TOWER, event);
+    canvases_.back().second->AddText({0.5f, 0.58f}, MakeDesc(MULTIPLE_TOWER_PRICE, MULTIPLE_TOWER_DAMAGE, MULTIPLE_TOWER_RANGE, true, false), 11);
     ReadWaves();
 }
 
@@ -37,7 +43,7 @@ void GameState::Update(double d_time) {
     canvases_[0].second->UpdateString(2, "Gold " + std::to_string((int)player_gold_));
     if (player_lives_ <= 0) {
         paused_ = true;
-        canvases_[0].second->AddText({0, 0.4f}, "GAME OVER", 100, sf::Color::Red);
+        canvases_[0].second->AddText({0.1f, 0.35f}, "GAME OVER", 120, sf::Color::Red);
     }
     if (!paused_) {
         since_last_spawn_ += d_time;
@@ -149,6 +155,7 @@ void GameState::ReadWaves(const std::string& filePath) {
 }
 
 void GameState::AddWave() {
+    player_gold_ += WAVE_GOLD;
     if (!waves_.empty()) {
         for (auto enemy : waves_.back()) {
             for (int i = 0; i < enemy.first; i++) 
@@ -170,4 +177,18 @@ void GameState::SendEnemy() {
         }, wave_.back());
         wave_.pop_back();
     }
+}
+
+std::string GameState::MakeDesc(int price, float damage, int range, bool ground, bool air) {
+    std::string desc = "Price: ";
+    desc.append(std::to_string(price));
+    desc.append("\nDamage: ");
+    desc.append(std::to_string((int)damage));
+    desc.append("\nRange: ");
+    desc.append(std::to_string(range));
+    desc.append("\nTargets: ");
+    desc.append(ground ? "Grd" : "-");
+    desc.append("/");
+    desc.append(air ? "Air" : "-");
+    return desc;
 }
