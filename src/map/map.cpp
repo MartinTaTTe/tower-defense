@@ -131,7 +131,7 @@ Event Map::UpdateEnemies(double d_time) {
                 death_occured_ = true;
                 int tile = enemy->second->currentTile;
                 delete enemy->second;
-                enemies_.erase(enemy);
+                enemy = enemies_.erase(enemy);
                 Vector2f pos = {
                     1.0f / grid_width_ * newEvent.x_f,
                     1.0f / grid_height_ * newEvent.y_f
@@ -148,6 +148,7 @@ Event Map::UpdateEnemies(double d_time) {
                     new NormalEnemy(body_ * position, newEvent.x_f, newEvent.y_f))
                 );
                 enemies_.back().second->currentTile = tile;
+                if (enemy == enemies_.end()) break;
                 if (enemies_.empty()) break;
             }
         } else {
@@ -155,7 +156,8 @@ Event Map::UpdateEnemies(double d_time) {
             return_event.increments.x++;
             death_occured_ = true;
             delete enemy->second;
-            enemies_.erase(enemy);
+            enemy = enemies_.erase(enemy);
+            if (enemy == enemies_.end()) break;
             if (enemies_.empty()) break;
         }
     }

@@ -18,6 +18,7 @@ private:
     void        ReadWaves(const std::string& filePath = W_BASIC_WAVES);
     void        AddWave();
     void        SendEnemy();
+    std::string MakeDesc(int price, float damage, int range, bool ground, bool air);
     Waves       waves_;
     Wave        wave_;
     Vector2i    start_;
