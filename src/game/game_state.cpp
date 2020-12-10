@@ -6,7 +6,7 @@
 #include <iostream>
 
 GameState::GameState(int width, int height, const std::string& mapPath, const std::string& wavePath)
-    : State("Game State", width, height), since_last_spawn_(SPAWN_SPEED - 1), player_lives_(PLAYER_LIVES), wave_count_(0), player_gold_(START_GOLD), paused_(false) {
+    : State("Game State", width, height), since_last_spawn_(SPAWN_SPEED - 1), player_lives_(PLAYER_LIVES), wave_count_(0), player_gold_(START_GOLD), paused_(false), last_wave_(0) {
     AddCanvas({0, 0, MAP_WIDTH, MAP_HEIGHT}, mapPath); // map
     start_ = dynamic_cast<Map*>(canvases_.back().second)->GetStart();
     canvases_.back().second->AddText({0.8f, 0}, "10 lives", 30); // life counter
@@ -66,8 +66,11 @@ void GameState::Update(double d_time) {
         case EventType::AddGold:
             player_gold_ += towerEvent.damage;
             break;
-        
         default:
+            if (wave_count_ == last_wave_) {
+                paused_ = true;
+                canvases_[0].second->AddText({0.2f, 0.35f}, "VICTORY!", 120, sf::Color::White);
+            }
             break;
         }
     }
@@ -149,14 +152,15 @@ void GameState::ReadWaves(const std::string& filePath) {
                     amount = "";
                 }
             }
+            last_wave_++;
         }
         file.close();
     }
 }
 
 void GameState::AddWave() {
-    player_gold_ += WAVE_GOLD;
     if (!waves_.empty()) {
+        player_gold_ += WAVE_GOLD;
         for (auto enemy : waves_.back()) {
             for (int i = 0; i < enemy.first; i++) 
                 wave_.push_back(enemy.second);

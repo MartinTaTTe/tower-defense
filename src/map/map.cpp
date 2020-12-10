@@ -274,11 +274,12 @@ Event Map::UpdateTowers(double d_time, Event event) {
             if (tower != nullptr) {
                 Event newEvent = tower->Update(enemies_, event, d_time);
                 if (newEvent.tower_type == 'U' && !enemies_.empty()) {
-                    counter += newEvent.damage;
-                }
+                        counter += newEvent.damage;
+                } 
             }
         }
-        event.type = EventType::AddGold;
+        if (!enemies_.empty())
+            event.type = EventType::AddGold;
         event.damage = counter;
     }
     return event;

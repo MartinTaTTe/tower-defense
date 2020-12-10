@@ -28,4 +28,5 @@ private:
     float       player_gold_;
     char        selected_tower_;
     int         wave_count_;
+    int         last_wave_;
 };
