@@ -1,9 +1,6 @@
-all: compile link
+noclean: compile link
 
-test: compile link clean run
-
-#test utan clean för victor
-test2: compile link run
+build: compile link clean
 
 compile:
 	g++ -c *.cpp
@@ -15,12 +12,13 @@ compile:
 	g++ -c ./towers/*.cpp
 
 link:
-	g++ *.o -o main -lsfml-graphics -lsfml-window -lsfml-system
+	g++ *.o -o towerdefense -lsfml-graphics -lsfml-window -lsfml-system
 
 clean:
 	rm *.o
 
-run:
-	main.exe
+wrun:
+	towerdefense.exe
 
-ignored:
+lrun:
+	./towerdefense
