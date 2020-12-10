@@ -7,7 +7,6 @@ UtilityTower::UtilityTower(const Vector4f& vector,int x, int y)
     UTILITY_TOWER_RANGE,
     false, false, true,
     T_UTILITY_TOWER) {
-    upgrade_price_ = UPGRADE_PRICE;
 }
 void UtilityTower::Upgrade(){
     if(level_ < max_level_){

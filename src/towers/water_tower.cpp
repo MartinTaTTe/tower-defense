@@ -7,7 +7,6 @@ WaterTower::WaterTower(const Vector4f& vector, int x, int y)
     WATER_TOWER_RANGE,
     false, true, false,
     T_WATER_TOWER) {
-    upgrade_price_ = UPGRADE_PRICE;
 }
 void WaterTower::Upgrade(){
     if(level_ < max_level_){

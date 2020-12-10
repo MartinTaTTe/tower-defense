@@ -7,7 +7,6 @@ FlyingTower::FlyingTower(const Vector4f& vector, int x, int y)
     FLYING_TOWER_RANGE,
     true, false, true,
     T_FLYING_TOWER) {
-    upgrade_price_ = UPGRADE_PRICE;
 }
 void FlyingTower::Upgrade(){
     if(level_ < max_level_){

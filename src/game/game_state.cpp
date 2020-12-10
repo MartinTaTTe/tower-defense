@@ -64,7 +64,7 @@ void GameState::Update(double d_time) {
         switch (towerEvent.type)
         {
         case EventType::AddGold:
-            player_gold_ = player_gold_ + towerEvent.damage;
+            player_gold_ += towerEvent.damage;
             break;
         
         default:

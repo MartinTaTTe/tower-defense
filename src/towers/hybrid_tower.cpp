@@ -7,7 +7,6 @@ HybridTower::HybridTower(const Vector4f& vector, int x, int y)
     HYBRID_TOWER_RANGE,
     true, true, true,
     T_HYBRID_TOWER) {
-    upgrade_price_ = UPGRADE_PRICE;
 }
 
 void HybridTower::Upgrade(){

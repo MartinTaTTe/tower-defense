@@ -7,7 +7,6 @@ BasicTower::BasicTower(const Vector4f& vector, int x, int y)
     BASIC_TOWER_RANGE,
     false, true, true,
     T_BASIC_TOWER) {
-    upgrade_price_ = UPGRADE_PRICE;
 }
 void BasicTower::Upgrade(){
     if(level_ < max_level_){

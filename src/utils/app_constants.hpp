@@ -14,7 +14,7 @@ const int BACKGROUND_B = 200;
 const float MAP_WIDTH = 0.8f; // 0-1
 const float MAP_HEIGHT = 1.0f; // 0-1
 const std::string DEFAULT_FONT = "utils/OpenSans.ttf";
-const double SPAWN_SPEED = 1.0;
+const double SPAWN_SPEED = 0.4;
 const int PLAYER_LIVES = 10;
 const float HP_BAR_THICC = 0.1f;
 const int START_GOLD = 300;
@@ -35,50 +35,50 @@ const std::string W_BASIC_WAVES = "enemies/waves/basic.wave";
 // Tower constants
 
 const float BASIC_TOWER_DAMAGE = 10;
-const float BASIC_TOWER_RANGE = 7;
+const float BASIC_TOWER_RANGE = 6;
 const int BASIC_TOWER_PRICE = 100;
 
 const float FLYING_TOWER_DAMAGE = 20;
-const float FLYING_TOWER_RANGE = 8;
+const float FLYING_TOWER_RANGE = 7;
 const int FLYING_TOWER_PRICE = 100;
 
 const float UTILITY_TOWER_DAMAGE = 10;
 const float UTILITY_TOWER_RANGE = 0;
 const int UTILITY_TOWER_PRICE = 400;
 
-const float WATER_TOWER_DAMAGE = 20;
+const float WATER_TOWER_DAMAGE = 25;
 const float WATER_TOWER_RANGE = 5;
 const int WATER_TOWER_PRICE = 300;
 
 const float HYBRID_TOWER_DAMAGE = 20;
-const float HYBRID_TOWER_RANGE = 7;
+const float HYBRID_TOWER_RANGE = 6;
 const int HYBRID_TOWER_PRICE = 500;
 
 const float MULTIPLE_TOWER_DAMAGE = 10;
-const float MULTIPLE_TOWER_RANGE = 6;
+const float MULTIPLE_TOWER_RANGE = 4;
 const int MULTIPLE_TOWER_PRICE = 500;
 
 // Enemy constants
 const float NORMAL_ENEMY_MAX_HP = 100.0f;
-const float NORMAL_ENEMY_SPEED = 0.5f;
+const float NORMAL_ENEMY_SPEED = 0.8f;
 const int NORMAL_ENEMY_VALUE = 10;
 
 const float FAST_ENEMY_MAX_HP = 75.0f;
 const float FAST_ENEMY_SPEED = 1.2f;
 const int FAST_ENEMY_VALUE = 15;
 
-const float FLYING_ENEMY_MAX_HP = 100.0f;
-const float FLYING_ENEMY_SPEED = 0.5f;
+const float FLYING_ENEMY_MAX_HP = 150.0f;
+const float FLYING_ENEMY_SPEED = 1;
 const int FLYING_ENEMY_VALUE = 50;
 
 const float REGEN_ENEMY_MAX_HP = 300.0f;
 const float REGEN_ENEMY_SPEED = 0.25f;
 const int REGEN_ENEMY_VALUE = 80;
-const float REGEN_ENEMY_HPREGEN = 0.03f;
+const float REGEN_ENEMY_HPREGEN = 0.07f;
 
-const float SPAWN_ENEMY_MAX_HP = 100.0f;
-const float SPAWN_ENEMY_SPEED = 0.5f;
-const int SPAWN_ENEMY_VALUE = 15;
+const float SPAWN_ENEMY_MAX_HP = 1000.0f;
+const float SPAWN_ENEMY_SPEED = 0.3f;
+const int SPAWN_ENEMY_VALUE = 100;
 
 // Texture paths, name like "T_NAME_OF_TEXTURE"
 // knappar
