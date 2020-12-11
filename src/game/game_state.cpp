@@ -67,7 +67,7 @@ void GameState::Update(double d_time) {
             player_gold_ += towerEvent.damage;
             break;
         default:
-            if (wave_count_ == last_wave_) {
+            if (wave_count_ == last_wave_ && wave_.empty()) {
                 paused_ = true;
                 canvases_[0].second->AddText({0.2f, 0.35f}, "VICTORY!", 120, sf::Color::White);
             }
